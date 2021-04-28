@@ -17,7 +17,9 @@ INCLUDE			=	-I include
 
 FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 
-SRC				=	main.c
+SRC				=	parsing.c \
+					get_next_line.c \
+					get_next_line_utils.c \
 
 OBJS			=	$(SRC:.c=.o)
 
