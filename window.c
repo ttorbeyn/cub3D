@@ -66,17 +66,11 @@ void 	init(t_data img)
 	}
 }
 
-void ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
 int	deal_key(int key, t_data img)
 {
-	//ft_putchar('X');
+	if (key == 0)
+		printf("A\n");
 	printf("%d\n", img.px);
-	printf("%d\n", key);
-
 	img.px -= 5;
 	printf("%d\n", img.px);
 
@@ -85,7 +79,7 @@ int	deal_key(int key, t_data img)
 		//img.px -= 5;
 		return (0);
 	}
-	return (0);
+	return (img.px);
 }
 
 int             main(void)
