@@ -19,7 +19,9 @@
 
 # include <limits.h>
 
-# define BUFFER_SIZE 2
+# define BUFFER_SIZE 1000
+
+
 
 size_t		ft_strlen(char *s);
 char		*ft_strdup(char *s1);

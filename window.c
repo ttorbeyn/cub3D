@@ -1,5 +1,6 @@
 #include <mlx.h>
 #include <math.h>
+#include "cub3D.h"
 
 typedef struct  s_data {
 	void        *img;
@@ -7,6 +8,8 @@ typedef struct  s_data {
 	int         bits_per_pixel;
 	int         line_length;
 	int         endian;
+	int			px;
+	int			py;
 }               t_data;
 
 void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -17,6 +20,74 @@ void            my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+void			my_mlx_line_put(int h, int a, int b, t_data img, int color)
+{
+	int c;
+
+	c = (h / 2) - (b / 2);
+	while (b)
+	{
+		my_mlx_pixel_put(&img, a, c, color);
+		c++;
+		b--;
+	}
+
+}
+
+/*
+void	ft_buttons(unsigned char key, int x, int y)
+{
+	if (key == 'a')
+		px -= 5;
+	if (key == 'a')
+		px -= 5;
+	if (key == 'a')
+		px -= 5;
+	if (key == 'a')
+		px -= 5;
+}
+*/
+
+void 	init(t_data img)
+{
+	int x;
+
+	x = img.py + 5;
+	while (img.px < x)
+	{
+		img.py = img.px;
+		while (img.py < x)
+		{
+			my_mlx_pixel_put(&img, img.px, img.py, 0x00FFFFFF);
+			img.py++;
+		}
+		img.px++;
+		//x--;
+	}
+}
+
+void ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+int	deal_key(int key, t_data img)
+{
+	//ft_putchar('X');
+	printf("%d\n", img.px);
+	printf("%d\n", key);
+
+	img.px -= 5;
+	printf("%d\n", img.px);
+
+	if (!key)
+	{
+		//img.px -= 5;
+		return (0);
+	}
+	return (0);
+}
+
 int             main(void)
 {
 	void    *mlx;
@@ -24,22 +95,74 @@ int             main(void)
 	t_data  img;
 	int		a;
 	int		b;
+	//int i;
+	img.px = 300;
+	img.py = 300;
 
-	b = 300;
+	//int x;
+
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	mlx_win = mlx_new_window(mlx, 2000, 1000, "You sucks!");
+	img.img = mlx_new_image(mlx, 2000, 1000);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	while (b < 800)
+	/*x = 1000;
+	a = 0;
+	while (a < 500)
 	{
-		a = 500;
-		while (a < 1000)
+		b = 1000;
+		while (b < x)
 		{
 			my_mlx_pixel_put(&img, a, b, 0x00FF0000);
-			a = a + 1;
+			b++;
 		}
-		b = b + 1;
+		a++;
+		x--;
 	}
+	a = 0;
+	b = 200;
+	i = 0;
+	while (i < 2000 && b < 1000 && a < 1000)
+	{
+		my_mlx_line_put(1000, a, b, img, 0x00FF0000);
+		b++;
+		a++;
+		i++;
+	}*/
+	/*a = 800;
+	b = 1000;
+	i = 0;
+	while (i < 2000 && b > 0 && a < 1500)
+	{
+		my_mlx_line_put(1000, a, b, img, 0x00FF7F7F);
+		b--;
+		a++;
+		i++;
+	}
+	a = 1500;
+	b = 300;
+	i = 0;
+	while (i < 2000 && b < 1000 && a < 2000)
+	{
+		my_mlx_line_put(1000, a, b, img, 0x00FF0000);
+		b++;
+		a++;
+		i++;
+	}*/
+
+	a = 0;
+	b = 500;
+	while (a < 2000)
+	{
+		my_mlx_pixel_put(&img, a, b, 0x000000FF);
+		a++;
+	}
+	printf("%d\n", img.px);
+	mlx_key_hook(mlx_win, deal_key, &img);
+	init(img);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+
+
+
+
 	mlx_loop(mlx);
 }
