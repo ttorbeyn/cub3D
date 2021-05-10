@@ -74,14 +74,18 @@ int	deal_key(int key, t_data *img)
 	if (key == 0)
 	{
 		img->px += 5;
-
 	}
 	printf("%d\n", img->px);
-
-
 	return (0);
 }
 
+int ft_refresh(t_data *img)
+{
+	mlx_key_hook(img->mlx_win, deal_key, img);
+	big_pixel(img);
+	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
+	return (0);
+}
 
 int	ft_close(int key, t_data *img)
 {
@@ -93,16 +97,16 @@ int	ft_close(int key, t_data *img)
 int             main(void)
 {
 	t_data  img;
-//	int		a;
-//	int		b;
-	//int i;
-	//img.px = 300;
-	//img.py = 300;
-
-	//int x;
+	/*int		a;
+	int		b;
+	int i;
+	img.px = 300;
+	img.py = 300;
+	int x;
+	*/
 
 	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, 2000, 1000, "You sucks!");
+	img.mlx_win = mlx_new_window(img.mlx, 2000, 1000, "cub3D");
 	img.img = mlx_new_image(img.mlx, 2000, 1000);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	/*x = 1000;
@@ -149,15 +153,7 @@ int             main(void)
 		i++;
 	}*/
 
-
-//	big_pixel(&img);
-
-	//mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
-	mlx_loop_hook(img.mlx, mlx_put_image_to_window, &img);
-
-	mlx_key_hook(img.mlx_win, deal_key, &img);
-
+	mlx_loop_hook(img.mlx, ft_refresh, &img);
 	mlx_hook(img.mlx_win, 2, 1L<<0, ft_close, &img);
-
 	mlx_loop(img.mlx);
 }

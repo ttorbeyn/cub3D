@@ -21,7 +21,9 @@ FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 					get_next_line.c \
 					get_next_line_utils.c
 
-SRC				=				window.c
+# SRC				=				window.c
+
+SRC				=				test.c
 
 OBJS			=	$(SRC:.c=.o)
 
