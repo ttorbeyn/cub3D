@@ -1,17 +1,6 @@
 #include "cub3D.h"
 
-typedef struct	s_parsing
-{
-	int res_x;
-	int res_y;
-	char *text_no;
-	char *text_so;
-	char *text_we;
-	char *text_ea;
-	char *text_s;
-	char *text_f;
-	char *text_c;
-}				t_parsing;
+
 
 /*int		is_correct(char *str)
 {
@@ -53,24 +42,19 @@ char	**ft_map(int fd)
 }
 
 
-void	ft_parsing(void)
+char	**ft_parsing(void)
 {
-	char **map;
-	int x;
+//	int x;
 	int fd;
 
-	x = 0;
+//	x = 0;
 	fd = open("map.cub", O_RDONLY);
-	map = ft_map(fd);
+	/*
 	while (map[x])
 	{
 		printf("%s\n", map[x]);
 		x++;
 	}
-}
-
-int main(void)
-{
-	ft_parsing();
-	return (0);
+	*/
+	return (ft_map(fd));
 }

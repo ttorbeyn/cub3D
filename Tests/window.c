@@ -1,6 +1,6 @@
 #include <mlx.h>
 #include <math.h>
-#include "cub3D.h"
+#include "../cub3D.h"
 
 typedef struct  s_data {
 	void        *img;
@@ -35,20 +35,6 @@ void			my_mlx_line_put(int h, int a, int b, t_data *img, int color)
 	}
 
 }
-
-/*
-void	ft_buttons(unsigned char key, int x, int y)
-{
-	if (key == 'a')
-		px -= 5;
-	if (key == 'a')
-		px -= 5;
-	if (key == 'a')
-		px -= 5;
-	if (key == 'a')
-		px -= 5;
-}
-*/
 
 int 	big_pixel(t_data *img)
 {
