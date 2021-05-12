@@ -29,6 +29,9 @@ typedef struct  s_data {
 	int         endian;
 	int			px;
 	int			py;
+	int			dx;
+	int			dy;
+	float		angle;
 	void		*mlx;
 	void 		*mlx_win;
 }               t_data;
