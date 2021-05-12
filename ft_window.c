@@ -110,7 +110,7 @@ int	minimap(t_data *img)
 int	make_image(t_data *img)
 {
 	minimap(img);
-	//big_pixel_user(img, 0x00FF0000);
+	big_pixel_user(img, 0x00FF0000);
 	show_ray(img);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
