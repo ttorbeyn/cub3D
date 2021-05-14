@@ -27,8 +27,8 @@ typedef struct  s_data {
 	int         bits_per_pixel;
 	int         line_length;
 	int         endian;
-	int			px;
-	int			py;
+	float		px;
+	float		py;
 	int			dx;
 	int			dy;
 	float		angle;

@@ -14,26 +14,27 @@ int	big_pixel_user(t_data *img, int color)
 {
 	int x;
 	int y;
+	int i;
+	int j;
 	int l;
 
-	printf("px:%d\n", img->px);
-	printf("py:%d\n", img->py);
-	l = 6;
+	i = img->px - 2;
+	j = img->py + 2;
+	l = 5;
 	x = 0;
 	while (x < l)
 	{
-		img->py -= l;
+		j -= l;
 		y = 0;
 		while (y < l)
 		{
-			my_mlx_pixel_put(img, img->px, img->py, color);
-			img->py++;
+			my_mlx_pixel_put(img, i, j, color);
+			j++;
 			y++;
 		}
-		img->px++;
+		i++;
 		x++;
 	}
-	img->px -= l;
 	return (0);
 }
 
@@ -110,8 +111,8 @@ int	minimap(t_data *img)
 int	make_image(t_data *img)
 {
 	minimap(img);
-	big_pixel_user(img, 0x00FF0000);
 	show_ray(img);
+	big_pixel_user(img, 0x00FF0000);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
 }
@@ -120,27 +121,29 @@ int	deal_key(int keycode, t_data *img)
 {
 	int l;
 
-	l = 5;
+	l = 10;
 	mlx_destroy_image(img->mlx, img->img);
 	img->img = mlx_new_image(img->mlx, 2000, 1000);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length, &img->endian);
-	printf("%d\n", keycode);
 	if (keycode == 0)
 		img->px -= l;
 	if (keycode == 2)
 		img->px += l;
 	if (keycode == 1)
-		img->py += l;
+	{
+		img->py -= l * sinf(img->angle);
+		img->px -= l * cosf(img->angle);
+	}
 	if (keycode == 13)
-		img->py -= l;
+	{
+		img->py += l * sinf(img->angle);
+		img->px += l * cosf(img->angle);
+	}
 	if (keycode == 123)
-		img->angle += 0.1;
-
-	if (keycode == 124)
 		img->angle -= 0.1;
+	if (keycode == 124)
+		img->angle += 0.1;
 	if (keycode == 53)
 		mlx_destroy_window(img->mlx, img->mlx_win);
-	printf("%f\n", img->angle);
 	make_image(img);
 	return (0);
 }
