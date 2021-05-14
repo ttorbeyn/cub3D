@@ -34,6 +34,8 @@ typedef struct  s_data {
 	float		angle;
 	void		*mlx;
 	void 		*mlx_win;
+	char		**map;
+	int			cellsize;
 }               t_data;
 
 typedef struct	s_parsing

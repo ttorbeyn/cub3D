@@ -38,24 +38,51 @@ int	big_pixel_user(t_data *img, int color)
 	return (0);
 }
 
+/*
+int show_ray(t_data *img)
+{
+	float	aTan = -1 / tanf(img->angle);
+
+}
+*/
+
 int show_ray(t_data *img)
 {
 	int c;
 	float x;
 	float y;
+	float l;
 
-	x = (float)img->px;
-	y = (float)img->py;
+	x = img->px;
+	y = img->py;
 	c = 0;
+	l = x;
+/*
+	l = 0;
+	while (img->map[x][y] == '0')
+	{
+		l += sqrtf(pow(cosf(img->angle), 2) + pow(sinf(img->angle), 2));
+	}
+	//l = l * 100;
+
+	printf("%f\n", l);
+	l -= (int)l;
+	printf("%f\n", l);
+*/
 	while (c < 50)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
+
 		x += (cosf(img->angle));
-		y += (sinf(img->angle));
+		//printf("px:%f\n", img->px);
+		y -= (sinf(img->angle));
+		//printf("py:%f\n", img->py);
+
 		c++;
 	}
 	return (0);
 }
+
 
 int	big_pixel_map(t_data *img, int color, int i, int j)
 {
@@ -63,9 +90,9 @@ int	big_pixel_map(t_data *img, int color, int i, int j)
 	int y;
 	int l;
 
-	i *= 100;
-	j *= 100;
-	l = 99;
+	i *= img->cellsize;
+	j *= img->cellsize;
+	l = img->cellsize - 1;
 	x = 0;
 	i -= l;
 	while (x < l)
@@ -86,18 +113,17 @@ int	big_pixel_map(t_data *img, int color, int i, int j)
 
 int	minimap(t_data *img)
 {
-	char **map;
 	int	x;
 	int y;
 
 	x = 0;
-	map = ft_parsing();
-	while (map[x])
+	img->map = ft_parsing();
+	while (img->map[x])
 	{
 		y = 0;
-		while (map[x][y])
+		while (img->map[x][y])
 		{
-			if (map[x][y] == '1')
+			if (img->map[x][y] == '1')
 				big_pixel_map(img, 0x000000FF, (y + 1), (x + 1));
 			else
 				big_pixel_map(img, 0x007F7F7F, (y + 1), (x + 1));
@@ -128,20 +154,25 @@ int	deal_key(int keycode, t_data *img)
 		img->px -= l;
 	if (keycode == 2)
 		img->px += l;
-	if (keycode == 1)
-	{
-		img->py -= l * sinf(img->angle);
-		img->px -= l * cosf(img->angle);
-	}
 	if (keycode == 13)
 	{
-		img->py += l * sinf(img->angle);
+		img->py -= l * sinf(img->angle);
 		img->px += l * cosf(img->angle);
+	}
+	if (keycode == 1)
+	{
+		img->py += l * sinf(img->angle);
+		img->px -= l * cosf(img->angle);
 	}
 	if (keycode == 123)
 		img->angle -= 0.1;
 	if (keycode == 124)
 		img->angle += 0.1;
+	if (img->angle > 6.28)
+		img->angle -= 6.28;
+	if (img->angle < 0)
+		img->angle += 6.28;
+	printf("%f\n", img->angle);
 	if (keycode == 53)
 		mlx_destroy_window(img->mlx, img->mlx_win);
 	make_image(img);
@@ -151,16 +182,15 @@ int	deal_key(int keycode, t_data *img)
 int	main(void)
 {
 	t_data	img;
-	img.px = 200;
-	img.py = 200;
+	img.px = 100;
+	img.py = 50;
 	img.angle = 1;
-
+	img.cellsize = 100;
 
 	img.mlx = mlx_init();
 	img.mlx_win = mlx_new_window(img.mlx, 2000, 1000, "cub3D");
 	img.img = mlx_new_image(img.mlx, 2000, 1000);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-
 	make_image(&img);
 	mlx_hook(img.mlx_win, 2, 1L<<0, deal_key, &img);
 	mlx_loop(img.mlx);
