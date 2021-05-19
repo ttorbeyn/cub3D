@@ -39,9 +39,39 @@ int	big_pixel_user(t_data *img, int color)
 }
 
 /*
-int show_ray(t_data *img)
+float	dist(t_data img, float px, float py)
 {
-	float	aTan = -1 / tanf(img->angle);
+
+}
+
+int calculate_ray(t_data *img)
+{
+	int xstep;                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````
+	int ystep;
+	int xn;
+	int yn;
+	float py = img->py;
+	float px = img->px;
+
+	//horizontal intersection
+	xstep = img->cellsize / (tanf(img->angle));
+	yn = img->py - (img->py / img->cellsize) * img->cellsize;
+	xn = yn / tanf(img->angle);
+	py += yn;
+	px += xn;
+	while (1)
+	{
+		if (img->map[(int)px][(int)py] == '1')
+			return (dist(img, px, py));
+	}
+
+
+
+	//vertical intersection
+	ystep = img->cellsize / tanf(img->angle);
+	xn = img->cellsize - (img->px / img->cellsize) * img->cellsize;
+	yn = xn * tanf(img->angle);
+
 
 }
 */
@@ -82,7 +112,6 @@ int show_ray(t_data *img)
 	}
 	return (0);
 }
-
 
 int	big_pixel_map(t_data *img, int color, int i, int j)
 {
@@ -165,14 +194,16 @@ int	deal_key(int keycode, t_data *img)
 		img->px -= l * cosf(img->angle);
 	}
 	if (keycode == 123)
-		img->angle -= 0.1;
-	if (keycode == 124)
 		img->angle += 0.1;
+	if (keycode == 124)
+		img->angle -= 0.1;
 	if (img->angle > 6.28)
 		img->angle -= 6.28;
 	if (img->angle < 0)
 		img->angle += 6.28;
-	printf("%f\n", img->angle);
+	printf("ang:%f\n", img->angle);
+	printf("px:%f\n", img->px);
+	printf("py:%f\n", img->py);
 	if (keycode == 53)
 		mlx_destroy_window(img->mlx, img->mlx_win);
 	make_image(img);
