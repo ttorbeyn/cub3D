@@ -43,38 +43,38 @@ float	dist(t_data img, float px, float py)
 {
 
 }
-
-int calculate_ray(t_data *img)
-{
-	int xstep;                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~``````````````````
-	int ystep;
-	int xn;
-	int yn;
-	float py = img->py;
-	float px = img->px;
-
-	//horizontal intersection
-	xstep = img->cellsize / (tanf(img->angle));
-	yn = img->py - (img->py / img->cellsize) * img->cellsize;
-	xn = yn / tanf(img->angle);
-	py += yn;
-	px += xn;
-	while (1)
-	{
-		if (img->map[(int)px][(int)py] == '1')
-			return (dist(img, px, py));
-	}
-
-
-
-	//vertical intersection
-	ystep = img->cellsize / tanf(img->angle);
-	xn = img->cellsize - (img->px / img->cellsize) * img->cellsize;
-	yn = xn * tanf(img->angle);
-
-
-}
 */
+float calculate_ray(t_data *img)
+{
+	float	x;
+	float	y;
+	float	dx;
+	/*float	dy;
+	int	stepx;
+	int	stepy;
+	int xstep;
+	int ystep;
+	float	xintercept;
+	float	yintercept;*/
+	float dist;
+
+
+	dx = img->cellsize - ((img->px / img->cellsize) - (int)(img->px / img->cellsize));
+	printf("dx:%f\n", dx);
+	//dy = 1 - (img->py - (int)img->py);
+	x = img->px + dx;
+	y =	img->py + (tanf(img->angle) * dx);
+	dist = dx / sinf(img->angle);
+	while (img->map[(int)x][(int)y] != 1)
+	{
+		x += 1;
+		y += tanf(img->angle);
+		dist += (1 / sinf(img->angle));
+	}
+	//dist = ft_dist(img, x, y);
+	return (dist);
+}
+
 
 int show_ray(t_data *img)
 {
@@ -82,6 +82,7 @@ int show_ray(t_data *img)
 	float x;
 	float y;
 	float l;
+	float	dist;
 
 	x = img->px;
 	y = img->py;
@@ -99,6 +100,7 @@ int show_ray(t_data *img)
 	l -= (int)l;
 	printf("%f\n", l);
 */
+	dist = calculate_ray(img);
 	while (c < 50)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
