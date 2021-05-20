@@ -36,6 +36,8 @@ typedef struct  s_data {
 	void 		*mlx_win;
 	char		**map;
 	int			cellsize;
+	int			width;
+	int 		height;
 }               t_data;
 
 typedef struct	s_parsing

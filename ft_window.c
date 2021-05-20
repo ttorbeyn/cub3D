@@ -38,41 +38,94 @@ int	big_pixel_user(t_data *img, int color)
 	return (0);
 }
 
-/*
-float	dist(t_data img, float px, float py)
+int	raycasting(t_data *img)
 {
+	double posX = img->px;
+	double posY = img->py;
+	double dirX = -1;
+	double dirY = 0;
+	double planeX = 0;
+	double planeY = 0.66;
+	int x = 0;
+	double cameraX;
+	double raydirX;
+	double raydirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	int stepX;
+	int stepY;
+	int hit = 0;
+	int side;
 
-}
-*/
-float calculate_ray(t_data *img)
-{
-	float	x;
-	float	y;
-	float	dx;
-	/*float	dy;
-	int	stepx;
-	int	stepy;
-	int xstep;
-	int ystep;
-	float	xintercept;
-	float	yintercept;*/
-	float dist;
+	/*while (x < img->width)
+	{*/
 
-
-	dx = img->cellsize - ((img->px / img->cellsize) - (int)(img->px / img->cellsize));
-	printf("dx:%f\n", dx);
-	//dy = 1 - (img->py - (int)img->py);
-	x = img->px + dx;
-	y =	img->py + (tanf(img->angle) * dx);
-	dist = dx / sinf(img->angle);
-	while (img->map[(int)x][(int)y] != 1)
+	cameraX = (2 * x) / (img->width - 1);
+	//printf("%f\n", cameraX);
+	raydirX = dirX + planeX * cameraX;
+	//printf("%f\n", raydirX);
+	raydirY = dirY + planeY * cameraX;
+	mapX = (int)(posX);
+	//printf("%d\n", mapX);
+	mapY = (int)(posY);
+	if (raydirX == 0)
+		deltaDistX = 0;
+	else
+		deltaDistX = fabs(1.0 / raydirX);
+	//printf("%f\n", deltaDistX);
+	if (raydirY == 0)
+		deltaDistY = 0;
+	else
+		deltaDistY = fabs(1.0 / raydirY);
+	//printf("%f\n", deltaDistY);
+	if (raydirX < 0)
 	{
-		x += 1;
-		y += tanf(img->angle);
-		dist += (1 / sinf(img->angle));
+		stepX = -1;
+		sideDistX = (posX - mapX) * deltaDistX;
 	}
-	//dist = ft_dist(img, x, y);
-	return (dist);
+	else
+	{
+		stepX = 1;
+		printf("%d\n", mapX);
+		sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+	}
+	printf("%f\n", sideDistX);
+	if (raydirY < 0)
+	{
+		stepY = -1;
+		sideDistY = (posY - mapY) * deltaDistY;
+	}
+	else
+	{
+		stepY = 1;
+		sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+	}
+	printf("%f\n", sideDistY);
+	while (hit == 0)
+	{
+		if (sideDistX < sideDistY)
+		{
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		}
+		else
+		{
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+		if (img->map[mapX][mapY] == 1)
+			hit = 1;
+	}
+	printf ("hit:%d", hit);
+		//x++;
+	//}
+	return (0);
 }
 
 
@@ -81,35 +134,15 @@ int show_ray(t_data *img)
 	int c;
 	float x;
 	float y;
-	float l;
-	float	dist;
 
 	x = img->px;
 	y = img->py;
 	c = 0;
-	l = x;
-/*
-	l = 0;
-	while (img->map[x][y] == '0')
-	{
-		l += sqrtf(pow(cosf(img->angle), 2) + pow(sinf(img->angle), 2));
-	}
-	//l = l * 100;
-
-	printf("%f\n", l);
-	l -= (int)l;
-	printf("%f\n", l);
-*/
-	dist = calculate_ray(img);
 	while (c < 50)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
-
 		x += (cosf(img->angle));
-		//printf("px:%f\n", img->px);
 		y -= (sinf(img->angle));
-		//printf("py:%f\n", img->py);
-
 		c++;
 	}
 	return (0);
@@ -170,6 +203,7 @@ int	make_image(t_data *img)
 	minimap(img);
 	show_ray(img);
 	big_pixel_user(img, 0x00FF0000);
+	raycasting(img);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
 }
@@ -215,14 +249,16 @@ int	deal_key(int keycode, t_data *img)
 int	main(void)
 {
 	t_data	img;
-	img.px = 100;
-	img.py = 50;
+	img.px = 22;
+	img.py = 12;
 	img.angle = 1;
 	img.cellsize = 100;
+	img.height = 1000;
+	img.width = 2000;
 
 	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, 2000, 1000, "cub3D");
-	img.img = mlx_new_image(img.mlx, 2000, 1000);
+	img.mlx_win = mlx_new_window(img.mlx, img.width, img.height, "cub3D");
+	img.img = mlx_new_image(img.mlx, img.width, img.height);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	make_image(&img);
 	mlx_hook(img.mlx_win, 2, 1L<<0, deal_key, &img);

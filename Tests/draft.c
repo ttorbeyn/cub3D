@@ -43,3 +43,35 @@ int show_ray(t_data *img)
 	}
 
 }
+
+float calculate_ray(t_data *img)
+{
+	float	x;
+	float	y;
+	float	dx;
+	float	dy;
+	int	stepx;
+	int	stepy;
+	int xstep;
+	int ystep;
+	float	xintercept;
+	float	yintercept;
+	float dist;
+
+
+	dx = img->cellsize - ((img->px / img->cellsize) - (int)(img->px / img->cellsize));
+	printf("dx:%f\n", dx);
+	//dy = 1 - (img->py - (int)img->py);
+	x = img->px + dx;
+	y =	img->py + (tanf(img->angle) * dx);
+	dist = dx / sinf(img->angle);
+	while (img->map[(int)x][(int)y] != 1)
+	{
+		x += 1;
+		y += tanf(img->angle);
+		dist += (1 / sinf(img->angle));
+	}
+	//dist = ft_dist(img, x, y);
+	return (dist);
+}
+*/
