@@ -38,6 +38,9 @@ typedef struct  s_data {
 	int			cellsize;
 	int			width;
 	int 		height;
+	double 		length;
+	double 		lengthx;
+	double 		lengthy;
 }               t_data;
 
 typedef struct	s_parsing

@@ -130,8 +130,8 @@ int	raycasting(t_data *img)
 */
 int	raycasting(t_data *img)
 {
-	double posX = img->px;  //position du joueur en x
-	double posY = img->py;	//position du joueur en y
+	double posX = img->px / img->cellsize;  //position du joueur en x
+	double posY = img->py / img->cellsize;	//position du joueur en y
 	double angle = img->angle; //angle du rayon
 	int mapX = (int)(posX); //case dans laquelle joueur se trouve en x
 	int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
@@ -140,23 +140,89 @@ int	raycasting(t_data *img)
 	double deltaDistX;
 	double deltaDistY;
 	double pi = 3.14159265359;
-	int stepX;
-	int stepY;
-	double length;
+	//int stepX;
+	//int stepY;
+	//double length;
+	float dx = 0;
+	float dy = 0;
+
+	printf("posX:%f\n", posX);
+	printf("posY:%f\n", posY);
+	printf("mapX:%d\n", mapX);
+	printf("angle:%f\n", angle);
+	if (angle > 0 && angle < pi/2)
+	{
+		//stepX = 1;
+		//stepY = 1;
+		dx = 1.0 - (posX - mapX);
+	}
+	else if (angle > pi/2 && angle < pi)
+	{
+		//stepX = -1;
+		//stepY = 1;
+		dx = posX - mapX;
+	}
+	else if (angle > pi && angle < ((3 * pi) / 2))
+	{
+		//stepX = -1;
+		//stepY = -1;
+		dx = posX - mapX;
+	}
+	else if (angle > ((3 * pi) / 2) && angle < (2 * pi))
+	{
+		//stepX = 1;
+		//stepY = -1;
+		dx = 1.0 - (posX - mapX);
+	}
+	printf("dx:%f\n", dx);
+	sideDistX = posX + dx;
+	printf("sx:%f\n", sideDistX);
+	sideDistY = posY + (tanf(angle) * dx);
+	printf("sy:%f\n", sideDistY);
+	deltaDistX = sideDistX - posX;
+	deltaDistY = sideDistY - posY;
+	img->lengthx = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
 
 	if (angle > 0 && angle < pi/2)
 	{
-		stepX = 1;
-		stepY = 1;
-		sideDistX = (mapX + 1.0 - posX);
-		sideDistY = (mapY + 1.0 - posY);
-		deltaDistX = posX + sideDistX;
-		deltaDistY = posY + sideDistY;
-		length = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+		//stepX = 1;
+		//stepY = 1;
+		dy = posY - mapY;
 	}
+	else if (angle > pi/2 && angle < pi)
+	{
+		//stepX = -1;
+		//stepY = 1;
+		dy = posY - mapY;
+	}
+	else if (angle > pi && angle < ((3 * pi) / 2))
+	{
+		//stepX = -1;
+		//stepY = -1;
+		dy = 1 - (posY - mapY);
+	}
+	else if (angle > ((3 * pi) / 2) && angle < (2 * pi))
+	{
+		//stepX = 1;
+		//stepY = -1;
+		dy = 1 - (posY - mapY);
+	}
+	printf("dy:%f\n", dy);
+	sideDistX = posX + (dy / tanf(angle));
+	printf("sx:%f\n", sideDistX);
+	sideDistY = posY + dy;
+	printf("sy:%f\n", sideDistY);
+	deltaDistX = sideDistX - posX;
+	deltaDistY = sideDistY - posY;
+	img->lengthy = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+	if (img->lengthx > img->lengthy)
+		img->length = img->lengthy;
 	else
-		length = 21.0;
-	printf("l:%f\n", length);
+		img->length = img->lengthx;
+	printf("lx:%f\n", img->lengthx);
+	printf("ly:%f\n", img->lengthy);
+
+	printf("l:%f\n", img->length);
 	return (0);
 }
 
@@ -169,7 +235,7 @@ int show_ray(t_data *img)
 	x = img->px;
 	y = img->py;
 	c = 0;
-	while (c < 50)
+	while (c < ((int)(img->length * img->cellsize)) && c < 500)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
 		x += (cosf(img->angle));
@@ -268,9 +334,9 @@ int	deal_key(int keycode, t_data *img)
 		img->angle -= 6.28;
 	if (img->angle < 0)
 		img->angle += 6.28;
-	printf("ang:%f\n", img->angle);
-	printf("px:%f\n", img->px);
-	printf("py:%f\n", img->py);
+	//printf("ang:%f\n", img->angle);
+	//printf("px:%f\n", img->px);
+	//printf("py:%f\n", img->py);
 	if (keycode == 53)
 		mlx_destroy_window(img->mlx, img->mlx_win);
 	make_image(img);
@@ -282,7 +348,7 @@ int	main(void)
 	t_data	img;
 	img.px = 22;
 	img.py = 12;
-	img.angle = 1;
+	img.angle = 4;
 	img.cellsize = 100;
 	img.height = 1000;
 	img.width = 2000;

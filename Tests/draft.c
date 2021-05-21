@@ -79,29 +79,41 @@ float calculate_ray(t_data *img)
 
 int	raycasting(t_data *img)
 {
-	double posX = img->px;  //position du joueur en x
-	double posY = img->py;	//position du joueur en y
+	double posX = img->px / img->cellsize;  //position du joueur en x
+	double posY = img->py / img->cellsize;	//position du joueur en y
 	double angle = img->angle; //angle du rayon
 	int mapX = (int)(posX); //case dans laquelle joueur se trouve en x
-	int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
+	//int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
 	double sideDistX;
 	double sideDistY;
 	double deltaDistX;
 	double deltaDistY;
 	double pi = 3.14159265359;
-	int stepX;
-	int stepY;
-	double length;
+	//int stepX;
+	//int stepY;
+	//double length;
+	float dx;
+
 
 	if (angle > 0 && angle < pi/2)
 	{
-		stepX = 1;
-		stepY = 1;
-		sideDistX = (mapX + 1.0 - posX);
-		sideDistY = (mapY + 1.0 - posY);
+		//stepX = 1;
+		//stepY = 1;
+		printf("posX:%f\n", posX);
+		printf("posY:%f\n", posY);
+		printf("mapX:%d\n", mapX);
+		dx = 1.0 - (posX - mapX);
+		printf("dx:%f\n", dx);
+		sideDistX = posX + dx;
+		printf("sx:%f\n", sideDistX);
+		sideDistY = posY + (tanf(angle) * dx);
+		printf("sy:%f\n", sideDistY);
+		deltaDistX = sideDistX - posX;
+		deltaDistY = sideDistY - posY;
+		img->length = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
 	}
-	deltaDistX = posX + sideDistX;
-	deltaDistY = posY + sideDistY;
-	length = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
-	printf("l:%f\n", length);
+	else
+		img->length = 1.0;
+	printf("l:%f\n", img->length);
+	return (0);
 }
