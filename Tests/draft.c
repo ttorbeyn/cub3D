@@ -2,6 +2,8 @@
 #include <math.h>
 #include "../cub3D.h"
 
+# define
+
 int show_ray(t_data *img)
 {
 	float	aTan = -1 / tanf(img->angle);
@@ -74,4 +76,32 @@ float calculate_ray(t_data *img)
 	//dist = ft_dist(img, x, y);
 	return (dist);
 }
-*/
+
+int	raycasting(t_data *img)
+{
+	double posX = img->px;  //position du joueur en x
+	double posY = img->py;	//position du joueur en y
+	double angle = img->angle; //angle du rayon
+	int mapX = (int)(posX); //case dans laquelle joueur se trouve en x
+	int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double pi = 3.14159265359;
+	int stepX;
+	int stepY;
+	double length;
+
+	if (angle > 0 && angle < pi/2)
+	{
+		stepX = 1;
+		stepY = 1;
+		sideDistX = (mapX + 1.0 - posX);
+		sideDistY = (mapY + 1.0 - posY);
+	}
+	deltaDistX = posX + sideDistX;
+	deltaDistY = posY + sideDistY;
+	length = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+	printf("l:%f\n", length);
+}

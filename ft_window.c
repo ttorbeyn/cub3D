@@ -37,13 +37,13 @@ int	big_pixel_user(t_data *img, int color)
 	}
 	return (0);
 }
-
+/*
 int	raycasting(t_data *img)
 {
-	double posX = img->px;
-	double posY = img->py;
-	double dirX = -1;
-	double dirY = 0;
+	double posX = img->px;  //position du joueur en x
+	double posY = img->py;	//position du joueur en y
+	double dirX = -1;	//direction de la camera en x
+	double dirY = 0;	//direction de la camera en x
 	double planeX = 0;
 	double planeY = 0.66;
 	int x = 0;
@@ -61,8 +61,8 @@ int	raycasting(t_data *img)
 	int hit = 0;
 	int side;
 
-	/*while (x < img->width)
-	{*/
+	while (x < img->width)
+	{
 
 	cameraX = (2 * x) / (img->width - 1);
 	//printf("%f\n", cameraX);
@@ -127,7 +127,38 @@ int	raycasting(t_data *img)
 	//}
 	return (0);
 }
+*/
+int	raycasting(t_data *img)
+{
+	double posX = img->px;  //position du joueur en x
+	double posY = img->py;	//position du joueur en y
+	double angle = img->angle; //angle du rayon
+	int mapX = (int)(posX); //case dans laquelle joueur se trouve en x
+	int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	double pi = 3.14159265359;
+	int stepX;
+	int stepY;
+	double length;
 
+	if (angle > 0 && angle < pi/2)
+	{
+		stepX = 1;
+		stepY = 1;
+		sideDistX = (mapX + 1.0 - posX);
+		sideDistY = (mapY + 1.0 - posY);
+		deltaDistX = posX + sideDistX;
+		deltaDistY = posY + sideDistY;
+		length = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+	}
+	else
+		length = 21.0;
+	printf("l:%f\n", length);
+	return (0);
+}
 
 int show_ray(t_data *img)
 {
@@ -214,7 +245,7 @@ int	deal_key(int keycode, t_data *img)
 
 	l = 10;
 	mlx_destroy_image(img->mlx, img->img);
-	img->img = mlx_new_image(img->mlx, 2000, 1000);
+	img->img = mlx_new_image(img->mlx, img->width, img->height);
 	if (keycode == 0)
 		img->px -= l;
 	if (keycode == 2)

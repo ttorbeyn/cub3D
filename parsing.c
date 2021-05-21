@@ -44,17 +44,8 @@ char	**ft_map(int fd)
 
 char	**ft_parsing(void)
 {
-//	int x;
 	int fd;
 
-//	x = 0;
 	fd = open("map.cub", O_RDONLY);
-	/*
-	while (map[x])
-	{
-		printf("%s\n", map[x]);
-		x++;
-	}
-	*/
 	return (ft_map(fd));
 }
