@@ -21,6 +21,38 @@
 
 # define BUFFER_SIZE 1000
 
+
+
+typedef struct	s_ray
+{
+	double posX;  //position du joueur en x
+	double posY;	//position du joueur en y
+	double angle;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	int	stepX;
+	int	stepY;
+	double dx;
+	double dy;
+}				t_ray;
+
+typedef struct	s_parsing
+{
+	int res_x;
+	int res_y;
+	char *text_no;
+	char *text_so;
+	char *text_we;
+	char *text_ea;
+	char *text_s;
+	char *text_f;
+	char *text_c;
+}				t_parsing;
+
 typedef struct  s_data {
 	void        *img;
 	char        *addr;
@@ -41,20 +73,8 @@ typedef struct  s_data {
 	double 		length;
 	double 		lengthx;
 	double 		lengthy;
+	t_ray		ray;
 }               t_data;
-
-typedef struct	s_parsing
-{
-	int res_x;
-	int res_y;
-	char *text_no;
-	char *text_so;
-	char *text_we;
-	char *text_ea;
-	char *text_s;
-	char *text_f;
-	char *text_c;
-}				t_parsing;
 
 size_t	ft_strlen(char *s);
 char	*ft_strdup(char *s1);

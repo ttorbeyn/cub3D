@@ -128,122 +128,132 @@ int	raycasting(t_data *img)
 	return (0);
 }
 */
+
+int	raycasting_vertical(t_data *img)
+{
+	double pi = 3.14159265359;
+	if (img->ray.angle > 0 && img->ray.angle < pi/2)
+	{
+		img->ray.stepX = 1;
+		img->ray.stepY = 1;
+		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
+	}
+	else if (img->ray.angle > pi/2 && img->ray.angle < pi)
+	{
+		img->ray.stepX = -1;
+		img->ray.stepY = 1;
+		img->ray.dx = img->ray.posX - img->ray.mapX;
+	}
+	else if (img->ray.angle > pi && img->ray.angle < ((3 * pi) / 2))
+	{
+		img->ray.stepX = -1;
+		img->ray.stepY = -1;
+		img->ray.dx = img->ray.posX - img->ray.mapX;
+	}
+	else if (img->ray.angle > ((3 * pi) / 2) && img->ray.angle < (2 * pi))
+	{
+		img->ray.stepX = 1;
+		img->ray.stepY = -1;
+		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
+	}
+	printf("dx:%f\n", img->ray.dx);
+	img->ray.sideDistX = img->ray.posX + img->ray.dx;
+	printf("sx:%f\n", img->ray.sideDistX);
+	img->ray.sideDistY = img->ray.posY + (tanf(img->ray.angle) * img->ray.dx);
+	printf("sy:%f\n", img->ray.sideDistY);
+	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
+	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+	img->lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+
+	return (0);
+}
+
+int	raycasting_horizontal(t_data *img)
+{
+	double pi = 3.14159265359;
+	if (img->ray.angle > 0 && img->ray.angle < pi/2)
+	{
+		img->ray.stepX = 1;
+		img->ray.stepY = 1;
+		img->ray.dy = img->ray.posY - img->ray.mapY;
+	}
+	else if (img->ray.angle > pi/2 && img->ray.angle < pi)
+	{
+		img->ray.stepX = -1;
+		img->ray.stepY = 1;
+		img->ray.dy = img->ray.posY - img->ray.mapY;
+	}
+	else if (img->ray.angle > pi && img->ray.angle < ((3 * pi) / 2))
+	{
+		img->ray.stepX = -1;
+		img->ray.stepY = -1;
+		img->ray.dy = 1 - (img->ray.posY - img->ray.mapY);
+	}
+	else if (img->ray.angle > ((3 * pi) / 2) && img->ray.angle < (2 * pi))
+	{
+		img->ray.stepX = 1;
+		img->ray.stepY = -1;
+		img->ray.dy = 1 - (img->ray.posY - img->ray.mapY);
+	}
+	printf("dy:%f\n", img->ray.dy);
+	img->ray.sideDistX = img->ray.posX + (img->ray.dy / tanf(img->ray.angle));
+	printf("sx:%f\n", img->ray.sideDistX);
+	img->ray.sideDistY = img->ray.posY + img->ray.dy;
+	printf("sy:%f\n", img->ray.sideDistY);
+	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
+	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+	img->lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+	return (0);
+}
+
 int	raycasting(t_data *img)
 {
-	double posX = img->px / img->cellsize;  //position du joueur en x
-	double posY = img->py / img->cellsize;	//position du joueur en y
-	double angle = img->angle; //angle du rayon
-	int mapX = (int)(posX); //case dans laquelle joueur se trouve en x
-	int mapY = (int)(posY);	//case dans laquelle joueur se trouve en y
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double pi = 3.14159265359;
-	//int stepX;
-	//int stepY;
-	//double length;
-	float dx = 0;
-	float dy = 0;
+	img->ray.posX = img->px / img->cellsize;  //position du joueur en x
+	img->ray.posY = img->py / img->cellsize;	//position du joueur en y
+	img->ray.angle = img->angle; //angle du rayon
+	img->ray.mapX = (int)(img->ray.posX); //case dans laquelle joueur se trouve en x
+	img->ray.mapY = (int)(img->ray.posY);	//case dans laquelle joueur se trouve en y
 
-	printf("posX:%f\n", posX);
-	printf("posY:%f\n", posY);
-	printf("mapX:%d\n", mapX);
-	printf("angle:%f\n", angle);
-	if (angle > 0 && angle < pi/2)
-	{
-		//stepX = 1;
-		//stepY = 1;
-		dx = 1.0 - (posX - mapX);
-	}
-	else if (angle > pi/2 && angle < pi)
-	{
-		//stepX = -1;
-		//stepY = 1;
-		dx = posX - mapX;
-	}
-	else if (angle > pi && angle < ((3 * pi) / 2))
-	{
-		//stepX = -1;
-		//stepY = -1;
-		dx = posX - mapX;
-	}
-	else if (angle > ((3 * pi) / 2) && angle < (2 * pi))
-	{
-		//stepX = 1;
-		//stepY = -1;
-		dx = 1.0 - (posX - mapX);
-	}
-	printf("dx:%f\n", dx);
-	sideDistX = posX + dx;
-	printf("sx:%f\n", sideDistX);
-	sideDistY = posY + (tanf(angle) * dx);
-	printf("sy:%f\n", sideDistY);
-	deltaDistX = sideDistX - posX;
-	deltaDistY = sideDistY - posY;
-	img->lengthx = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+	raycasting_vertical(img);
+	raycasting_horizontal(img);
+	printf("posX:%f\n", img->ray.posX);
+	printf("posY:%f\n", img->ray.posY);
+	printf("mapX:%d\n", img->ray.mapX);
+	printf("angle:%f\n", img->ray.angle);
 
-	if (angle > 0 && angle < pi/2)
-	{
-		//stepX = 1;
-		//stepY = 1;
-		dy = posY - mapY;
-	}
-	else if (angle > pi/2 && angle < pi)
-	{
-		//stepX = -1;
-		//stepY = 1;
-		dy = posY - mapY;
-	}
-	else if (angle > pi && angle < ((3 * pi) / 2))
-	{
-		//stepX = -1;
-		//stepY = -1;
-		dy = 1 - (posY - mapY);
-	}
-	else if (angle > ((3 * pi) / 2) && angle < (2 * pi))
-	{
-		//stepX = 1;
-		//stepY = -1;
-		dy = 1 - (posY - mapY);
-	}
-	printf("dy:%f\n", dy);
-	sideDistX = posX + (dy / tanf(angle));
-	printf("sx:%f\n", sideDistX);
-	sideDistY = posY + dy;
-	printf("sy:%f\n", sideDistY);
-	deltaDistX = sideDistX - posX;
-	deltaDistY = sideDistY - posY;
-	img->lengthy = sqrtf((deltaDistX * deltaDistX) + (deltaDistY * deltaDistY));
+	img->length = img->lengthx;
 	if (img->lengthx > img->lengthy)
 		img->length = img->lengthy;
-	else
-		img->length = img->lengthx;
 	printf("lx:%f\n", img->lengthx);
 	printf("ly:%f\n", img->lengthy);
-
-	printf("l:%f\n", img->length);
+	//img->length = ft_arrondi(img->length);
+	printf("length:%f\n", img->length);
 	return (0);
 }
 
 int show_ray(t_data *img)
 {
-	int c;
-	float x;
-	float y;
+	double c;
+	double x;
+	double y;
 
 	x = img->px;
 	y = img->py;
 	c = 0;
-	while (c < ((int)(img->length * img->cellsize)) && c < 500)
+	//while (x != (img->ray.sideDistX * 100) && y != (img->ray.sideDistY * 100))
+	while (c <= (img->length * img->cellsize) && c < 150)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
 		x += (cosf(img->angle));
 		y -= (sinf(img->angle));
-		c++;
+		c += 1;
+
 	}
+	printf("c:%f\n", c);
 	return (0);
 }
+
+
 
 int	big_pixel_map(t_data *img, int color, int i, int j)
 {
@@ -298,9 +308,9 @@ int	minimap(t_data *img)
 int	make_image(t_data *img)
 {
 	minimap(img);
+	raycasting(img);
 	show_ray(img);
 	big_pixel_user(img, 0x00FF0000);
-	raycasting(img);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
 }
