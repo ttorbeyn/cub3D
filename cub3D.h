@@ -27,6 +27,8 @@ typedef struct	s_ray
 {
 	double posX;  //position du joueur en x
 	double posY;	//position du joueur en y
+	int newPosX;
+	int newPosY;
 	double angle;
 	int mapX;
 	int mapY;
@@ -57,10 +59,10 @@ typedef struct  s_data {
 	void        *img;
 	char        *addr;
 	int         bits_per_pixel;
-	int         line_length;
-	int         endian;
-	float		px;
-	float		py;
+	int			line_length;
+	int			endian;
+	double		px;
+	double		py;
 	int			dx;
 	int			dy;
 	float		angle;

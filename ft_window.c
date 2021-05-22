@@ -18,9 +18,9 @@ int	big_pixel_user(t_data *img, int color)
 	int j;
 	int l;
 
-	i = img->px - 2;
-	j = img->py + 2;
-	l = 5;
+	l = img->cellsize / 20;
+	i = img->px - (l / 2);
+	j = img->py + (l / 2);
 	x = 0;
 	while (x < l)
 	{
@@ -132,6 +132,8 @@ int	raycasting(t_data *img)
 int	raycasting_vertical(t_data *img)
 {
 	double pi = 3.14159265359;
+	//int c = 0;
+
 	if (img->ray.angle > 0 && img->ray.angle < pi/2)
 	{
 		img->ray.stepX = 1;
@@ -156,13 +158,32 @@ int	raycasting_vertical(t_data *img)
 		img->ray.stepY = -1;
 		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
 	}
-	printf("dx:%f\n", img->ray.dx);
+	//printf("dx:%f\n", img->ray.dx);
 	img->ray.sideDistX = img->ray.posX + img->ray.dx;
 	printf("sx:%f\n", img->ray.sideDistX);
 	img->ray.sideDistY = img->ray.posY + (tanf(img->ray.angle) * img->ray.dx);
 	printf("sy:%f\n", img->ray.sideDistY);
 	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
+	printf("dx:%f\n", img->ray.deltaDistX);
 	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+	printf("dy:%f\n", img->ray.deltaDistY);
+	printf("idx:%d\n", (int)img->ray.deltaDistX);
+	printf("idy:%d\n", (int)img->ray.deltaDistY);
+	img->ray.newPosX = (int)(img->ray.posX + img->ray.sideDistX);
+	img->ray.newPosY = (int)(img->ray.posX + img->ray.sideDistX);
+	printf("nidx:%d\n", img->ray.newPosX);
+	printf("nidy:%d\n", img->ray.newPosY);
+	/*while (img->map[(int)img->ray.ne][(int)img->ray.sideDistY] != '1' && c < 8)
+	{
+		img->ray.sideDistX += img->ray.posX + 1.0;
+		img->ray.sideDistY += img->ray.posY + tanf(img->ray.angle);
+		img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
+		img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+		img->lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+		c++;
+	}*/
+	printf("sx:%f\n", img->ray.sideDistX);
+	printf("sy:%f\n", img->ray.sideDistY);
 	img->lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
 
 	return (0);
@@ -171,6 +192,8 @@ int	raycasting_vertical(t_data *img)
 int	raycasting_horizontal(t_data *img)
 {
 	double pi = 3.14159265359;
+	//int c = 0;
+
 	if (img->ray.angle > 0 && img->ray.angle < pi/2)
 	{
 		img->ray.stepX = 1;
@@ -195,13 +218,32 @@ int	raycasting_horizontal(t_data *img)
 		img->ray.stepY = -1;
 		img->ray.dy = 1 - (img->ray.posY - img->ray.mapY);
 	}
-	printf("dy:%f\n", img->ray.dy);
+	//printf("dy:%f\n", img->ray.dy);
 	img->ray.sideDistX = img->ray.posX + (img->ray.dy / tanf(img->ray.angle));
-	printf("sx:%f\n", img->ray.sideDistX);
+	//printf("sx:%f\n", img->ray.sideDistX);
 	img->ray.sideDistY = img->ray.posY + img->ray.dy;
-	printf("sy:%f\n", img->ray.sideDistY);
+	//printf("sy:%f\n", img->ray.sideDistY);
 	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
 	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+	//printf("sx:%d\n", (int)img->ray.sideDistX);
+	//printf("sy:%d\n", (int)img->ray.sideDistY);
+	//printf("dx:%d\n", (int)img->ray.deltaDistX);
+	//printf("dy:%d\n", (int)img->ray.deltaDistY);
+
+	//printf("map[x][y]:%c\n", img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY]);
+	/*while (img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY] != '1' && c < 8)
+	{
+		img->ray.sideDistX = img->ray.posX + (1.0 / tanf(img->angle));
+		//printf("sx:%f\n", img->ray.sideDistX);
+		img->ray.sideDistY = img->ray.posY + img->ray.stepY;
+		//printf("sy:%f\n", img->ray.sideDistY);
+		img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
+		img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
+		img->lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+		c++;
+	}*/
+	//printf("sx:%f\n", img->ray.sideDistX);
+	//printf("sy:%f\n", img->ray.sideDistY);
 	img->lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
 	return (0);
 }
@@ -213,6 +255,8 @@ int	raycasting(t_data *img)
 	img->ray.angle = img->angle; //angle du rayon
 	img->ray.mapX = (int)(img->ray.posX); //case dans laquelle joueur se trouve en x
 	img->ray.mapY = (int)(img->ray.posY);	//case dans laquelle joueur se trouve en y
+	img->ray.dx = 0;
+	img->ray.dy = 0;
 
 	raycasting_vertical(img);
 	raycasting_horizontal(img);
@@ -240,14 +284,13 @@ int show_ray(t_data *img)
 	x = img->px;
 	y = img->py;
 	c = 0;
-	//while (x != (img->ray.sideDistX * 100) && y != (img->ray.sideDistY * 100))
-	while (c <= (img->length * img->cellsize) && c < 150)
+
+	while (c <= (img->length * img->cellsize) && c < 1000)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
 		x += (cosf(img->angle));
 		y -= (sinf(img->angle));
 		c += 1;
-
 	}
 	printf("c:%f\n", c);
 	return (0);
@@ -288,7 +331,6 @@ int	minimap(t_data *img)
 	int y;
 
 	x = 0;
-	img->map = ft_parsing();
 	while (img->map[x])
 	{
 		y = 0;
@@ -319,7 +361,7 @@ int	deal_key(int keycode, t_data *img)
 {
 	int l;
 
-	l = 10;
+	l = img->cellsize / 10;
 	mlx_destroy_image(img->mlx, img->img);
 	img->img = mlx_new_image(img->mlx, img->width, img->height);
 	if (keycode == 0)
@@ -348,7 +390,10 @@ int	deal_key(int keycode, t_data *img)
 	//printf("px:%f\n", img->px);
 	//printf("py:%f\n", img->py);
 	if (keycode == 53)
+	{
 		mlx_destroy_window(img->mlx, img->mlx_win);
+		exit (0);
+	}
 	make_image(img);
 	return (0);
 }
@@ -356,12 +401,13 @@ int	deal_key(int keycode, t_data *img)
 int	main(void)
 {
 	t_data	img;
-	img.px = 22;
-	img.py = 12;
-	img.angle = 4;
+	img.px = 122;
+	img.py = 112;
+	img.angle = 1;
 	img.cellsize = 100;
 	img.height = 1000;
 	img.width = 2000;
+	img.map = ft_parsing();
 
 	img.mlx = mlx_init();
 	img.mlx_win = mlx_new_window(img.mlx, img.width, img.height, "cub3D");
