@@ -19,8 +19,16 @@
 
 # include <limits.h>
 
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 10
+# define PI 3.14159265359
 
+# define PLAYER_FORWARD 13
+# define PLAYER_BACK 1
+# define PLAYER_LEFT 0
+# define PLAYER_RIGHT 2
+# define CAMERA_LEFT 123
+# define CAMERA_RIGHT 124
+# define ESC 53
 
 
 typedef struct	s_ray

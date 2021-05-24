@@ -117,3 +117,95 @@ int	raycasting(t_data *img)
 	printf("l:%f\n", img->length);
 	return (0);
 }
+
+/*
+int	raycasting(t_data *img)
+{
+	double posX = img->px;  //position du joueur en x
+	double posY = img->py;	//position du joueur en y
+	double dirX = -1;	//direction de la camera en x
+	double dirY = 0;	//direction de la camera en x
+	double planeX = 0;
+	double planeY = 0.66;
+	int x = 0;
+	double cameraX;
+	double raydirX;
+	double raydirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	int stepX;
+	int stepY;
+	int hit = 0;
+	int side;
+
+	while (x < img->width)
+	{
+
+	cameraX = (2 * x) / (img->width - 1);
+	//printf("%f\n", cameraX);
+	raydirX = dirX + planeX * cameraX;
+	//printf("%f\n", raydirX);
+	raydirY = dirY + planeY * cameraX;
+	mapX = (int)(posX);
+	//printf("%d\n", mapX);
+	mapY = (int)(posY);
+	if (raydirX == 0)
+		deltaDistX = 0;
+	else
+		deltaDistX = fabs(1.0 / raydirX);
+	//printf("%f\n", deltaDistX);
+	if (raydirY == 0)
+		deltaDistY = 0;
+	else
+		deltaDistY = fabs(1.0 / raydirY);
+	//printf("%f\n", deltaDistY);
+	if (raydirX < 0)
+	{
+		stepX = -1;
+		sideDistX = (posX - mapX) * deltaDistX;
+	}
+	else
+	{
+		stepX = 1;
+		printf("%d\n", mapX);
+		sideDistX = (mapX + 1.0 - posX) * deltaDistX;
+	}
+	printf("%f\n", sideDistX);
+	if (raydirY < 0)
+	{
+		stepY = -1;
+		sideDistY = (posY - mapY) * deltaDistY;
+	}
+	else
+	{
+		stepY = 1;
+		sideDistY = (mapY + 1.0 - posY) * deltaDistY;
+	}
+	printf("%f\n", sideDistY);
+	while (hit == 0)
+	{
+		if (sideDistX < sideDistY)
+		{
+			sideDistX += deltaDistX;
+			mapX += stepX;
+			side = 0;
+		}
+		else
+		{
+			sideDistY += deltaDistY;
+			mapY += stepY;
+			side = 1;
+		}
+		if (img->map[mapX][mapY] == 1)
+			hit = 1;
+	}
+	printf ("hit:%d", hit);
+		//x++;
+	//}
+	return (0);
+}
+*/

@@ -21,7 +21,7 @@ FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 
 # SRC				=				window.c
 
-SRC				=				ft_window.c \
+SRC				=				ft_raycasting.c \
 								parsing.c \
 								utils/get_next_line.c \
                                 utils/get_next_line_utils.c
