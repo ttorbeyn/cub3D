@@ -48,6 +48,9 @@ typedef struct	s_ray
 	int	stepY;
 	double dx;
 	double dy;
+	double lengthx;
+	double lengthy;
+	double length;
 }				t_ray;
 
 typedef struct	s_parsing

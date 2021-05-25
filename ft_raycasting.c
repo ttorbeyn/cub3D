@@ -41,35 +41,35 @@ int	raycasting_vertical(t_data *img)
 {
 	int c = 0;
 
-	if ((img->ray.angle > 0 && img->ray.angle < PI/2) ||
-		(img->ray.angle > ((3 * PI) / 2) && img->ray.angle < (2 * PI)))
-	{
-		img->ray.stepX = 1;
-		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
-	}
-	else if ((img->ray.angle > PI/2 && img->ray.angle < PI) ||
-				(img->ray.angle > PI && img->ray.angle < ((3 * PI) / 2)))
+	if ((img->ray.angle > PI/2 && img->ray.angle < ((3 * PI) / 2)))
 	{
 		img->ray.stepX = -1;
 		img->ray.dx = img->ray.posX - img->ray.mapX;
 	}
+	else if ((img->ray.angle < PI/2) || (img->ray.angle > ((3 * PI) / 2)))
+	{
+		img->ray.stepX = 1;
+		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
+	}
 	img->ray.sideDistX = img->ray.posX + img->ray.dx * img->ray.stepX;
 	if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2))
 		img->ray.sideDistY = img->ray.posY + (tanf(img->ray.angle) * img->ray.dx * img->ray.stepX);
+	while (c < 7 && img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0 &&
+			img->ray.sideDistX <= 10 && img->ray.sideDistY <= 8)
+	{
+		if (img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY] != '1')
+		{
+			img->ray.sideDistX += img->ray.stepX;
+			if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2))
+				img->ray.sideDistY += tanf(img->ray.angle) * img->ray.stepX;
+			c++;
+		}
+		else
+			c = 7;
+	}
 	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
 	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-	while (img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY] != '1' && c++ < 7 &&
-			(int)img->ray.sideDistX >= 0 && (int)img->ray.sideDistY >= 0 &&
-				(int)img->ray.sideDistX <= 10 && (int)img->ray.sideDistY <= 8)
-	{
-		img->ray.sideDistX += img->ray.stepX;
-		if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2))
-			img->ray.sideDistY += tanf(img->ray.angle) * img->ray.stepX;
-		img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
-		img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-	}
-	img->lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
-	printf("lengthx	:%f\n", img->lengthx);
+	img->ray.lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
 	return (0);
 }
 
@@ -77,14 +77,12 @@ int	raycasting_horizontal(t_data *img)
 {
 	int c = 0;
 
-	if ((img->ray.angle > 0 && img->ray.angle < PI/2) ||
-			(img->ray.angle > PI/2 && img->ray.angle < PI))
+	if ((img->ray.angle > 0 && img->ray.angle < PI))
 	{
 		img->ray.stepY = 1;
 		img->ray.dy = 1.0 - (img->ray.posY - img->ray.mapY);
 	}
-	else if ((img->ray.angle > PI && img->ray.angle < ((3 * PI) / 2)) ||
-				(img->ray.angle > ((3 * PI) / 2) && img->ray.angle < (2 * PI)))
+	else if ((img->ray.angle > PI && img->ray.angle < (2 * PI)))
 	{
 		img->ray.stepY = -1;
 		img->ray.dy = img->ray.posY - img->ray.mapY;
@@ -92,31 +90,23 @@ int	raycasting_horizontal(t_data *img)
 	if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2) && tanf(img->ray.angle) != 0)
 		img->ray.sideDistX = img->ray.posX + ((img->ray.dy * img->ray.stepY) / tanf(img->ray.angle));
 	img->ray.sideDistY = img->ray.posY + (img->ray.dy * img->ray.stepY);
+	while (c < 7 && img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0 &&
+			img->ray.sideDistX <= 8 && img->ray.sideDistY <= 7)
+	{
+		if (img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY] != '1')
+		{
+			if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2) && tanf(img->ray.angle) != 0)
+				img->ray.sideDistX += img->ray.stepY / tanf(img->ray.angle);
+			img->ray.sideDistY += img->ray.stepY;
+
+			c++;
+		}
+		else
+			c = 7;
+	}
 	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
 	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-	printf("ray.dy	:%f\n", img->ray.dy);
-	printf("sideDistX|%d|	:%f\n", c, img->ray.sideDistX);
-	printf("sideDistY|%d|	:%f\n", c, img->ray.sideDistY);
-	printf("deltaDistX|%d|	:%f\n", c, img->ray.deltaDistX);
-	printf("deltaDistY|%d|	:%f\n", c, img->ray.deltaDistY);
-
-	while (img->map[(int)img->ray.sideDistX][(int)img->ray.sideDistY] != '1' && c++ < 7 &&
-			img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0 &&
-		   		img->ray.sideDistX <= 8 && img->ray.sideDistY <= 7)
-	{
-		if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2) && tanf(img->ray.angle) != 0)
-			img->ray.sideDistX += img->ray.stepY / tanf(img->ray.angle);
-		img->ray.sideDistY += img->ray.stepY;
-		img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
-		img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-		printf("sideDistX|%d|:%f\n", c, img->ray.sideDistX);
-		printf("sideDistY|%d|:%f\n", c, img->ray.sideDistY);
-		printf("deltaDistX|%d|:%f\n", c, img->ray.deltaDistX);
-		printf("deltaDistY|%d|:%f\n", c, img->ray.deltaDistY);
-		printf("coucou\n");
-	}
-
-	img->lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+	img->ray.lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
 	return (0);
 }
 
@@ -130,14 +120,11 @@ int	raycasting(t_data *img)
 	img->ray.dx = 0;
 	img->ray.dy = 0;
 
-	//raycasting_vertical(img);
+	raycasting_vertical(img);
 	raycasting_horizontal(img);
-	img->length = img->lengthy;
-	//img->length = 5.0;
-	/*if (img->lengthx > img->lengthy)
-		img->length = img->lengthy;*/
-	printf("posX:%f\n", img->ray.posX);
-	printf("posY:%f\n", img->ray.posY);
+	img->ray.length = img->ray.lengthx;
+	if (img->ray.lengthx > img->ray.lengthy)
+		img->ray.length = img->ray.lengthy;
 	return (0);
 }
 
@@ -150,13 +137,12 @@ int show_ray(t_data *img)
 	x = img->px;
 	y = img->py;
 	c = 0;
-	while (c <= (img->length * img->cellsize) && c < 800 &&
+	while (c <= (img->ray.length * img->cellsize) && c < 800 &&
 			x > 0 && y > 0 && x < img->width && y < img->height)
 	{
 		my_mlx_pixel_put(img, x, y, 0x0000FF00);
 		x += (cosf(img->angle));
 		y += (sinf(img->angle));
-		//printf("Coord:(%f, %f)\n", x, y);
 		c += 1;
 	}
 	printf("c: %f\n", c);
@@ -272,7 +258,7 @@ int	main(void)
 	t_data	img;
 	img.px = 450;
 	img.py = 350;
-	img.angle = 1;
+	img.angle = PI/2;
 	img.cellsize = 100;
 	img.height = 1000;
 	img.width = 2000;
