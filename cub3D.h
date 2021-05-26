@@ -51,6 +51,8 @@ typedef struct	s_ray
 	double lengthx;
 	double lengthy;
 	double length;
+	int x;
+	int y;
 }				t_ray;
 
 typedef struct	s_parsing

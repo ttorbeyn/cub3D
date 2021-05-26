@@ -37,6 +37,26 @@ int	big_pixel_user(t_data *img, int color)
 	return (0);
 }
 
+int show_ray(t_data *img, int color)
+{
+	double c;
+	double x;
+	double y;
+
+	x = img->px;
+	y = img->py;
+	c = 0;
+	while (c <= (img->ray.length * img->cellsize) && c < 800 &&
+		   x > 0 && y > 0 && x < img->width && y < img->height)
+	{
+		my_mlx_pixel_put(img, x, y, color);
+		x += (cosf(img->ray.angle));
+		y += (sinf(img->ray.angle));
+		c += 1;
+	}
+	return (0);
+}
+
 int	raycasting_vertical(t_data *img)
 {
 	int c = 0;
@@ -99,14 +119,6 @@ int	raycasting_horizontal(t_data *img)
 	if (!(img->ray.angle == PI/2 || img->ray.angle == 3*PI/2) && tanf(img->ray.angle) != 0)
 		img->ray.sideDistX = img->ray.posX + ((img->ray.dy * img->ray.stepY) / tanf(img->ray.angle));
 	img->ray.sideDistY = img->ray.posY + (img->ray.dy * img->ray.stepY);
-
-
-	printf("sideDistX|%d|:%f\n", c, img->ray.sideDistX);
-	printf("sideDistY|%d|:%f\n", c, img->ray.sideDistY);
-	printf("deltaDistX|%d|:%f\n", c, img->ray.deltaDistX);
-	printf("deltaDistY|%d|:%f\n", c, img->ray.deltaDistY);
-	//if ((img->ray.angle > PI && img->ray.angle < (2 * PI)))
-	//	img->ray.sideDistY++;
 	while (c < 7 && img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0 &&
 			img->ray.sideDistX <= 8 && img->ray.sideDistY <= 8)
 	{
@@ -123,16 +135,31 @@ int	raycasting_horizontal(t_data *img)
 		}
 		else
 			c = 7;
-		printf("sideDistX|%d|:%f\n", c, img->ray.sideDistX);
-		printf("sideDistY|%d|:%f\n", c, img->ray.sideDistY);
-		printf("deltaDistX|%d|:%f\n", c, img->ray.deltaDistX);
-		printf("deltaDistY|%d|:%f\n", c, img->ray.deltaDistY);
 	}
 	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
 	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
 	img->ray.lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
 	return (0);
 }
+
+int print_3D(t_data *img)
+{
+	double len = img->height / img->ray.length;
+	if (len >= img->height)
+		len = img->height;
+	img->ray.y = (img->height / 2) - (len / 2);
+
+
+	while (len > 0)
+	{
+		my_mlx_pixel_put(img, img->ray.x, img->ray.y, 0x007F7F7F);
+		len--;
+		img->ray.y++;
+	}
+	img->ray.x++;
+	return (0);
+}
+
 
 int	raycasting(t_data *img)
 {
@@ -143,35 +170,32 @@ int	raycasting(t_data *img)
 	img->ray.mapY = (int)(img->ray.posY);	//case dans laquelle joueur se trouve en y
 	img->ray.dx = 0;
 	img->ray.dy = 0;
+	img->ray.x = 0;
+	img->ray.angle = img->angle - (PI / 3);
+	int x = 0;
 
+	while (x < img->width)
+	{
+		raycasting_vertical(img);
+		raycasting_horizontal(img);
+		img->ray.length = img->ray.lengthx;
+		if (img->ray.lengthx > img->ray.lengthy)
+			img->ray.length = img->ray.lengthy;
+		img->ray.angle += (PI / 3) / (img->width / 2);
+		print_3D(img);
+		show_ray(img, 0x0000FF00);
+		x++;
+	}
+	img->ray.angle = img->angle;
 	raycasting_vertical(img);
 	raycasting_horizontal(img);
 	img->ray.length = img->ray.lengthx;
 	if (img->ray.lengthx > img->ray.lengthy)
 		img->ray.length = img->ray.lengthy;
+	show_ray(img, 0xFF0000);
 	return (0);
 }
 
-int show_ray(t_data *img)
-{
-	double c;
-	double x;
-	double y;
-
-	x = img->px;
-	y = img->py;
-	c = 0;
-	while (c <= (img->ray.length * img->cellsize) && c < 800 &&
-			x > 0 && y > 0 && x < img->width && y < img->height)
-	{
-		my_mlx_pixel_put(img, x, y, 0x0000FF00);
-		x += (cosf(img->angle));
-		y += (sinf(img->angle));
-		c += 1;
-	}
-	printf("c: %f\n", c);
-	return (0);
-}
 
 int	big_pixel_map(t_data *img, int color, int i, int j)
 {
@@ -245,9 +269,8 @@ int	minimap(t_data *img)
 int	make_image(t_data *img)
 {
 	minimap(img);
-	print_map(img);
 	raycasting(img);
-	show_ray(img);
+
 	big_pixel_user(img, 0x00FF0000);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
@@ -288,7 +311,6 @@ int	deal_key(int keycode, t_data *img)
 		img->angle -= (2 * PI);
 	if (img->angle < 0)
 		img->angle += (2 * PI);
-	printf("angle : |%f|\n", img->angle);
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(img->mlx, img->mlx_win);
@@ -298,13 +320,15 @@ int	deal_key(int keycode, t_data *img)
 	return (0);
 }
 
+
+
 int	main(void)
 {
 	t_data	img;
-	img.px = 450;
-	img.py = 350;
+	img.px = 45;
+	img.py = 35;
 	img.angle = PI/2;
-	img.cellsize = 100;
+	img.cellsize = 10;
 	img.height = 1000;
 	img.width = 2000;
 	img.map = ft_parsing();
