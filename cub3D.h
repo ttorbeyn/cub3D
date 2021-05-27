@@ -1,7 +1,6 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-
 //open, close
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -70,9 +69,9 @@ typedef struct	s_parsing
 typedef struct  s_data {
 	void        *img;
 	char        *addr;
-	int         bits_per_pixel;
+	int         bpp;
 	int			line_length;
-	int			endian;
+	int			end;
 	double		px;
 	double		py;
 	int			dx;
@@ -96,6 +95,7 @@ typedef struct  s_data {
 //ft_cub3D
 int	make_image(t_data *img);
 //ft_key
+double	check_overflow_angle(double angle);
 int	deal_key(int keycode, t_data *img);
 //ft_raycasting
 int	raycasting(t_data *img);
@@ -109,7 +109,6 @@ char	**ft_parsing(void);
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
 int		big_pixel(t_data *img, int color, int i, int j, int l);
-
 
 //get_next_line
 int	get_next_line(int fd, char **line);

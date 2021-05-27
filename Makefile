@@ -22,7 +22,7 @@ SRC				=				ft_cub3D.c \
 								ft_mlx_utils.c \
 								ft_key.c \
 								ft_draw.c \
-								parsing.c \
+								ft_parsing.c \
 								gnl/get_next_line.c \
                                 gnl/get_next_line_utils.c
 

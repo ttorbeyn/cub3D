@@ -1,8 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_key.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/27 18:57:41 by ttorbeyn          #+#    #+#             */
+/*   Updated: 2021/05/27 18:57:42 by ttorbeyn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
+
+double	check_overflow_angle(double angle)
+{
+	if (angle > (2 * PI))
+		angle -= (2 * PI);
+	if (angle < 0)
+		angle += (2 * PI);
+	return (angle);
+}
 
 int	deal_key(int keycode, t_data *img)
 {
-	int l;
+	int	l;
 
 	l = img->cellsize / 10;
 	mlx_destroy_image(img->mlx, img->img);
@@ -31,10 +52,7 @@ int	deal_key(int keycode, t_data *img)
 		img->angle += 0.1;
 	if (keycode == CAMERA_LEFT)
 		img->angle -= 0.1;
-	if (img->angle > (2 * PI))
-		img->angle -= (2 * PI);
-	if (img->angle < 0)
-		img->angle += (2 * PI);
+	img->angle = check_overflow_angle(img->angle);
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(img->mlx, img->mlx_win);
