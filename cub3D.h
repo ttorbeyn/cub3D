@@ -35,8 +35,6 @@ typedef struct	s_ray
 {
 	double posX;  //position du joueur en x
 	double posY;	//position du joueur en y
-	int newPosX;
-	int newPosY;
 	double angle;
 	int mapX;
 	int mapY;
@@ -51,6 +49,7 @@ typedef struct	s_ray
 	double lengthx;
 	double lengthy;
 	double length;
+	double lengthf;
 	int x;
 	int y;
 }				t_ray;
@@ -88,15 +87,36 @@ typedef struct  s_data {
 	double 		length;
 	double 		lengthx;
 	double 		lengthy;
+	int			userheight;
 	t_ray		ray;
+
 }               t_data;
 
+
+//ft_cub3D
+int	make_image(t_data *img);
+//ft_key
+int	deal_key(int keycode, t_data *img);
+//ft_raycasting
+int	raycasting(t_data *img);
+//ft_draw
+int draw_ray(t_data *img, int color);
+int draw_3D(t_data *img, int color);
+int	draw_minimap(t_data *img);
+int print_minimap(t_data *img);
+//parsing
+char	**ft_parsing(void);
+//ft_mlx_utils
+void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
+int		big_pixel(t_data *img, int color, int i, int j, int l);
+
+
+//get_next_line
+int	get_next_line(int fd, char **line);
+//get_next_line_utils
 size_t	ft_strlen(char *s);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
-int	get_next_line(int fd, char **line);
-
-char	**ft_parsing(void);
 
 
 #endif
