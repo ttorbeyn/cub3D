@@ -53,6 +53,17 @@ typedef struct	s_ray
 	int y;
 }				t_ray;
 
+typedef struct	s_keys
+{
+	int w;
+	int a;
+	int s;
+	int d;
+	int l;
+	int r;
+	int e;
+}				t_keys;
+
 typedef struct	s_parsing
 {
 	int res_x;
@@ -88,6 +99,7 @@ typedef struct  s_data {
 	double 		lengthy;
 	int			userheight;
 	t_ray		ray;
+	t_keys		key;
 
 }               t_data;
 
@@ -95,8 +107,9 @@ typedef struct  s_data {
 //ft_cub3D
 int	make_image(t_data *img);
 //ft_key
-double	check_overflow_angle(double angle);
-int	deal_key(int keycode, t_data *img);
+int	deal_key(t_data *img);
+int	key_pressed(int keycode, t_data *img);
+int	key_released(int keycode, t_data *img);
 //ft_raycasting
 int	raycasting(t_data *img);
 //ft_draw
@@ -109,6 +122,8 @@ char	**ft_parsing(void);
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
 int		big_pixel(t_data *img, int color, int i, int j, int l);
+//ft_utils.c
+double	check_overflow_angle(double angle);
 
 //get_next_line
 int	get_next_line(int fd, char **line);

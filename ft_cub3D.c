@@ -34,7 +34,15 @@ int	make_image(t_data *img)
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
 }
-
+/*
+int event(t_data *img)
+{
+	mlx_hook(img->mlx_win, 2, 1L << 0, key_pressed, img);
+	mlx_hook(img->mlx_win, 3, 1L << 1, key_released, img);
+	mlx_loop_hook(img->mlx_win, make_image, img);
+	return (0);
+}
+*/
 int	main(void)
 {
 	t_data	img;
@@ -45,6 +53,10 @@ int	main(void)
 	img.img = mlx_new_image(img.mlx, img.width, img.height);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.end);
 	make_image(&img);
-	mlx_hook(img.mlx_win, 2, 1L << 0, deal_key, &img);
+	//event(&img);
+	//mlx_hook(img.mlx_win, 2, 1L << 0, deal_key, &img);
+	mlx_hook(img.mlx_win, 2, 1L << 0, key_pressed, &img);
+	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
+	mlx_loop_hook(img.mlx, deal_key, &img);
 	mlx_loop(img.mlx);
 }

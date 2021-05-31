@@ -123,9 +123,9 @@ int	raycasting(t_data *img)
 	img->ray.angle = check_overflow_angle(img->ray.angle);
 	img->ray.x = 0;
 	x = 0;
-	color = 0x00696969;
 	while (x < img->width)
 	{
+		color = 0x00696969;
 		set_ray(img);
 		raycasting_vertical(img);
 		raycasting_horizontal(img);
