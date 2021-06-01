@@ -24,23 +24,22 @@ int	set_data(t_data *img)
 	img->userheight = img->cellsize / 20;
 	return (0);
 }
-
+/*
 int get_text(t_data *img)
 {
 	char *path = "./textures/eagle.xpm";
 	img->text.img = mlx_xpm_file_to_image(img->mlx, path, &img->text.width, &img->text.height);
 	return (0);
 }
-
+*/
 
 int	make_image(t_data *img)
 {
-
-	raycasting(img);
 	draw_minimap(img);
+	raycasting(img);
 	big_pixel(img, 0x00FF0000, (img->px - (img->userheight / 2)),
 		(img->py + (img->userheight / 2)), img->userheight);
-	get_text(img);
+	//get_text(img);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
 	return (0);
 }
