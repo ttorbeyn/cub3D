@@ -79,6 +79,13 @@ typedef struct	s_parsing
 	char *text_c;
 }				t_parsing;
 
+typedef struct	s_text
+{
+	void *img;
+	int texx;
+	int texy;
+}				t_text;
+
 typedef struct  s_data {
 	void        *img;
 	char        *addr;
@@ -102,7 +109,7 @@ typedef struct  s_data {
 	int			userheight;
 	t_ray		ray;
 	t_keys		key;
-
+	t_text		text;
 }               t_data;
 
 
