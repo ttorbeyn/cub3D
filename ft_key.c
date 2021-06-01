@@ -12,28 +12,32 @@
 
 #include "cub3D.h"
 
-int	define_step(t_data *img)
+int	define_step(t_data * img, float angle)
 {
-	if ((img->ray.angle > 0 && img->ray.angle < PI / 2))
+	angle = check_overflow_angle(angle);
+	img->key.stepX = 0;
+	img->key.stepY = 0;
+	if ((angle > 0 && angle < (PI / 2)))
 	{
-		img->ray.stepY = 1;
-		img->ray.stepX = 1;
+		img->key.stepX = 1;
+		img->key.stepY = 1;
 	}
-	if ((img->ray.angle > PI / 2 && img->ray.angle < PI))
+	if ((angle > (PI / 2) && angle < PI))
 	{
-		img->ray.stepY = 1;
-		img->ray.stepX = -1;
+		img->key.stepX = -1;
+		img->key.stepY = 1;
 	}
-	if ((img->ray.angle > PI && img->ray.angle < 2 * PI / 3))
+	if ((angle > PI && angle < (3 * PI / 2)))
 	{
-		img->ray.stepY = -1;
-		img->ray.stepX = -1;
+		img->key.stepX = -1;
+		img->key.stepY = -1;
 	}
-	if ((img->ray.angle > 2 * PI / 3 && img->ray.angle < 2 * PI))
+	if ((angle > (3 * PI / 2) && angle < (2 * PI)))
 	{
-		img->ray.stepY = -1;
-		img->ray.stepX = 1;
+		img->key.stepX = 1;
+		img->key.stepY = -1;
 	}
+	printf("%f\n", angle);
 	return (0);
 }
 
@@ -43,18 +47,37 @@ int player_forward(t_data *img, float l)
 	int y;
 	float dist;
 
-	dist = 0.2;
+	dist = 0.5;
 	x = (int)(img->px / img->cellsize + (dist * img->ray.stepX));
 	y = (int)(img->py / img->cellsize + (dist * img->ray.stepY));
-	if (img->map[x][y] == '0')
-	{
+	if (img->map[x][(int)img->py / img->cellsize] == '0')
 		img->px += l * cosf(img->angle);
+	if (img->map[(int)img->px / img->cellsize][y] == '0')
 		img->py += l * sinf(img->angle);
-	}
 	return (0);
 }
-//int player_back(t_data *img)
-//int player_left(t_data *img)
+
+int player_back(t_data *img, float angle, float l)
+{
+	int x;
+	int y;
+	float dist;
+
+	dist = 0.5;
+	define_step(img, angle);
+	x = (int)(img->px / img->cellsize - (dist * img->key.stepY));
+	y = (int)(img->py / img->cellsize - (dist * img->key.stepX));
+	printf("rx:%d\n", img->ray.stepX);
+	printf("ry:%d\n", img->ray.stepY);
+	printf("kx:%d\n", img->key.stepX);
+	printf("ky:%d\n", img->key.stepY);
+	if (img->map[x][(int)img->py / img->cellsize] == '0')
+		img->px -= l * cosf(angle);
+	if (img->map[(int)img->px / img->cellsize][y] == '0')
+		img->py -= l * sinf(angle);
+	return (0);
+}
+
 //int player_right(t_data *img)
 /*
 int camera_left(t_data *img)
@@ -70,15 +93,9 @@ int	deal_key(t_data *img)
 	if (img->key.w == 1)
 		player_forward(img, l);
 	if (img->key.s == 1)
-	{
-		img->px -= l * cosf(img->angle);
-		img->py -= l * sinf(img->angle);
-	}
+		player_back(img, img->angle, l);
 	if (img->key.a == 1)
-	{
-		img->px -= l * cosf(img->angle + (PI / 2));
-		img->py -= l * sinf(img->angle + (PI / 2));
-	}
+		player_back(img, (img->angle + (PI / 2)), l);
 	if (img->key.d == 1)
 	{
 		img->px += l * cosf(img->angle + (PI / 2));

@@ -62,6 +62,8 @@ typedef struct	s_keys
 	int l;
 	int r;
 	int e;
+	int	stepX;
+	int	stepY;
 }				t_keys;
 
 typedef struct	s_parsing
