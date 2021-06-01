@@ -14,7 +14,6 @@
 
 int	define_step(t_data * img, float angle)
 {
-	angle = check_overflow_angle(angle);
 	img->key.stepX = 0;
 	img->key.stepY = 0;
 	if ((angle > 0 && angle < (PI / 2)))
@@ -37,23 +36,24 @@ int	define_step(t_data * img, float angle)
 		img->key.stepX = 1;
 		img->key.stepY = -1;
 	}
-	printf("%f\n", angle);
 	return (0);
 }
 
-int player_forward(t_data *img, float l)
+int player_forward(t_data *img, float angle, float l)
 {
 	int x;
 	int y;
 	float dist;
 
-	dist = 0.5;
-	x = (int)(img->px / img->cellsize + (dist * img->ray.stepX));
-	y = (int)(img->py / img->cellsize + (dist * img->ray.stepY));
+	dist = 0.3;
+	angle = check_overflow_angle(angle);
+	define_step(img, angle);
+	x = (int)(img->px / img->cellsize + (dist * img->key.stepX));
+	y = (int)(img->py / img->cellsize + (dist * img->key.stepY));
 	if (img->map[x][(int)img->py / img->cellsize] == '0')
-		img->px += l * cosf(img->angle);
+		img->px += l * cosf(angle);
 	if (img->map[(int)img->px / img->cellsize][y] == '0')
-		img->py += l * sinf(img->angle);
+		img->py += l * sinf(angle);
 	return (0);
 }
 
@@ -63,14 +63,11 @@ int player_back(t_data *img, float angle, float l)
 	int y;
 	float dist;
 
-	dist = 0.5;
+	dist = 0.3;
+	angle = check_overflow_angle(angle);
 	define_step(img, angle);
-	x = (int)(img->px / img->cellsize - (dist * img->key.stepY));
-	y = (int)(img->py / img->cellsize - (dist * img->key.stepX));
-	printf("rx:%d\n", img->ray.stepX);
-	printf("ry:%d\n", img->ray.stepY);
-	printf("kx:%d\n", img->key.stepX);
-	printf("ky:%d\n", img->key.stepY);
+	x = (int)(img->px / img->cellsize - (dist * img->key.stepX));
+	y = (int)(img->py / img->cellsize - (dist * img->key.stepY));
 	if (img->map[x][(int)img->py / img->cellsize] == '0')
 		img->px -= l * cosf(angle);
 	if (img->map[(int)img->px / img->cellsize][y] == '0')
@@ -78,11 +75,6 @@ int player_back(t_data *img, float angle, float l)
 	return (0);
 }
 
-//int player_right(t_data *img)
-/*
-int camera_left(t_data *img)
-int camera_right(t_data *img)
-*/
 int	deal_key(t_data *img)
 {
 	float	l;
@@ -91,16 +83,13 @@ int	deal_key(t_data *img)
 	img->img = mlx_new_image(img->mlx, img->width, img->height);
 	l = (img->cellsize / 10) * 0.3;
 	if (img->key.w == 1)
-		player_forward(img, l);
+		player_forward(img, img->angle, l);
 	if (img->key.s == 1)
 		player_back(img, img->angle, l);
 	if (img->key.a == 1)
 		player_back(img, (img->angle + (PI / 2)), l);
 	if (img->key.d == 1)
-	{
-		img->px += l * cosf(img->angle + (PI / 2));
-		img->py += l * sinf(img->angle + (PI / 2));
-	}
+		player_forward(img, (img->angle + (PI / 2)), l);
 	if (img->key.r == 1)
 		img->angle += 0.03;
 	if (img->key.l == 1)

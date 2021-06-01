@@ -40,6 +40,6 @@ char	**ft_parsing(void)
 {
 	int	fd;
 
-	fd = open("map.cub", O_RDONLY);
+	fd = open("map2.cub", O_RDONLY);
 	return (ft_map(fd));
 }
