@@ -31,7 +31,6 @@ int	set_ray(t_data *img)
 	return (0);
 }
 
-
 int	raycasting_vertical(t_data *img)
 {
 	int	c;
@@ -143,7 +142,6 @@ int	raycasting(t_data *img)
 			angle += (2 * PI);
 		img->ray.lengthf = img->ray.length * cosf(angle);
 		draw_3D(img, color);
-
 		draw_ray(img, 0x0000FF00);
 		img->ray.angle += (PI / 3) / (img->width);
 		img->ray.angle = check_overflow_angle(img->ray.angle);

@@ -81,15 +81,22 @@ typedef struct	s_parsing
 
 typedef struct	s_text
 {
-	void *img;
-	int texx;
-	int texy;
+	void 	*img;
+	char	*addr;
+	int		bpp;
+	int		line_length;
+	int		end;
+	int 	texx;
+	int 	texy;
+	int		width;
+	int		height;
+
 }				t_text;
 
 typedef struct  s_data {
-	void        *img;
-	char        *addr;
-	int         bpp;
+	void		*img;
+	char		*addr;
+	int			bpp;
 	int			line_length;
 	int			end;
 	double		px;
@@ -107,6 +114,7 @@ typedef struct  s_data {
 	double 		lengthx;
 	double 		lengthy;
 	int			userheight;
+	int			color_sky;
 	t_ray		ray;
 	t_keys		key;
 	t_text		text;
@@ -116,6 +124,7 @@ typedef struct  s_data {
 //ft_cub3D
 int	make_image(t_data *img);
 //ft_key
+int set_key(t_data *img);
 int	deal_key(t_data *img);
 int	key_pressed(int keycode, t_data *img);
 int	key_released(int keycode, t_data *img);
@@ -124,6 +133,7 @@ int	raycasting(t_data *img);
 //ft_draw
 int draw_ray(t_data *img, int color);
 int draw_3D(t_data *img, int color);
+int	draw_text(t_data *img);
 int	draw_minimap(t_data *img);
 int print_minimap(t_data *img);
 //parsing
@@ -133,7 +143,6 @@ void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
 int		big_pixel(t_data *img, int color, int i, int j, int l);
 //ft_utils.c
 double	check_overflow_angle(double angle);
-
 //get_next_line
 int	get_next_line(int fd, char **line);
 //get_next_line_utils

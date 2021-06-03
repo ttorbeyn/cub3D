@@ -22,25 +22,28 @@ int	set_data(t_data *img)
 	img->width = 2000;
 	img->map = ft_parsing();
 	img->userheight = img->cellsize / 20;
+	img->color_sky = 0x00FF00FF;
 	return (0);
 }
-/*
+
 int get_text(t_data *img)
 {
 	char *path = "./textures/eagle.xpm";
 	img->text.img = mlx_xpm_file_to_image(img->mlx, path, &img->text.width, &img->text.height);
+	img->text.addr = mlx_get_data_addr(img->text.img, &img->text.bpp, &img->text.line_length, &img->text.end);
 	return (0);
 }
-*/
+
 
 int	make_image(t_data *img)
 {
+	get_text(img);
 	draw_minimap(img);
 	raycasting(img);
 	big_pixel(img, 0x00FF0000, (img->px - (img->userheight / 2)),
 		(img->py + (img->userheight / 2)), img->userheight);
-	//get_text(img);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
+	mlx_put_image_to_window(img->mlx, img->mlx_win, img->text.img, 0, 0);
 	return (0);
 }
 /*
@@ -57,6 +60,7 @@ int	main(void)
 	t_data	img;
 
 	set_data(&img);
+	set_key(&img);
 	img.mlx = mlx_init();
 	img.mlx_win = mlx_new_window(img.mlx, img.width, img.height, "cub3D");
 	img.img = mlx_new_image(img.mlx, img.width, img.height);

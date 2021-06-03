@@ -32,14 +32,43 @@ int	draw_ray(t_data *img, int color)
 	return (0);
 }
 
+int	draw_text(t_data *img)
+{
+	double len;
+
+	len = img->text.height / img->ray.lengthf;
+	if (len >= img->text.height)
+		len = img->text.height;
+	img->ray.y = (img->text.height / 2) - (len / 2);
+	while (len > 0)
+	{
+		my_mlx_pixel_put(img, img->ray.x, img->ray.y, 0x000000FF);
+		//img->data.addr[y * img->data.line_length / 4 + x] = recup->texture[img->t.texdir].addr[recup->t.texy * recup->texture[img->t.texdir].line_length / 4 + img->t.texx];
+		len--;
+		img->ray.y++;
+	}
+	img->ray.x++;
+	return (0);
+}
+
 int	draw_3D(t_data *img, int color)
 {
 	double	len;
+	double start;
+	int i;
 
+	i = 0;
 	len = img->height / img->ray.lengthf;
 	if (len >= img->height)
 		len = img->height;
-	img->ray.y = (img->height / 2) - (len / 2);
+	start = (img->height / 2) - (len / 2);
+	img->ray.y = 0;
+	while (i < start)
+	{
+		my_mlx_pixel_put(img, img->ray.x, img->ray.y, img->color_sky);
+		i++;
+		img->ray.y++;
+	}
 	while (len > 0)
 	{
 		my_mlx_pixel_put(img, img->ray.x, img->ray.y, color);
