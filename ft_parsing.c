@@ -13,13 +13,16 @@ char	ft_textures()
 	if (is_correct(str))
 }
 */
-char	**ft_map(int fd)
+
+char	**ft_parsing(void)
 {
+	int	fd;
 	int		ret;
 	char	*line;
 	char	**map;
 	int		x;
 
+	fd = open("map2.cub", O_RDONLY);
 	x = 0;
 	map = malloc(sizeof(char *) * 100);
 	while (1)
@@ -34,12 +37,4 @@ char	**ft_map(int fd)
 			return (map);
 		}
 	}
-}
-
-char	**ft_parsing(void)
-{
-	int	fd;
-
-	fd = open("map2.cub", O_RDONLY);
-	return (ft_map(fd));
 }
