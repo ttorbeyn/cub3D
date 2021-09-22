@@ -37,13 +37,13 @@ int get_text(t_data *img)
 
 int	make_image(t_data *img)
 {
-	//get_text(img);
+	get_text(img);
 	//draw_minimap(img);
 	raycasting(img);
 	big_pixel(img, 0x00FF0000, (img->px - (img->userheight / 2)),
 		(img->py + (img->userheight / 2)), img->userheight);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-	//draw_minimap(img);
+	draw_minimap(img);
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->text.img, 0, 0);
 	return (0);
 }

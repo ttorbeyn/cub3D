@@ -54,12 +54,12 @@ int	draw_text(t_data *img)
 int	draw_3D(t_data *img, int color)
 {
 	double	len;
-	double start;
-	int i;
+	double	start;
+	double	i;
 
 	i = 0;
 	len = img->height / img->ray.lengthf;
-	if (len >= img->height)
+	if (len > img->height)
 		len = img->height;
 	start = (img->height / 2) - (len / 2);
 	img->ray.y = 0;
@@ -69,11 +69,19 @@ int	draw_3D(t_data *img, int color)
 		i++;
 		img->ray.y++;
 	}
-	while (len > 0)
+	while (len > 0 && i < img->height)
 	{
-		my_mlx_pixel_put(img, img->ray.x, img->ray.y, color);
+		/*
+		texture[0].addr = (int *)mlx_get_data_addr(texture[0].img, &texture[0].bits_per_pixel, &texture[0].line_length, &texture[0].endian);
+		data.addr[y * recup->data.line_length / 4 + x] = texture[0].addr[texy * texture[0].line_length / 4 + texx];
+		*/
+		img->text.addr = mlx_get_data_addr(img->text.img, &img->text.bpp, &img->text.line_length, &img->text.end);
+		img.addr[y * img.line_length / 4 + x] = img->text.addr[img->text.texy * img->text.line_length / 4 + img->text.texx];
+
+		my_mlx_pixel_put(img, img->text.texx, img->text.texx, color);
 		len--;
-		img->ray.y++;
+		i++;
+		img->text.texy++;
 	}
 	img->ray.x++;
 	return (0);
