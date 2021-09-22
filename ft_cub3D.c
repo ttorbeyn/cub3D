@@ -19,7 +19,7 @@ int	set_data(t_data *img)
 	img->angle = PI / 2;
 	img->cellsize = 10;
 	img->height = 1000;
-	img->width = 1000;
+	img->width = 2000;
 	img->map = ft_parsing();
 	img->userheight = img->cellsize / 20;
 	img->color_sky = 0x00FF00FF;
@@ -39,11 +39,12 @@ int	make_image(t_data *img)
 {
 	get_text(img);
 	//draw_minimap(img);
+	draw_minimap(img);
+
 	raycasting(img);
 	big_pixel(img, 0x00FF0000, (img->px - (img->userheight / 2)),
 		(img->py + (img->userheight / 2)), img->userheight);
 	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
-	draw_minimap(img);
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->text.img, 0, 0);
 	return (0);
 }

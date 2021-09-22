@@ -123,6 +123,7 @@ int	raycasting(t_data *img)
 	img->ray.angle = check_overflow_angle(img->ray.angle);
 	img->ray.x = 0;
 	x = 0;
+
 	while (x < img->width)
 	{
 		color = 0x00696969;
@@ -147,9 +148,7 @@ int	raycasting(t_data *img)
 		img->ray.angle = check_overflow_angle(img->ray.angle);
 		x++;
 	}
-	//printf("angle1 : %f", angle);
-	//printf("angle2 : %f", img->ray.angle);
-	//printf("angle : %f", angle);
+	draw_minimap(img);
 	img->ray.angle = img->angle;
 	raycasting_vertical(img);
 	raycasting_horizontal(img);
@@ -157,5 +156,6 @@ int	raycasting(t_data *img)
 	if (img->ray.lengthx > img->ray.lengthy)
 		img->ray.length = img->ray.lengthy;
 	draw_ray(img, 0xFF0000);
+
 	return (0);
 }

@@ -74,14 +74,14 @@ int	draw_3D(t_data *img, int color)
 		/*
 		texture[0].addr = (int *)mlx_get_data_addr(texture[0].img, &texture[0].bits_per_pixel, &texture[0].line_length, &texture[0].endian);
 		data.addr[y * recup->data.line_length / 4 + x] = texture[0].addr[texy * texture[0].line_length / 4 + texx];
-		*/
+
 		img->text.addr = mlx_get_data_addr(img->text.img, &img->text.bpp, &img->text.line_length, &img->text.end);
 		img.addr[y * img.line_length / 4 + x] = img->text.addr[img->text.texy * img->text.line_length / 4 + img->text.texx];
-
-		my_mlx_pixel_put(img, img->text.texx, img->text.texx, color);
+		*/
+		my_mlx_pixel_put(img, img->ray.x, img->ray.y, color);
 		len--;
 		i++;
-		img->text.texy++;
+		img->ray.y++;
 	}
 	img->ray.x++;
 	return (0);
@@ -119,9 +119,9 @@ int	draw_minimap(t_data *img)
 		while (img->map[x][y])
 		{
 			if (img->map[x][y] == '1')
-				big_pixel(img, 0x000000FF, (((x + 1) * img->cellsize) - (img->cellsize - 1)), ((y + 1) * img->cellsize), (img->cellsize - 1));
+				big_pixel(img, 0x000000FF, (((x + 1) * img->cellsize) - img->cellsize), ((y + 1) * img->cellsize), img->cellsize);
 			else
-				big_pixel(img, 0x007F7F7F, (((x + 1) * img->cellsize) - (img->cellsize - 1)), ((y + 1) * img->cellsize), (img->cellsize - 1));
+				big_pixel(img, 0x007F7F7F, (((x + 1) * img->cellsize) - img->cellsize), ((y + 1) * img->cellsize), img->cellsize);
 			y++;
 		}
 		x++;
