@@ -31,7 +31,7 @@ int	draw_ray(t_data *img, int color)
 	}
 	return (0);
 }
-
+/*
 int	draw_text(t_data *img)
 {
 	double len;
@@ -48,6 +48,17 @@ int	draw_text(t_data *img)
 		img->ray.y++;
 	}
 	img->ray.x++;
+	return (0);
+}
+*/
+
+int	draw_text(t_data *img)
+{
+	my_mlx_pixel_put(img, 500, 500, (int)img->text.img);
+	printf("%d\n", (int)img->text.img);
+	my_mlx_pixel_put(img, 500, 501, (int)img->text.img);
+	my_mlx_pixel_put(img, 501, 501, (int)img->text.img);
+	my_mlx_pixel_put(img, 501, 500, (int)img->text.img);
 	return (0);
 }
 

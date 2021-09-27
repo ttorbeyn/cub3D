@@ -124,6 +124,7 @@ int	raycasting(t_data *img)
 	img->ray.x = 0;
 	x = 0;
 
+
 	while (x < img->width)
 	{
 		color = 0x00696969;
@@ -156,6 +157,5 @@ int	raycasting(t_data *img)
 	if (img->ray.lengthx > img->ray.lengthy)
 		img->ray.length = img->ray.lengthy;
 	draw_ray(img, 0xFF0000);
-
 	return (0);
 }
