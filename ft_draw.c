@@ -54,11 +54,11 @@ int	draw_text(t_data *img)
 
 int	draw_text(t_data *img)
 {
-	my_mlx_pixel_put(img, 500, 500, (int)img->text.img);
-	printf("%d\n", (int)img->text.img);
-	my_mlx_pixel_put(img, 500, 501, (int)img->text.img);
-	my_mlx_pixel_put(img, 501, 501, (int)img->text.img);
-	my_mlx_pixel_put(img, 501, 500, (int)img->text.img);
+	my_mlx_pixel_put(img, 500, 500, (int)img->text.img % 2);
+	printf("%d\n", (int)img->text.img % 2);
+	//my_mlx_pixel_put(img, 500, 501, (int)img->text.img);
+	//my_mlx_pixel_put(img, 501, 501, (int)img->text.img);
+	//my_mlx_pixel_put(img, 501, 500, (int)img->text.img);
 	return (0);
 }
 
