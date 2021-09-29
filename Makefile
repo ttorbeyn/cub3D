@@ -18,6 +18,7 @@ INCLUDE			=	-I include
 FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 
 SRC				=				ft_cub3D.c \
+								ft_set.c \
 								ft_raycasting.c \
 								ft_mlx_utils.c \
 								ft_key.c \

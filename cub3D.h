@@ -32,9 +32,9 @@
 
 typedef struct	s_ray
 {
-	double posX;  //position du joueur en x
+	double posX;  	//position du joueur en x
 	double posY;	//position du joueur en y
-	double angle;
+	double angle; 	//direction du joueur en radian
 	int mapX;
 	int mapY;
 	double sideDistX;
@@ -122,25 +122,27 @@ typedef struct  s_data {
 
 
 //ft_cub3D
-int	make_image(t_data *img);
+int	make_image(t_data *data);
+//ft_set
+int set_key(t_data *data);
+int	set_data(t_data *data);
 //ft_key
-int set_key(t_data *img);
-int	deal_key(t_data *img);
-int	key_pressed(int keycode, t_data *img);
-int	key_released(int keycode, t_data *img);
+int	deal_key(t_data *data);
+int	key_pressed(int keycode, t_data *data);
+int	key_released(int keycode, t_data *data);
 //ft_raycasting
-int	raycasting(t_data *img);
+int	raycasting(t_data *data);
 //ft_draw
-int draw_ray(t_data *img, int color);
-int draw_3D(t_data *img, int color);
-int	draw_text(t_data *img);
-int	draw_minimap(t_data *img);
-int print_minimap(t_data *img);
+int draw_ray(t_data *data, int color);
+int draw_3D(t_data *data, int color);
+int	draw_text(t_data *data);
+int	draw_minimap(t_data *data);
+int print_minimap(t_data *data);
 //parsing
 char	**ft_parsing(void);
 //ft_mlx_utils
-void	my_mlx_pixel_put(t_data *img, int x, int y, int color);
-int		big_pixel(t_data *img, int color, int i, int j, int l);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		big_pixel(t_data *data, int color, int i, int j, int l);
 //ft_utils.c
 double	check_overflow_angle(double angle);
 //get_next_line

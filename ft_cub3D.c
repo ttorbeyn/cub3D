@@ -11,21 +11,7 @@
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int	set_data(t_data *img)
-{
-	img->px = 45;
-	img->py = 35;
-	img->angle = PI / 2;
-	img->cellsize = 10;
-	img->height = 1000;
-	img->width = 2000;
-	img->map = ft_parsing();
-	img->userheight = img->cellsize / 20;
-	img->color_sky = 0x00FF00FF;
-	return (0);
-}
-
+/*
 int get_text(t_data *img)
 {
 	char *path = "./textures/eagle.xpm";
@@ -33,42 +19,38 @@ int get_text(t_data *img)
 	img->text.addr = mlx_get_data_addr(img->text.img, &img->text.bpp, &img->text.line_length, &img->text.end);
 	return (0);
 }
+*/
 
-
-int	make_image(t_data *img)
+int	make_image(t_data *data)
 {
-	get_text(img);
-	draw_minimap(img);
-	raycasting(img);
-	big_pixel(img, 0x00FF0000, (img->px - (img->userheight / 2)),
-		(img->py + (img->userheight / 2)), img->userheight);
-	draw_text(img);
-	mlx_put_image_to_window(img->mlx, img->mlx_win, img->img, 0, 0);
+	raycasting(data);
+	big_pixel(data, 0x00FF0000, (data->px - (data->userheight / 2)),
+		(data->py + (data->userheight / 2)), data->userheight);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->text.img, 0, 0);
 	return (0);
 }
-/*
-int event(t_data *img)
-{
-	mlx_hook(img->mlx_win, 2, 1L << 0, key_pressed, img);
-	mlx_hook(img->mlx_win, 3, 1L << 1, key_released, img);
-	mlx_loop_hook(img->mlx_win, make_image, img);
-	return (0);
-}
-*/
+
 int	main(void)
 {
-	t_data	img;
+	t_data	data;
 
-	set_data(&img);
-	set_key(&img);
-	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, img.width, img.height, "cub3D");
-	img.img = mlx_new_image(img.mlx, img.width, img.height);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, &img.end);
-	make_image(&img);
-	mlx_hook(img.mlx_win, 2, 1L << 0, key_pressed, &img);
-	mlx_hook(img.mlx_win, 3, 1L << 1, key_released, &img);
-	mlx_loop_hook(img.mlx, deal_key, &img);
-	mlx_loop(img.mlx);
+	//configure les parametres de base
+	set_data(&data);
+	//remets a 0 toutes les keys
+	set_key(&data);
+	//Creation d'une fenetre qui va acceuillir les pixels qu'on imprime dessus
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, data.width, data.height, "cub3D");
+	data.img = mlx_new_image(data.mlx, data.width, data.height);
+	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_length, &data.end);
+	//Ecriture des pixels dans la fenetre
+	make_image(&data);
+	//Gestion des touches
+	mlx_hook(data.mlx_win, 2, 1L << 0, key_pressed, &data);
+	mlx_hook(data.mlx_win, 3, 1L << 1, key_released, &data);
+	//Boucle pour prendre en compte les touches en continu
+	mlx_loop_hook(data.mlx, deal_key, &data);
+	//Boucle pour rafraichir la page en continu
+	mlx_loop(data.mlx);
 }

@@ -12,18 +12,6 @@
 
 #include "cub3D.h"
 
-int set_key(t_data *img)
-{
-	img->key.w = 0;
-	img->key.a = 0;
-	img->key.s = 0;
-	img->key.d = 0;
-	img->key.l = 0;
-	img->key.r = 0;
-	img->key.e = 0;
-	return (0);
-}
-
 int	define_step(t_data * img, float angle)
 {
 	img->key.stepX = 0;

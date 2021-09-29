@@ -13,149 +13,148 @@
 #include "cub3D.h"
 #include <stdio.h>
 
-int	set_ray(t_data *img)
+int	set_ray(t_data *data)
 {
-	img->ray.posX = img->px / img->cellsize;
-	img->ray.posY = img->py / img->cellsize;
-	img->ray.mapX = (int)(img->ray.posX);
-	img->ray.mapY = (int)(img->ray.posY);
-	img->ray.dx = 0;
-	img->ray.dy = 0;
-	img->ray.sideDistX = 0;
-	img->ray.sideDistY = 0;
-	img->ray.deltaDistX = 0;
-	img->ray.deltaDistY = 0;
-	img->ray.lengthx = 0;
-	img->ray.lengthy = 0;
-	img->ray.length = 0;
+	data->ray.posX = data->px / data->cellsize;
+	data->ray.posY = data->py / data->cellsize;
+	data->ray.mapX = (int)(data->ray.posX);
+	data->ray.mapY = (int)(data->ray.posY);
+	data->ray.dx = 0;
+	data->ray.dy = 0;
+	data->ray.sideDistX = 0;
+	data->ray.sideDistY = 0;
+	data->ray.deltaDistX = 0;
+	data->ray.deltaDistY = 0;
+	data->ray.lengthx = 0;
+	data->ray.lengthy = 0;
+	data->ray.length = 0;
 	return (0);
 }
 
-int	raycasting_vertical(t_data *img)
+int	raycasting_vertical(t_data *data)
 {
 	int	c;
 	int	x;
 
 	c = 0;
-	if ((img->ray.angle >= PI / 2 && img->ray.angle <= ((3 * PI) / 2)))
+	if ((data->ray.angle >= PI / 2 && data->ray.angle <= ((3 * PI) / 2)))
 	{
-		img->ray.stepX = -1;
-		img->ray.dx = img->ray.posX - img->ray.mapX;
+		data->ray.stepX = -1;
+		data->ray.dx = data->ray.posX - data->ray.mapX;
 	}
-	else if ((img->ray.angle < PI / 2) || (img->ray.angle > ((3 * PI) / 2)))
+	else if ((data->ray.angle < PI / 2) || (data->ray.angle > ((3 * PI) / 2)))
 	{
-		img->ray.stepX = 1;
-		img->ray.dx = 1.0 - (img->ray.posX - img->ray.mapX);
+		data->ray.stepX = 1;
+		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
 	}
-	img->ray.sideDistX = img->ray.posX + img->ray.dx * img->ray.stepX;
-	if (!(img->ray.angle == PI / 2 || img->ray.angle == 3 * PI / 2))
-		img->ray.sideDistY = img->ray.posY + (tanf(img->ray.angle) * img->ray.dx * img->ray.stepX);
-	while (c < 7 && img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0
-		&& img->ray.sideDistX <= 8 && img->ray.sideDistY <= 8)
+	data->ray.sideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
+	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
+		data->ray.sideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
+	while (c < 7 && data->ray.sideDistX >= 0 && data->ray.sideDistY >= 0
+		&& data->ray.sideDistX <= 8 && data->ray.sideDistY <= 8)
 	{
-		x = (int)img->ray.sideDistX;
-		if ((img->ray.angle > PI / 2 && img->ray.angle < ((3 * PI) / 2)))
-			x = (int)img->ray.sideDistX - 1;
-		if (img->map[x][(int)img->ray.sideDistY] != '1')
+		x = (int)data->ray.sideDistX;
+		if ((data->ray.angle > PI / 2 && data->ray.angle < ((3 * PI) / 2)))
+			x = (int)data->ray.sideDistX - 1;
+		if (data->map[x][(int)data->ray.sideDistY] != '1')
 		{
-			img->ray.sideDistX += img->ray.stepX;
-			if (!(img->ray.angle == PI / 2 || img->ray.angle == 3 * PI / 2))
-				img->ray.sideDistY += tanf(img->ray.angle) * img->ray.stepX;
+			data->ray.sideDistX += data->ray.stepX;
+			if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
+				data->ray.sideDistY += tanf(data->ray.angle) * data->ray.stepX;
 			c++;
 		}
 		else
 			c = 7;
 	}
-	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
-	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-	img->ray.lengthx = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+	data->ray.deltaDistX = data->ray.sideDistX - data->ray.posX;
+	data->ray.deltaDistY = data->ray.sideDistY - data->ray.posY;
+	data->ray.lengthx = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
 
-int	raycasting_horizontal(t_data *img)
+int	raycasting_horizontal(t_data *data)
 {
 	int	c;
 	int	y;
 
 	c = 0;
-	if ((img->ray.angle > 0 && img->ray.angle < PI))
+	if ((data->ray.angle > 0 && data->ray.angle < PI))
 	{
-		img->ray.stepY = 1;
-		img->ray.dy = 1.0 - (img->ray.posY - img->ray.mapY);
+		data->ray.stepY = 1;
+		data->ray.dy = 1.0 - (data->ray.posY - data->ray.mapY);
 	}
-	else if ((img->ray.angle > PI && img->ray.angle < (2 * PI)))
+	else if ((data->ray.angle > PI && data->ray.angle < (2 * PI)))
 	{
-		img->ray.stepY = -1;
-		img->ray.dy = img->ray.posY - img->ray.mapY;
+		data->ray.stepY = -1;
+		data->ray.dy = data->ray.posY - data->ray.mapY;
 	}
-	if (!(img->ray.angle == PI / 2 || img->ray.angle == 3 * PI / 2) && tanf(img->ray.angle) != 0)
-		img->ray.sideDistX = img->ray.posX + ((img->ray.dy * img->ray.stepY) / tanf(img->ray.angle));
-	img->ray.sideDistY = img->ray.posY + (img->ray.dy * img->ray.stepY);
-	while (c < 7 && img->ray.sideDistX >= 0 && img->ray.sideDistY >= 0
-		&& img->ray.sideDistX <= 8 && img->ray.sideDistY <= 8)
+	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2) && tanf(data->ray.angle) != 0)
+		data->ray.sideDistX = data->ray.posX + ((data->ray.dy * data->ray.stepY) / tanf(data->ray.angle));
+	data->ray.sideDistY = data->ray.posY + (data->ray.dy * data->ray.stepY);
+	while (c < 7 && data->ray.sideDistX >= 0 && data->ray.sideDistY >= 0
+		&& data->ray.sideDistX <= 8 && data->ray.sideDistY <= 8)
 	{
-		y = (int)img->ray.sideDistY;
-		if ((img->ray.angle > PI && img->ray.angle < (2 * PI)))
-			y = (int)img->ray.sideDistY - 1;
-		if (img->map[(int)img->ray.sideDistX][y] != '1')
+		y = (int)data->ray.sideDistY;
+		if ((data->ray.angle > PI && data->ray.angle < (2 * PI)))
+			y = (int)data->ray.sideDistY - 1;
+		if (data->map[(int)data->ray.sideDistX][y] != '1')
 		{
-			if (img->ray.angle != PI / 2 && img->ray.angle != 3 * PI / 2 && tanf(img->ray.angle) != 0)
-				img->ray.sideDistX += img->ray.stepY / tanf(img->ray.angle);
-			img->ray.sideDistY += img->ray.stepY;
+			if (data->ray.angle != PI / 2 && data->ray.angle != 3 * PI / 2 && tanf(data->ray.angle) != 0)
+				data->ray.sideDistX += data->ray.stepY / tanf(data->ray.angle);
+			data->ray.sideDistY += data->ray.stepY;
 			c++;
 		}
 		else
 			c = 7;
 	}
-	img->ray.deltaDistX = img->ray.sideDistX - img->ray.posX;
-	img->ray.deltaDistY = img->ray.sideDistY - img->ray.posY;
-	img->ray.lengthy = hypot(img->ray.deltaDistX, img->ray.deltaDistY);
+	data->ray.deltaDistX = data->ray.sideDistX - data->ray.posX;
+	data->ray.deltaDistY = data->ray.sideDistY - data->ray.posY;
+	data->ray.lengthy = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
 
-int	raycasting(t_data *img)
+int	raycasting(t_data *data)
 {
 	float	angle;
 	int		x;
 	int		color;
 
-	img->ray.angle = img->angle - (PI / 6);
-	img->ray.angle = check_overflow_angle(img->ray.angle);
-	img->ray.x = 0;
+	data->ray.angle = check_overflow_angle(data->angle - (PI / 6));
+	data->ray.x = 0;
 	x = 0;
 
 
-	while (x < img->width)
+	while (x < data->width)
 	{
 		color = 0x00696969;
-		set_ray(img);
-		raycasting_vertical(img);
-		raycasting_horizontal(img);
-		img->ray.length = img->ray.lengthx;
-		if (img->ray.lengthx > img->ray.lengthy)
+		set_ray(data);
+		raycasting_vertical(data);
+		raycasting_horizontal(data);
+		data->ray.length = data->ray.lengthx;
+		if (data->ray.lengthx > data->ray.lengthy)
 		{
-			img->ray.length = img->ray.lengthy;
+			data->ray.length = data->ray.lengthy;
 			color = 0x00808080;
 		}
-		angle = img->angle - img->ray.angle;
+		angle = data->angle - data->ray.angle;
 		if (angle > (2 * PI))
 			angle -= (2 * PI);
 		if (angle < 0)
 			angle += (2 * PI);
-		img->ray.lengthf = img->ray.length * cosf(angle);
-		draw_3D(img, color);
-		draw_ray(img, 0x0000FF00);
-		img->ray.angle += (PI / 3) / (img->width);
-		img->ray.angle = check_overflow_angle(img->ray.angle);
+		data->ray.lengthf = data->ray.length * cosf(angle);
+		draw_3D(data, color);
+		draw_ray(data, 0x0000FF00);
+		data->ray.angle += (PI / 3) / (data->width);
+		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;
 	}
-	draw_minimap(img);
-	img->ray.angle = img->angle;
-	raycasting_vertical(img);
-	raycasting_horizontal(img);
-	img->ray.length = img->ray.lengthx;
-	if (img->ray.lengthx > img->ray.lengthy)
-		img->ray.length = img->ray.lengthy;
-	draw_ray(img, 0xFF0000);
+	draw_minimap(data);
+	data->ray.angle = data->angle;
+	raycasting_vertical(data);
+	raycasting_horizontal(data);
+	data->ray.length = data->ray.lengthx;
+	if (data->ray.lengthx > data->ray.lengthy)
+		data->ray.length = data->ray.lengthy;
+	draw_ray(data, 0xFF0000);
 	return (0);
 }

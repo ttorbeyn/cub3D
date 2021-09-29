@@ -17,10 +17,10 @@ char	ft_textures()
 char	**ft_parsing(void)
 {
 	int	fd;
-	int		ret;
+	int	ret;
 	char	*line;
 	char	**map;
-	int		x;
+	int	x;
 
 	fd = open("map2.cub", O_RDONLY);
 	x = 0;
