@@ -37,20 +37,23 @@ typedef struct	s_ray
 	double angle; 	//direction du joueur en radian
 	int mapX;
 	int mapY;
-	double sideDistX;
-	double sideDistY;
+	double HsideDistX;
+	double HsideDistY;
+	double VsideDistX;
+	double VsideDistY;
 	double deltaDistX;
 	double deltaDistY;
 	int	stepX;
 	int	stepY;
 	double dx;
 	double dy;
-	double lengthx;
-	double lengthy;
+	double lengthV;
+	double lengthH;
 	double length;
 	double lengthf;
 	int x;
 	int y;
+	int side;
 }				t_ray;
 
 typedef struct	s_keys
@@ -90,7 +93,6 @@ typedef struct	s_text
 	int 	texy;
 	int		width;
 	int		height;
-
 }				t_text;
 
 typedef struct  s_data {

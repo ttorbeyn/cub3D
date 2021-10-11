@@ -11,23 +11,23 @@
 /* ************************************************************************** */
 
 #include "cub3D.h"
-/*
-int get_text(t_data *img)
+
+int get_text(t_data *data)
 {
 	char *path = "./textures/eagle.xpm";
-	img->text.img = mlx_xpm_file_to_image(img->mlx, path, &img->text.width, &img->text.height);
-	img->text.addr = mlx_get_data_addr(img->text.img, &img->text.bpp, &img->text.line_length, &img->text.end);
+	data->text.img = mlx_xpm_file_to_image(data->mlx, path, &data->text.width, &data->text.height);
+	data->text.addr = mlx_get_data_addr(data->text.img, &data->text.bpp, &data->text.line_length, &data->text.end);
 	return (0);
 }
-*/
 
 int	make_image(t_data *data)
 {
+	get_text(data);
 	raycasting(data);
 	big_pixel(data, 0x00FF0000, (data->px - (data->userheight / 2)),
 		(data->py + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	//mlx_put_image_to_window(img->mlx, img->mlx_win, img->text.img, 0, 0);
+	//mlx_put_image_to_window(data->mlx, data->mlx_win, data->text.img, 0, 0);
 	return (0);
 }
 

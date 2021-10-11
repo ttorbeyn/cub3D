@@ -21,13 +21,16 @@ int	set_ray(t_data *data)
 	data->ray.mapY = (int)(data->ray.posY);
 	data->ray.dx = 0;
 	data->ray.dy = 0;
-	data->ray.sideDistX = 0;
-	data->ray.sideDistY = 0;
+	data->ray.VsideDistX = 0;
+	data->ray.VsideDistY = 0;
+	data->ray.HsideDistX = 0;
+	data->ray.HsideDistY = 0;
 	data->ray.deltaDistX = 0;
 	data->ray.deltaDistY = 0;
-	data->ray.lengthx = 0;
-	data->ray.lengthy = 0;
+	data->ray.lengthV = 0;
+	data->ray.lengthH = 0;
 	data->ray.length = 0;
+	data->ray.side = 0;
 	return (0);
 }
 
@@ -47,28 +50,28 @@ int	raycasting_vertical(t_data *data)
 		data->ray.stepX = 1;
 		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
 	}
-	data->ray.sideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
+	data->ray.VsideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
-		data->ray.sideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
-	while (c < 7 && data->ray.sideDistX >= 0 && data->ray.sideDistY >= 0
-		&& data->ray.sideDistX <= 8 && data->ray.sideDistY <= 8)
+		data->ray.VsideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
+	while (c < 7 && data->ray.VsideDistX >= 0 && data->ray.VsideDistY >= 0
+		&& data->ray.VsideDistX <= 8 && data->ray.VsideDistY <= 8)
 	{
-		x = (int)data->ray.sideDistX;
+		x = (int)data->ray.VsideDistX;
 		if ((data->ray.angle > PI / 2 && data->ray.angle < ((3 * PI) / 2)))
-			x = (int)data->ray.sideDistX - 1;
-		if (data->map[x][(int)data->ray.sideDistY] != '1')
+			x = (int)data->ray.VsideDistX - 1;
+		if (data->map[x][(int)data->ray.VsideDistY] != '1')
 		{
-			data->ray.sideDistX += data->ray.stepX;
+			data->ray.VsideDistX += data->ray.stepX;
 			if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
-				data->ray.sideDistY += tanf(data->ray.angle) * data->ray.stepX;
+				data->ray.VsideDistY += tanf(data->ray.angle) * data->ray.stepX;
 			c++;
 		}
 		else
 			c = 7;
 	}
-	data->ray.deltaDistX = data->ray.sideDistX - data->ray.posX;
-	data->ray.deltaDistY = data->ray.sideDistY - data->ray.posY;
-	data->ray.lengthx = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
+	data->ray.deltaDistX = data->ray.VsideDistX - data->ray.posX;
+	data->ray.deltaDistY = data->ray.VsideDistY - data->ray.posY;
+	data->ray.lengthV = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
 
@@ -78,38 +81,38 @@ int	raycasting_horizontal(t_data *data)
 	int	y;
 
 	c = 0;
-	if ((data->ray.angle > 0 && data->ray.angle < PI))
+	if (data->ray.angle > 0 && data->ray.angle < PI)
 	{
 		data->ray.stepY = 1;
 		data->ray.dy = 1.0 - (data->ray.posY - data->ray.mapY);
 	}
-	else if ((data->ray.angle > PI && data->ray.angle < (2 * PI)))
+	else if (data->ray.angle > PI && data->ray.angle < (2 * PI))
 	{
 		data->ray.stepY = -1;
 		data->ray.dy = data->ray.posY - data->ray.mapY;
 	}
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2) && tanf(data->ray.angle) != 0)
-		data->ray.sideDistX = data->ray.posX + ((data->ray.dy * data->ray.stepY) / tanf(data->ray.angle));
-	data->ray.sideDistY = data->ray.posY + (data->ray.dy * data->ray.stepY);
-	while (c < 7 && data->ray.sideDistX >= 0 && data->ray.sideDistY >= 0
-		&& data->ray.sideDistX <= 8 && data->ray.sideDistY <= 8)
+		data->ray.HsideDistX = data->ray.posX + ((data->ray.dy * data->ray.stepY) / tanf(data->ray.angle));
+	data->ray.HsideDistY = data->ray.posY + (data->ray.dy * data->ray.stepY);
+	while (c < 7 && data->ray.HsideDistX >= 0 && data->ray.HsideDistY >= 0
+		&& data->ray.HsideDistX <= 8 && data->ray.HsideDistY <= 8)
 	{
-		y = (int)data->ray.sideDistY;
-		if ((data->ray.angle > PI && data->ray.angle < (2 * PI)))
-			y = (int)data->ray.sideDistY - 1;
-		if (data->map[(int)data->ray.sideDistX][y] != '1')
+		y = (int)data->ray.HsideDistY;
+		if (data->ray.angle > PI && data->ray.angle < (2 * PI))
+			y = (int)data->ray.HsideDistY - 1;
+		if (data->map[(int)data->ray.HsideDistX][y] != '1')
 		{
 			if (data->ray.angle != PI / 2 && data->ray.angle != 3 * PI / 2 && tanf(data->ray.angle) != 0)
-				data->ray.sideDistX += data->ray.stepY / tanf(data->ray.angle);
-			data->ray.sideDistY += data->ray.stepY;
+				data->ray.HsideDistX += data->ray.stepY / tanf(data->ray.angle);
+			data->ray.HsideDistY += data->ray.stepY;
 			c++;
 		}
 		else
 			c = 7;
 	}
-	data->ray.deltaDistX = data->ray.sideDistX - data->ray.posX;
-	data->ray.deltaDistY = data->ray.sideDistY - data->ray.posY;
-	data->ray.lengthy = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
+	data->ray.deltaDistX = data->ray.HsideDistX - data->ray.posX;
+	data->ray.deltaDistY = data->ray.HsideDistY - data->ray.posY;
+	data->ray.lengthH = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
 
@@ -130,10 +133,13 @@ int	raycasting(t_data *data)
 		set_ray(data);
 		raycasting_vertical(data);
 		raycasting_horizontal(data);
-		data->ray.length = data->ray.lengthx;
-		if (data->ray.lengthx > data->ray.lengthy)
+		data->ray.length = data->ray.lengthV;
+		if (data->ray.lengthV > data->ray.lengthH)
 		{
-			data->ray.length = data->ray.lengthy;
+			data->ray.length = data->ray.lengthH;
+			data->ray.VsideDistX = data->ray.HsideDistX;
+			data->ray.VsideDistY = data->ray.HsideDistY;
+			data->ray.side = 1;
 			color = 0x00808080;
 		}
 		angle = data->angle - data->ray.angle;
@@ -152,9 +158,9 @@ int	raycasting(t_data *data)
 	data->ray.angle = data->angle;
 	raycasting_vertical(data);
 	raycasting_horizontal(data);
-	data->ray.length = data->ray.lengthx;
-	if (data->ray.lengthx > data->ray.lengthy)
-		data->ray.length = data->ray.lengthy;
+	data->ray.length = data->ray.lengthV;
+	if (data->ray.lengthV > data->ray.lengthH)
+		data->ray.length = data->ray.lengthH;
 	draw_ray(data, 0xFF0000);
 	return (0);
 }

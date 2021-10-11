@@ -138,8 +138,22 @@ int	draw_3D(t_data *data, int color)
 		data->ray.y++;
 	}
 	y = offset*y_step;
-	x = (int)(data->ray.deltaDistX) % 32;
-	//printf("%f\n", x);
+	if (data->ray.side == 0)
+	{
+		x = (int)(data->ray.VsideDistY * data->text.line_length) % data->text.line_length;
+		if (data->ray.angle > (PI / 2) && data->ray.angle < ((3 * PI) / 2))
+			x = data->text.line_length - 1 - x;
+	}
+	else
+	{
+		x = (int)(data->ray.VsideDistX * data->text.line_length) % data->text.line_length;
+		if (!(data->ray.angle > PI && data->ray.angle < (2 * PI)))
+			x = data->text.line_length - 1 - x;
+	}
+	data->text.texx = x;
+	data->text.texy = y;
+	x = start;
+	y = start;
 	while (len > 0 && i < data->height)
 	{
 		/*
@@ -149,13 +163,16 @@ int	draw_3D(t_data *data, int color)
 		data->text.addr = mlx_get_data_addr(data->text.data, &data->text.bpp, &data->text.line_length, &data->text.end);
 		data.addr[y * data.line_length / 4 + x] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
 		*/
-		color = color_textures(textures[(int)y * 32 + (int)x]);
-		my_mlx_pixel_put(data, data->ray.x, data->ray.y, color);
+		data->addr[(int)y * data->line_length / 4 + (int)x] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
+		//color = color_textures(textures[(int)y * 32 + (int)x]);
+		//my_mlx_pixel_put(data, data->ray.x, data->ray.y, color);
 		len--;
 		i++;
 		y += y_step;
 		data->ray.y++;
 	}
+	if (!color)
+		return (0);
 	data->ray.x++;
 	return (0);
 }
