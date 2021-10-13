@@ -115,7 +115,6 @@ int	draw_3D(t_data *data, int color)
 	double	len;
 	double	start;
 	double	i;
-	double	y;
 	double	x;
 	double	y_step;
 	double	offset;
@@ -123,7 +122,7 @@ int	draw_3D(t_data *data, int color)
 	i = 0;
 	offset = 0;
 	len = data->height / data->ray.lengthf;
-	y_step = 32.0/len;
+	y_step = data->text.height/len;
 	if (len > data->height)
 	{
 		offset = (len - data->height)/2;
@@ -137,23 +136,21 @@ int	draw_3D(t_data *data, int color)
 		i++;
 		data->ray.y++;
 	}
-	y = offset*y_step;
+	//data->text.texy = offset*y_step;
 	if (data->ray.side == 0)
 	{
-		x = (int)(data->ray.VsideDistY * data->text.line_length) % data->text.line_length;
+		x = (int)(data->ray.VsideDistY) % data->text.width;
 		if (data->ray.angle > (PI / 2) && data->ray.angle < ((3 * PI) / 2))
-			x = data->text.line_length - 1 - x;
+			x = data->text.width - 1 - x;
 	}
 	else
 	{
-		x = (int)(data->ray.VsideDistX * data->text.line_length) % data->text.line_length;
+		x = (int)(data->ray.VsideDistX) % data->text.width;
 		if (!(data->ray.angle > PI && data->ray.angle < (2 * PI)))
-			x = data->text.line_length - 1 - x;
+			x = data->text.width - 1 - x;
 	}
 	data->text.texx = x;
-	data->text.texy = y;
-	x = start;
-	y = start;
+	data->text.texpos = (data->ray.y + (data->ray.y + len) / 2 + len / 2) * y_step;
 	while (len > 0 && i < data->height)
 	{
 		/*
@@ -163,17 +160,19 @@ int	draw_3D(t_data *data, int color)
 		data->text.addr = mlx_get_data_addr(data->text.data, &data->text.bpp, &data->text.line_length, &data->text.end);
 		data.addr[y * data.line_length / 4 + x] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
 		*/
-		data->addr[(int)y * data->line_length / 4 + (int)x] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
+		data->text.texy = data->text.texpos & (data->text.height - 1);
+		data->text.texpos += y_step;
+		data->addr[(int)data->ray.y * data->line_length + ((int)data->ray.x * 4)] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
 		//color = color_textures(textures[(int)y * 32 + (int)x]);
 		//my_mlx_pixel_put(data, data->ray.x, data->ray.y, color);
 		len--;
 		i++;
-		y += y_step;
+		//data->text.texy += y_step;
 		data->ray.y++;
 	}
+	data->ray.x++;
 	if (!color)
 		return (0);
-	data->ray.x++;
 	return (0);
 }
 

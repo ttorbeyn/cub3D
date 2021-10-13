@@ -27,7 +27,7 @@ int	make_image(t_data *data)
 	big_pixel(data, 0x00FF0000, (data->px - (data->userheight / 2)),
 		(data->py + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	//mlx_put_image_to_window(data->mlx, data->mlx_win, data->text.img, 0, 0);
+	mlx_put_image_to_window(data->mlx, data->mlx_win, data->text.img, 0, 0);
 	return (0);
 }
 

@@ -91,6 +91,7 @@ typedef struct	s_text
 	int		end;
 	int 	texx;
 	int 	texy;
+	int		texpos;
 	int		width;
 	int		height;
 }				t_text;
