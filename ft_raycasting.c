@@ -54,7 +54,7 @@ int	raycasting_vertical(t_data *data)
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
 		data->ray.VsideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
 	while (c < 7 && data->ray.VsideDistX >= 0 && data->ray.VsideDistY >= 0
-		&& data->ray.VsideDistX <= 8 && data->ray.VsideDistY <= 8)
+		&& data->ray.VsideDistX < 9 && data->ray.VsideDistY < 9)
 	{
 		x = (int)data->ray.VsideDistX;
 		if ((data->ray.angle > PI / 2 && data->ray.angle < ((3 * PI) / 2)))
@@ -148,19 +148,19 @@ int	raycasting(t_data *data)
 		if (angle < 0)
 			angle += (2 * PI);
 		data->ray.lengthf = data->ray.length * cosf(angle);
-		draw_3D(data, color);
-		//draw_ray(data, 0x0000FF00);
+		//draw_3D(data);
+		draw_ray(data, 0x0000FF00);
 		data->ray.angle += (PI / 3) / (data->width);
 		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;
 	}
-	//draw_minimap(data);
+	draw_minimap(data);
 	data->ray.angle = data->angle;
 	raycasting_vertical(data);
 	raycasting_horizontal(data);
 	data->ray.length = data->ray.lengthV;
 	if (data->ray.lengthV > data->ray.lengthH)
 		data->ray.length = data->ray.lengthH;
-	//draw_ray(data, 0xFF0000);
+	draw_ray(data, 0xFF0000);
 	return (0);
 }

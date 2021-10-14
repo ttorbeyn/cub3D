@@ -85,7 +85,7 @@ typedef struct	s_parsing
 typedef struct	s_text
 {
 	void 	*img;
-	char	*addr;
+	int		*addr;
 	int		bpp;
 	int		line_length;
 	int		end;
@@ -99,7 +99,7 @@ typedef struct	s_text
 
 typedef struct  s_data {
 	void		*img;
-	char		*addr;
+	int		*addr;
 	int			bpp;
 	int			line_length;
 	int			end;
@@ -119,6 +119,7 @@ typedef struct  s_data {
 	double 		lengthy;
 	int			userheight;
 	int			color_sky;
+	int			color_ground;
 	t_ray		ray;
 	t_keys		key;
 	t_text		text;
@@ -132,13 +133,14 @@ int set_key(t_data *data);
 int	set_data(t_data *data);
 //ft_key
 int	deal_key(t_data *data);
+int close_window(t_data *data);
 int	key_pressed(int keycode, t_data *data);
 int	key_released(int keycode, t_data *data);
 //ft_raycasting
 int	raycasting(t_data *data);
 //ft_draw
 int draw_ray(t_data *data, int color);
-int draw_3D(t_data *data, int color);
+int draw_3D(t_data *data);
 int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
 int print_minimap(t_data *data);

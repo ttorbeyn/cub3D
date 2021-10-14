@@ -12,34 +12,34 @@
 
 #include "cub3D.h"
 
-int	define_step(t_data * img, float angle)
+int	define_step(t_data * data, float angle)
 {
-	img->key.stepX = 0;
-	img->key.stepY = 0;
+	data->key.stepX = 0;
+	data->key.stepY = 0;
 	if ((angle > 0 && angle < (PI / 2)))
 	{
-		img->key.stepX = 1;
-		img->key.stepY = 1;
+		data->key.stepX = 1;
+		data->key.stepY = 1;
 	}
 	if ((angle > (PI / 2) && angle < PI))
 	{
-		img->key.stepX = -1;
-		img->key.stepY = 1;
+		data->key.stepX = -1;
+		data->key.stepY = 1;
 	}
 	if ((angle > PI && angle < (3 * PI / 2)))
 	{
-		img->key.stepX = -1;
-		img->key.stepY = -1;
+		data->key.stepX = -1;
+		data->key.stepY = -1;
 	}
 	if ((angle > (3 * PI / 2) && angle < (2 * PI)))
 	{
-		img->key.stepX = 1;
-		img->key.stepY = -1;
+		data->key.stepX = 1;
+		data->key.stepY = -1;
 	}
 	return (0);
 }
 
-int player_forward(t_data *img, float angle, float l)
+int player_forward(t_data *data, float angle, float l)
 {
 	int x;
 	int y;
@@ -47,17 +47,17 @@ int player_forward(t_data *img, float angle, float l)
 
 	dist = 0.3;
 	angle = check_overflow_angle(angle);
-	define_step(img, angle);
-	x = (int)(img->px / img->cellsize + (dist * img->key.stepX));
-	y = (int)(img->py / img->cellsize + (dist * img->key.stepY));
-	if (img->map[x][(int)img->py / img->cellsize] == '0')
-		img->px += l * cosf(angle);
-	if (img->map[(int)img->px / img->cellsize][y] == '0')
-		img->py += l * sinf(angle);
+	define_step(data, angle);
+	x = (int)(data->px / data->cellsize + (dist * data->key.stepX));
+	y = (int)(data->py / data->cellsize + (dist * data->key.stepY));
+	if (data->map[x][(int)data->py / data->cellsize] == '0')
+		data->px += l * cosf(angle);
+	if (data->map[(int)data->px / data->cellsize][y] == '0')
+		data->py += l * sinf(angle);
 	return (0);
 }
 
-int player_back(t_data *img, float angle, float l)
+int player_back(t_data *data, float angle, float l)
 {
 	int x;
 	int y;
@@ -65,77 +65,80 @@ int player_back(t_data *img, float angle, float l)
 
 	dist = 0.3;
 	angle = check_overflow_angle(angle);
-	define_step(img, angle);
-	x = (int)(img->px / img->cellsize - (dist * img->key.stepX));
-	y = (int)(img->py / img->cellsize - (dist * img->key.stepY));
-	if (img->map[x][(int)img->py / img->cellsize] == '0')
-		img->px -= l * cosf(angle);
-	if (img->map[(int)img->px / img->cellsize][y] == '0')
-		img->py -= l * sinf(angle);
+	define_step(data, angle);
+	x = (int)(data->px / data->cellsize - (dist * data->key.stepX));
+	y = (int)(data->py / data->cellsize - (dist * data->key.stepY));
+	if (data->map[x][(int)data->py / data->cellsize] == '0')
+		data->px -= l * cosf(angle);
+	if (data->map[(int)data->px / data->cellsize][y] == '0')
+		data->py -= l * sinf(angle);
 	return (0);
 }
 
-int	deal_key(t_data *img)
+int	deal_key(t_data *data)
 {
 	float	l;
 
-	mlx_destroy_image(img->mlx, img->img);
-	img->img = mlx_new_image(img->mlx, img->width, img->height);
-	l = (img->cellsize / 10) * 0.3;
-	if (img->key.w == 1)
-		player_forward(img, img->angle, l);
-	if (img->key.s == 1)
-		player_back(img, img->angle, l);
-	if (img->key.a == 1)
-		player_back(img, (img->angle + (PI / 2)), l);
-	if (img->key.d == 1)
-		player_forward(img, (img->angle + (PI / 2)), l);
-	if (img->key.r == 1)
-		img->angle += 0.03;
-	if (img->key.l == 1)
-		img->angle -= 0.03;
-	img->angle = check_overflow_angle(img->angle);
-	if (img->key.e == 1)
-	{
-		mlx_destroy_window(img->mlx, img->mlx_win);
-		exit (0);
-	}
-	make_image(img);
+	mlx_destroy_image(data->mlx, data->img);
+	data->img = mlx_new_image(data->mlx, data->width, data->height);
+	l = (data->cellsize / 10) * 0.3;
+	if (data->key.w == 1)
+		player_forward(data, data->angle, l);
+	if (data->key.s == 1)
+		player_back(data, data->angle, l);
+	if (data->key.a == 1)
+		player_back(data, (data->angle + (PI / 2)), l);
+	if (data->key.d == 1)
+		player_forward(data, (data->angle + (PI / 2)), l);
+	if (data->key.r == 1)
+		data->angle += 0.03;
+	if (data->key.l == 1)
+		data->angle -= 0.03;
+	data->angle = check_overflow_angle(data->angle);
+	if (data->key.e == 1)
+		close_window(data);
+	make_image(data);
 	return (0);
 }
 
-int	key_pressed(int keycode, t_data *img)
+int close_window(t_data *data)
+{
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit (0);
+}
+
+int	key_pressed(int keycode, t_data *data)
 {
 	if (keycode == PLAYER_FORWARD)
-		img->key.w = 1;
+		data->key.w = 1;
 	if (keycode == PLAYER_BACK)
-		img->key.s = 1;
+		data->key.s = 1;
 	if (keycode == PLAYER_LEFT)
-		img->key.a = 1;
+		data->key.a = 1;
 	if (keycode == PLAYER_RIGHT)
-		img->key.d = 1;
+		data->key.d = 1;
 	if (keycode == CAMERA_RIGHT)
-		img->key.r = 1;
+		data->key.r = 1;
 	if (keycode == CAMERA_LEFT)
-		img->key.l = 1;
+		data->key.l = 1;
 	if (keycode == ESC)
-		img->key.e = 1;
+		data->key.e = 1;
 	return (0);
 }
 
-int	key_released(int keycode, t_data *img)
+int	key_released(int keycode, t_data *data)
 {
 	if (keycode == PLAYER_FORWARD)
-		img->key.w = 0;
+		data->key.w = 0;
 	if (keycode == PLAYER_BACK)
-		img->key.s = 0;
+		data->key.s = 0;
 	if (keycode == PLAYER_LEFT)
-		img->key.a = 0;
+		data->key.a = 0;
 	if (keycode == PLAYER_RIGHT)
-		img->key.d = 0;
+		data->key.d = 0;
 	if (keycode == CAMERA_RIGHT)
-		img->key.r = 0;
+		data->key.r = 0;
 	if (keycode == CAMERA_LEFT)
-		img->key.l = 0;
+		data->key.l = 0;
 	return (0);
 }

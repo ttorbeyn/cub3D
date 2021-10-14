@@ -14,10 +14,10 @@
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	char	*dst;
+	int	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+	dst = (int *)data->addr + (y * data->line_length / 4 + x);
+	*dst = color;
 }
 
 int	big_pixel(t_data *data, int color, int i, int j, int l)
@@ -39,5 +39,7 @@ int	big_pixel(t_data *data, int color, int i, int j, int l)
 		i++;
 		x++;
 	}
+	if (!color || !data)
+		return (0);
 	return (0);
 }

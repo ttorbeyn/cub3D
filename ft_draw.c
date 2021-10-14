@@ -12,43 +12,6 @@
 
 #include "cub3D.h"
 
-int textures[]=               //all 32x32 textures
-		{
-				//Checkerboard
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-				1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,
-		};
-
 
 int	draw_ray(t_data *data, int color)
 {
@@ -67,20 +30,12 @@ int	draw_ray(t_data *data, int color)
 		y += (sinf(data->ray.angle));
 		c++;
 	}
+	if (!color)
+		return (0);
 	return (0);
 }
 
-int color_textures(int i)
-{
-	int c;
-
-	c = 0xff0000;
-	if (i == 1)
-		c = 0xffd700;
-	return (c);
-}
-
-int	draw_3D(t_data *data, int color)
+int	draw_3D(t_data *data)
 {
 	double	len;
 	double	start;
@@ -102,7 +57,7 @@ int	draw_3D(t_data *data, int color)
 	data->ray.y = 0;
 	while (i < start)
 	{
-		my_mlx_pixel_put(data, data->ray.x, data->ray.y, data->color_sky);
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->color_sky;
 		i++;
 		data->ray.y++;
 	}
@@ -123,47 +78,20 @@ int	draw_3D(t_data *data, int color)
 	data->text.texpos = (data->ray.y + (data->ray.y + len) / 2 + len / 2) * y_step;
 	while (len > 0 && i < data->height)
 	{
-		/*
-		texture[0].addr = (int *)mlx_get_data_addr(texture[0].data, &texture[0].bits_per_pixel, &texture[0].line_length, &texture[0].endian);
-		data.addr[y * recup->data.line_length / 4 + x] = texture[0].addr[texy * texture[0].line_length / 4 + texx];
-
-		data->text.addr = mlx_get_data_addr(data->text.data, &data->text.bpp, &data->text.line_length, &data->text.end);
-		data.addr[y * data.line_length / 4 + x] = data->text.addr[data->text.texy * data->text.line_length / 4 + data->text.texx];
-		*/
-		//data->text.texy = data->text.texpos & (data->text.height - 1);
-		//data->text.texpos += y_step;
-		data->addr[(int)data->ray.y * data->line_length + (int)data->ray.x * (data->bpp / 8)] =
-				data->text.addr[(int)data->text.texy * data->text.line_length + (int)data->text.texx * (data->text.bpp / 8)];
-		//color = color_textures(textures[(int)data->text.texy * 32 + (int)data->text.texx]);
-		//my_mlx_pixel_put(data, data->ray.x, data->ray.y, color);
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] =
+				data->text.addr[(int)data->text.texy * data->text.line_length / 4 + (int)data->text.texx];
 		len--;
 		i++;
 		data->text.texy += y_step;
 		data->ray.y++;
 	}
-	data->ray.x++;
-	if (!color)
-		return (0);
-	return (0);
-}
-
-int	print_minimap(t_data *data)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (data->map[x])
+	while (i < data->height)
 	{
-		y = 0;
-		while (data->map[x][y])
-		{
-			printf("%c", data->map[x][y]);
-			y++;
-		}
-		printf("\n");
-		x++;
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->color_ground;
+		i++;
+		data->ray.y++;
 	}
+	data->ray.x++;
 	return (0);
 }
 
@@ -180,8 +108,8 @@ int	draw_minimap(t_data *data)
 		{
 			if (data->map[x][y] == '1')
 				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
-			else
-				big_pixel(data, 0x007F7F7F, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
+			//else
+			//	big_pixel(data, 0x007F7F7F, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
 			y++;
 		}
 		x++;
