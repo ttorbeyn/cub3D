@@ -6,8 +6,8 @@ int	set_data(t_data *data)
 	data->py = 35;
 	data->angle = PI / 2;
 	data->cellsize = 10;
-	data->height = 1000;
-	data->width = 2000;
+	data->height = 1024;
+	data->width = 1926;
 	data->map = ft_parsing();
 	data->userheight = data->cellsize / 20;
 	data->color_sky = 0x7a7a7a;

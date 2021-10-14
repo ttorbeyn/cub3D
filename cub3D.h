@@ -51,8 +51,8 @@ typedef struct	s_ray
 	double lengthH;
 	double length;
 	double lengthf;
-	int x;
-	int y;
+	double x;
+	double y;
 	int side;
 }				t_ray;
 
@@ -89,11 +89,12 @@ typedef struct	s_text
 	int		bpp;
 	int		line_length;
 	int		end;
-	int 	texx;
-	int 	texy;
+	double 	texx;
+	double 	texy;
 	int		texpos;
 	int		width;
 	int		height;
+	unsigned int	*color;
 }				t_text;
 
 typedef struct  s_data {
