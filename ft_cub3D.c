@@ -40,6 +40,11 @@ int	main(void)
 	set_data(&data);
 	//remets a 0 toutes les keys
 	set_key(&data);
+	if (parsing(&data) == 1)
+	{
+		printf("ERROR MAP");
+		return (0);
+	}
 	//Creation d'une fenetre qui va acceuillir les pixels qu'on imprime dessus
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, data.width, data.height, "cub3D");

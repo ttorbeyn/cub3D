@@ -14,7 +14,7 @@ char	ft_textures()
 }
 */
 
-char	**ft_parsing(void)
+char	**ft_recup_map(void)
 {
 	int	fd;
 	int	ret;
@@ -37,4 +37,37 @@ char	**ft_parsing(void)
 			return (map);
 		}
 	}
+}
+
+int		check_map(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			if (data->map[x][y] == '0' || data->map[x][y] == '1')
+				y++;
+			else if (data->map[x][y] == 'N' || data->map[x][y] == 'S' || data->map[x][y] == 'E' || data->map[x][y] == 'W')
+			{
+				data->player_cardinal = data->map[x][y];
+				y++;
+			}
+			else
+				return (1);
+		}
+		x++;
+	}
+	return (0);
+}
+
+int		parsing(t_data *data)
+{
+	if (check_map(data) == 1)
+		return (1);
+	return (0);
 }

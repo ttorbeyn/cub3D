@@ -99,7 +99,7 @@ typedef struct	s_text
 
 typedef struct  s_data {
 	void		*img;
-	int		*addr;
+	int			*addr;
 	int			bpp;
 	int			line_length;
 	int			end;
@@ -120,6 +120,9 @@ typedef struct  s_data {
 	int			userheight;
 	int			color_sky;
 	int			color_ground;
+	int			map_heigth;
+	int			map_width;
+	char		player_cardinal;
 	t_ray		ray;
 	t_keys		key;
 	t_text		text;
@@ -145,7 +148,9 @@ int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
 int print_minimap(t_data *data);
 //parsing
-char	**ft_parsing(void);
+char	**ft_recup_map(void);
+int		check_map(t_data *data);
+int		parsing(t_data *data);
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		big_pixel(t_data *data, int color, int i, int j, int l);
