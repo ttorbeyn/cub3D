@@ -81,7 +81,7 @@ int	deal_key(t_data *data)
 
 	mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, data->width, data->height);
-	l = (data->cellsize / 10) * 0.3;
+	l = (data->cellsize / 10) * 1;
 	if (data->key.w == 1)
 		player_forward(data, data->angle, l);
 	if (data->key.s == 1)
@@ -91,9 +91,9 @@ int	deal_key(t_data *data)
 	if (data->key.d == 1)
 		player_forward(data, (data->angle + (PI / 2)), l);
 	if (data->key.r == 1)
-		data->angle += 0.03;
+		data->angle += 0.05;
 	if (data->key.l == 1)
-		data->angle -= 0.03;
+		data->angle -= 0.05;
 	data->angle = check_overflow_angle(data->angle);
 	if (data->key.e == 1)
 		close_window(data);

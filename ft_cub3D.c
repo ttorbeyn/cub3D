@@ -17,7 +17,6 @@ int get_text(t_data *data)
 	char *path = "./textures/eagle.xpm";
 	data->text.img = mlx_xpm_file_to_image(data->mlx, path, &data->text.width, &data->text.height);
 	data->text.addr = (int *)mlx_get_data_addr(data->text.img, &data->text.bpp, &data->text.line_length, &data->text.end);
-	//*(unsigned int *)data->text.addr = *data->text.color;
 	return (0);
 }
 
@@ -32,7 +31,7 @@ int	make_image(t_data *data)
 	return (0);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_data	data;
 
@@ -40,11 +39,20 @@ int	main(void)
 	set_data(&data);
 	//remets a 0 toutes les keys
 	set_key(&data);
+	/*
+	if (ac < 2 || ac > 3)
+	{
+		printf("ERROR ARG\n");
+		return (0);
+	}*/
+	if (!av || !ac)
+		return (0);
 	if (parsing(&data) == 1)
 	{
-		printf("ERROR MAP");
+		printf("ERROR MAP\n");
 		return (0);
 	}
+	print_minimap(&data);
 	//Creation d'une fenetre qui va acceuillir les pixels qu'on imprime dessus
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, data.width, data.height, "cub3D");

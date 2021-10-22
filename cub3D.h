@@ -126,9 +126,14 @@ typedef struct  s_data {
 	t_ray		ray;
 	t_keys		key;
 	t_text		text;
+	t_parsing	parsing;
 }               t_data;
 
-
+//get_next_line
+size_t		ft_strlen(char *s);
+char		*ft_strdup(char *s1);
+char		*ft_strjoin(char *s1, char *s2);
+int			get_next_line(int fd, char **line);
 //ft_cub3D
 int	make_image(t_data *data);
 //ft_set
@@ -148,7 +153,7 @@ int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
 int print_minimap(t_data *data);
 //parsing
-char	**ft_recup_map(void);
+char	**recup_map(void);
 int		check_map(t_data *data);
 int		parsing(t_data *data);
 //ft_mlx_utils
