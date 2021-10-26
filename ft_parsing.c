@@ -15,13 +15,10 @@ char	ft_textures()
 
 static	int is_space(char str)
 {
-	int	i;
-
-	i = 0;
-	while (str == ' ' || str == '\t' || str == '\n' || str == '\v'
-		   || str == '\f' || str == '\r')
-		i++;
-	return (i);
+	if (str == ' ' || str == '\t' || str == '\n' || str == '\v'
+		   || str == '\f' || str == '\r' || str == 0)
+		return (1);
+	return (0);
 }
 
 char	**recup_map(void)
@@ -49,12 +46,19 @@ char	**recup_map(void)
 	}
 }
 
-int get_texture(char *text, t_data *data, int i)
+char *get_texture(int i, char *str)
 {
+	char *text = NULL;
+
 	i++;
 	while (is_space(str[i]))
 		i++;
-
+	if (str[i] == '.' && str[i + 1] == '/')
+	{
+		i += 2;
+		text = ft_strdup(&str[i]);
+	}
+	return (text);
 }
 
 int check_texture(char *str, t_data *data)
@@ -64,16 +68,16 @@ int check_texture(char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		while (is_space(str[i]))
+		while(is_space(str[i]))
 			i++;
 		if (str[i] == 'N' && str[i + 1] == 'O')
-			get_texture(data->parsing.text_no, data, i);
-		else if (str[i] == 'S' && str[i + 1] == 'O', i)
-			get_texture(data->parsing.text_so, data);
-		else if (str[i] == 'W' && str[i + 1] == 'E', i)
-			get_texture(data->parsing.text_we, data);
-		else if (str[i] == 'E' && str[i + 1] == 'A', i)
-			get_texture(data->parsing.text_ea, data);
+			data->parsing.text_no = get_texture(i, str);
+		else if (str[i] == 'S' && str[i + 1] == 'O')
+			data->parsing.text_so = get_texture(i, str);
+		else if (str[i] == 'W' && str[i + 1] == 'E')
+			data->parsing.text_we = get_texture(i, str);
+		else if (str[i] == 'E' && str[i + 1] == 'A')
+			data->parsing.text_ea = get_texture(i, str);
 		else
 			return (1);
 	}
@@ -91,10 +95,10 @@ int		recup(char *file, t_data *data)
 	while (ret == 1)
 	{
 		ret = get_next_line(fd, &recup);
-		if(check_texture(recup, data) == 1 || check_map(recup, data) == 1)
+		if(check_texture(recup, data) == 1 || check_map(data) == 1)
 			return (1);
 	}
-
+	return (0);
 }
 
 int		check_map(t_data *data)
@@ -103,30 +107,76 @@ int		check_map(t_data *data)
 	int	y;
 
 	x = 0;
+	y = 0;
+	while (data->map[0][y])
+	{
+		while (is_space(data->map[0][y]))
+			y++;
+		if (data->map[0][y] != '1')
+			return (1);
+		y++;
+	}
 	while (data->map[x])
 	{
 		y = 0;
-		if (data->map[x][y] != '1')
-			return (1);
 		while (data->map[x][y])
 		{
+			while (is_space(data->map[x][y]))
+				y++;
+			if (data->map[x][y] != '1')
+				return (1);
+			else if (data->map[x - 1][y] != '1')
+		}
+	}
+	return (0);
+/*
+	x = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			while (is_space(data->map[x][y]))
+				y++;
+			if (data->map[x][y] != '1')
+			{
+				printf("Pas de 1 au debut de la ligne %d\n", x);
+				return (1);
+			}
 			if (data->map[x][y] == '0' || data->map[x][y] == '1')
 				y++;
-			else if (is_coordinate(data->map[x][y]))
+			if (is_coordinate(data->map[x][y]))
 			{
 				data->player_cardinal = data->map[x][y];
 				data->px = x * data->cellsize;
 				data->py = y * data->cellsize;
 				y++;
 			}
-			else
+			if (data->map[x][y - 1] == '1' && is_space(data->map[x][y]))
+			{
+				while (is_space(data->map[x][y]))
+					y++;
+				if (data->map[x][y] != '1')
+				{
+					printf("CARACTERE INVALIDE 1 |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
+					return (1);
+				}
+			}
+			else if (data->map[x][y] != '0' && data->map[x][y] != '1' && !is_coordinate(data->map[x][y]))
+			{
+				printf("CARACTERE INVALIDE 2 |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
 				return (1);
+			}
+			if (data->map[x][y] != '1')
+			{
+				printf("PAS DE 1 A LA FIN\n |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
+				return (1);
+			}
 		}
-		if (data->map[x][--y] != '1')
-			return (1);
-		x++;
+	x++;
 	}
 	return (0);
+*/
 }
 
 int		parsing(t_data *data)
@@ -135,3 +185,4 @@ int		parsing(t_data *data)
 		return (1);
 	return (0);
 }
+

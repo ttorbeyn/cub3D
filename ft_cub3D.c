@@ -47,12 +47,14 @@ int	main(int ac, char **av)
 	}*/
 	if (!av || !ac)
 		return (0);
+	print_minimap(&data);
+
 	if (parsing(&data) == 1)
 	{
 		printf("ERROR MAP\n");
 		return (0);
 	}
-	print_minimap(&data);
+
 	//Creation d'une fenetre qui va acceuillir les pixels qu'on imprime dessus
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, data.width, data.height, "cub3D");
