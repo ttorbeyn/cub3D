@@ -31,8 +31,8 @@ int	set_ray(t_data *data)
 	data->ray.lengthH = 0;
 	data->ray.length = 0;
 	data->ray.side = 0;
-	data->map_heigth = 4;
-	data->map_width = 11;
+	data->map_heigth = 13;
+	data->map_width = 32;
 	return (0);
 }
 
@@ -127,8 +127,6 @@ int	raycasting(t_data *data)
 	data->ray.angle = check_overflow_angle(data->angle - (PI / 6));
 	data->ray.x = 0;
 	x = 0;
-
-
 	while (x < data->width)
 	{
 		color = 0x00696969;

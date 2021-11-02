@@ -1,23 +1,25 @@
 #include "cub3D.h"
 
-int		is_coordinate(char str)
+int get_coordinate(t_data *data)
 {
-	if (str == 'N' || str == 'S' || str == 'E' || str == 'W')
-		return (1);
-	return (0);
-}
-/*
-char	ft_textures()
-{
-	if (is_correct(str))
-}
-*/
+	int x;
+	int y;
 
-static	int is_space(char str)
-{
-	if (str == ' ' || str == '\t' || str == '\n' || str == '\v'
-		   || str == '\f' || str == '\r' || str == 0)
-		return (1);
+	x = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			if (is_coordinate(data->map[x][y]))
+			{
+				data->px = x * data->cellsize;
+				data->py = y * data->cellsize;
+			}
+			y++;
+		}
+		x++;
+	}
 	return (0);
 }
 
@@ -84,7 +86,7 @@ int check_texture(char *str, t_data *data)
 	return (0);
 }
 
-int		recup(char *file, t_data *data)
+int	recup(char *file, t_data *data)
 {
 	int ret;
 	int fd;
@@ -101,7 +103,21 @@ int		recup(char *file, t_data *data)
 	return (0);
 }
 
-int		check_map(t_data *data)
+int check_surround(t_data *data, int x, int y)
+{
+	if (is_space(data->map[x - 1][y]) ||
+		is_space(data->map[x][y - 1]) ||
+		is_space(data->map[x - 1][y - 1]) ||
+		is_space(data->map[x + 1][y]) ||
+		is_space(data->map[x][y + 1]) ||
+		is_space(data->map[x + 1][y + 1]) ||
+		is_space(data->map[x - 1][y + 1]) ||
+		is_space(data->map[x + 1][y - 1]))
+		return (1);
+	return (0);
+}
+
+int	check_map(t_data *data)
 {
 	int	x;
 	int	y;
@@ -123,10 +139,17 @@ int		check_map(t_data *data)
 		{
 			while (is_space(data->map[x][y]))
 				y++;
-			if (data->map[x][y] != '1')
-				return (1);
-			else if (data->map[x - 1][y] != '1')
+			if (is_coordinate(data->map[x][y]) || data->map[x][y] == '0')
+			{
+				if (check_surround(data, x, y))
+				{
+					printf("ERROR MAP |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
+					return (1);
+				}
+			}
+			y++;
 		}
+		x++;
 	}
 	return (0);
 /*
@@ -179,10 +202,9 @@ int		check_map(t_data *data)
 */
 }
 
-int		parsing(t_data *data)
+int	parsing(t_data *data)
 {
 	if (check_map(data) == 1)
 		return (1);
 	return (0);
 }
-

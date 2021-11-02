@@ -152,10 +152,14 @@ int draw_3D(t_data *data);
 int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
 int print_minimap(t_data *data);
-//parsing
+//ft_parsing
 char	**recup_map(void);
 int		check_map(t_data *data);
 int		parsing(t_data *data);
+int get_coordinate(t_data *data);
+//ft_parsing_utils
+int is_space(char str);
+int	is_coordinate(char str);
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		big_pixel(t_data *data, int color, int i, int j, int l);
