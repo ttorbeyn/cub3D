@@ -108,6 +108,7 @@ typedef struct  s_data {
 	int			dx;
 	int			dy;
 	float		angle;
+	char 		orientation;
 	void		*mlx;
 	void 		*mlx_win;
 	char		**map;

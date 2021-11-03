@@ -42,7 +42,7 @@ int	raycasting_vertical(t_data *data)
 	int	x;
 
 	c = 0;
-	if ((data->ray.angle >= PI / 2 && data->ray.angle <= ((3 * PI) / 2)))
+	if ((data->ray.angle > PI / 2 && data->ray.angle < ((3 * PI) / 2)))
 	{
 		data->ray.stepX = -1;
 		data->ray.dx = data->ray.posX - data->ray.mapX;
@@ -52,10 +52,10 @@ int	raycasting_vertical(t_data *data)
 		data->ray.stepX = 1;
 		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
 	}
-	data->ray.VsideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
 		data->ray.VsideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
-	while (c < (data->map_heigth - 2) && data->ray.VsideDistX >= 0 && data->ray.VsideDistY >= 0
+	data->ray.VsideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
+	while (c < (data->map_heigth - 1) && data->ray.VsideDistX >= 0 && data->ray.VsideDistY >= 0
 		&& data->ray.VsideDistX < data->map_heigth && data->ray.VsideDistY < data->map_width)
 	{
 		x = (int)data->ray.VsideDistX;
@@ -63,13 +63,13 @@ int	raycasting_vertical(t_data *data)
 			x = (int)data->ray.VsideDistX - 1;
 		if (data->map[x][(int)data->ray.VsideDistY] != '1')
 		{
-			data->ray.VsideDistX += data->ray.stepX;
 			if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
 				data->ray.VsideDistY += tanf(data->ray.angle) * data->ray.stepX;
+			data->ray.VsideDistX += data->ray.stepX;
 			c++;
 		}
 		else
-			c = data->map_heigth - 2;
+			c = data->map_heigth - 1;
 	}
 	data->ray.deltaDistX = data->ray.VsideDistX - data->ray.posX;
 	data->ray.deltaDistY = data->ray.VsideDistY - data->ray.posY;
@@ -96,7 +96,7 @@ int	raycasting_horizontal(t_data *data)
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2) && tanf(data->ray.angle) != 0)
 		data->ray.HsideDistX = data->ray.posX + ((data->ray.dy * data->ray.stepY) / tanf(data->ray.angle));
 	data->ray.HsideDistY = data->ray.posY + (data->ray.dy * data->ray.stepY);
-	while (c < (data->map_width - 2) && data->ray.HsideDistX >= 0 && data->ray.HsideDistY >= 0
+	while (c < (data->map_width - 1) && data->ray.HsideDistX >= 0 && data->ray.HsideDistY >= 0
 		&& data->ray.HsideDistX < data->map_heigth && data->ray.HsideDistY < data->map_width)
 	{
 		y = (int)data->ray.HsideDistY;
@@ -110,7 +110,7 @@ int	raycasting_horizontal(t_data *data)
 			c++;
 		}
 		else
-			c = data->map_width - 2;
+			c = data->map_width - 1;
 	}
 	data->ray.deltaDistX = data->ray.HsideDistX - data->ray.posX;
 	data->ray.deltaDistY = data->ray.HsideDistY - data->ray.posY;
@@ -148,7 +148,7 @@ int	raycasting(t_data *data)
 		if (angle < 0)
 			angle += (2 * PI);
 		data->ray.lengthf = data->ray.length * cosf(angle);
-		draw_3D(data);
+		//draw_3D(data);
 		draw_ray(data, 0x0000FF00);
 		data->ray.angle += (PI / 3) / (data->width);
 		data->ray.angle = check_overflow_angle(data->ray.angle);

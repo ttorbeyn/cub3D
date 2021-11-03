@@ -2,9 +2,6 @@
 
 int	set_data(t_data *data)
 {
-	//data->px = 250;
-	//data->py = 300;
-
 	data->angle = PI / 2;
 	data->cellsize = 30;
 	data->height = 1000;
@@ -13,7 +10,6 @@ int	set_data(t_data *data)
 	data->userheight = data->cellsize / 20;
 	data->color_sky = 0x7a7a7a;
 	data->color_ground = 0x00FF0000;
-	get_coordinate(data);
 	return (0);
 }
 
