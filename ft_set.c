@@ -2,6 +2,8 @@
 
 int	set_data(t_data *data)
 {
+	data->map_heigth = 13;
+	data->map_width = 32;
 	data->angle = PI / 2;
 	data->cellsize = 30;
 	data->height = 1000;

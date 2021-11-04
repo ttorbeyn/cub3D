@@ -130,48 +130,61 @@ typedef struct  s_data {
 	t_parsing	parsing;
 }               t_data;
 
-//get_next_line
-size_t		ft_strlen(char *s);
-char		*ft_strdup(char *s1);
-char		*ft_strjoin(char *s1, char *s2);
-int			get_next_line(int fd, char **line);
 //ft_cub3D
 int	make_image(t_data *data);
+
 //ft_set
 int set_key(t_data *data);
 int	set_data(t_data *data);
+
 //ft_key
 int	deal_key(t_data *data);
 int close_window(t_data *data);
 int	key_pressed(int keycode, t_data *data);
 int	key_released(int keycode, t_data *data);
+
 //ft_raycasting
+int	set_ray(t_data *data);
+int	raycasting_horizontal(t_data *data);
+int	raycasting_vertical(t_data *data);
 int	raycasting(t_data *data);
+
 //ft_draw
 int draw_ray(t_data *data, int color);
 int draw_3D(t_data *data);
 int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
 int print_minimap(t_data *data);
+
 //ft_parsing
+int	parsing(t_data *data);
+
+//ft_parsing_map
+int check_coordinate(t_data *data);
+int check_surround(t_data *data, int x, int y);
+int	check_map(t_data *data);
+int	parsing(t_data *data);
 char	**recup_map(void);
-int		check_map(t_data *data);
-int		parsing(t_data *data);
-int get_coordinate(t_data *data);
+
+//ft_parsing_textures
+
 //ft_parsing_utils
 int is_space(char str);
 int	is_coordinate(char str);
-//ft_mlx_utils
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		big_pixel(t_data *data, int color, int i, int j, int l);
+
 //ft_utils.c
 double	check_overflow_angle(double angle);
+
 //get_next_line
 int	get_next_line(int fd, char **line);
+
 //get_next_line_utils
 size_t	ft_strlen(char *s);
 char	*ft_strdup(char *s1);
 char	*ft_strjoin(char *s1, char *s2);
 
+//ft_mlx_utils
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+int		big_pixel(t_data *data, int color, int i, int j, int l);
 
 #endif
