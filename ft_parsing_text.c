@@ -19,7 +19,7 @@ char	*ft_revstr(char *str)
 	new[i] = '\0';
 	return (new);
 }
-
+/*
 char	*convert_to_hexa(char *str)
 {
 	int nbr;
@@ -28,59 +28,61 @@ char	*convert_to_hexa(char *str)
 	char *text;
 	int i;
 
+
 	nbr = atoi(str);
 	text = malloc(100);
-	printf("%d\n", nbr);
+	if (nbr == 0)
+	{
+		text = "00";
+		return (text);
+	}
+	//printf("%d\n", nbr);
 	i = 0;
 	while (nbr >= len)
 	{
 		text[i] = base[nbr % len];
-		printf("text\t|%c|\n", text[i]);
-		printf("base\t|%c|\n",  base[nbr % len]);
+		//printf("text\t|%c|\n", text[i]);
+		//printf("base\t|%c|\n",  base[nbr % len]);
 		nbr = nbr / len;
-		printf("%d\n", nbr);
+	//	printf("%d\n", nbr);
 
 		i++;
 	}
-	printf("%d\n", nbr);
-
 	text[i++] = base[nbr];
 	text[i] = '\0';
 	text = ft_revstr(text);
-	printf("%s\n", text);
+
 	return(text);
 }
+*/
 
-char	*get_color(int i, char *str)
+
+int get_color(int i, char *str)
 {
-	char	*color = "0x00";
-	char	*color2;
-	int x;
+	int color = 0;
+	int c = 0;
 
 	i++;
+	printf("%s\n", str);
 	while (is_space(str[i]))
 		i++;
 	while (str[i])
 	{
-		color2 = malloc(10 * sizeof(char *));
-		x = 0;
-		while (str[i] != ',')
-			color2[x++] = str[i++];
-		if (str[i] == ',')
+		while (str[i] != ',' && c < 5)
 		{
-			printf("%s\n", color);
-
-			strcat(color, convert_to_hexa(color2));
-
-			printf("%s\n", color);
-
+			printf("color\t|%d|\n", color);
+			printf("str[i]\t|%d|\n", str[i] - 48);
+			color = (color * 10) + (str[i] - 48);
 			i++;
-			free(color2);
+			c++;
+			//printf("%d\n", color);
 		}
+		if (str[i] == ',')
+			i++;
 		else
-			return (NULL);
+			return (0);
 	}
-	printf("%s\n", color);
+	printf("%d\n", color);
 	return (color);
 }
 
@@ -115,18 +117,14 @@ int	check_texture(char *str, t_data *data)
 		while(is_space(str[i]))
 			i++;
 		//printf("|%c|\n", str[i]);
-
 		if (str[i] == 'N' && str[i + 1] == 'O')
 		{
 			data->parsing.text_no = get_texture(i, str);
-			i += 2;
-			//printf("|%c|\n", str[i]);
 			break;
 		}
 		else if (str[i] == 'S' && str[i + 1] == 'O')
 		{
 			data->parsing.text_so = get_texture(i, str);
-			i += 2;
 			break;
 		}
 		else if (str[i] == 'W' && str[i + 1] == 'E')
@@ -143,18 +141,22 @@ int	check_texture(char *str, t_data *data)
 		}
 		else if (str[i] == 'F')
 		{
-
 			data->parsing.text_f = get_color(i, str);
 			i++;
 		}
-		//else if (str[i] == 'C')
-		//	data->parsing.text_c = get_color(i, str);
+		else if (str[i] == 'C')
+		{
+			data->parsing.text_c = get_color(i, str);
+			i++;
+		}
 		else
+		{
+			//printf("|%c|\n", str[i]);
+			//return (1);
 			break;
-		//	return (1);
+		}
 		//i++;
 	}
-
 	return (0);
 }
 
@@ -176,6 +178,9 @@ int	recup(char *file, t_data *data)
 	printf("SO|%s|\n", data->parsing.text_so);
 	printf("WE|%s|\n", data->parsing.text_we);
 	printf("EA|%s|\n", data->parsing.text_ea);
+	printf("F|%d|\n", data->parsing.text_f);
+	printf("C|%d|\n", data->parsing.text_c);
+
 	//printf("hello i am here\n");
 
 	return (0);

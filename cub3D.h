@@ -78,8 +78,8 @@ typedef struct	s_parsing
 	char *text_we;
 	char *text_ea;
 	char *text_s;
-	char *text_f;
-	char *text_c;
+	int text_f;
+	int text_c;
 }				t_parsing;
 
 typedef struct	s_text
