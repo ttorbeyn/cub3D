@@ -12,13 +12,6 @@
 
 #include "cub3D.h"
 
-int get_text(t_data *data)
-{
-	char *path = "./textures/eagle.xpm";
-	data->text.img = mlx_xpm_file_to_image(data->mlx, path, &data->text.width, &data->text.height);
-	data->text.addr = (int *)mlx_get_data_addr(data->text.img, &data->text.bpp, &data->text.line_length, &data->text.end);
-	return (0);
-}
 
 int	make_image(t_data *data)
 {
@@ -54,7 +47,6 @@ int	main(int ac, char **av)
 		printf("ERROR MAP\n");
 		return (0);
 	}
-
 	//Creation d'une fenetre qui va acceuillir les pixels qu'on imprime dessus
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, data.width, data.height, "cub3D");

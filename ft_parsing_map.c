@@ -2,6 +2,36 @@
 
 /*
 
+	Vérifie que la map ne soit composée que de "01NSWE "
+
+*/
+
+int check_valid_char_map(t_data *data)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (data->map[x])
+	{
+		y = 0;
+		while (data->map[x][y])
+		{
+			if (strchr("NSWE01 ", data->map[x][y]))
+				y++;
+			else
+			{
+				printf("NOT GOOD CHAR\t|%c|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
+				return (1);
+			}
+		}
+	x++;
+	}
+	return (0);
+}
+
+/*
+
 	Vérifie qu'il y ait pas plusieurs fois une position de départ pour le joueur (N, S, E, W).
  	Attribue la position du joueur de base.
  	Change la lettre en un 0.
@@ -12,15 +42,10 @@ int check_coordinate(t_data *data)
 {
 	int x;
 	int y;
-	int tab[256];
+	int c;
 
 	x = 0;
-	while (x < 256)
-	{
-		tab[x] = 0;
-		x++;
-	}
-	x = 0;
+	c = 0;
 	while (data->map[x])
 	{
 		y = 0;
@@ -28,13 +53,13 @@ int check_coordinate(t_data *data)
 		{
 			if (is_coordinate(data->map[x][y]))
 			{
-				if (tab[(int)data->map[x][y]] < 1)
+				if (c < 1)
 				{
 					data->px = x * data->cellsize;
 					data->py = y * data->cellsize;
 					data->orientation = data->map[x][y];
-					tab[(int)data->map[x][y]]++;
 					data->map[x][y] = '0';
+					c++;
 				}
 				else
 				{
@@ -45,6 +70,11 @@ int check_coordinate(t_data *data)
 			y++;
 		}
 		x++;
+	}
+	if (!c)
+	{
+		printf("PAS DE POSITION DE DEPART\n");
+		return (1);
 	}
 	return (0);
 }
@@ -129,34 +159,41 @@ int	check_map(t_data *data)
 	return (0);
 }
 
-
-
 /*
 
 	Ouvre et récupere la map grace a un get_next_line
+ 	Defini la hauteur et la longueur de la map
 
 */
 
-char	**recup_map(void)
+char	**recup_map(t_data *data)
 {
 	int	fd;
 	int	ret;
 	char	*line;
 	char	**map;
 	int	x;
+	size_t len;
 
-	fd = open("map2.cub", O_RDONLY);
+	len = 0;
+	fd = open("map.cub", O_RDONLY);
 	x = 0;
-	map = malloc(sizeof(char *) * 100);
+	map = malloc(sizeof(char *) * 200);
 	while (1)
 	{
 		ret = get_next_line(fd, &line);
 		map[x] = ft_strdup(line);
+		if (ft_strlen(map[x]) > len)
+			len = ft_strlen(map[x]);
+		//printf("len|%zu\n", len);
 		free(line);
 		x++;
 		if (ret == 0)
 		{
 			map[x] = NULL;
+			//printf("x|%d\n", x);
+			data->map_heigth = x - 1;
+			data->map_width = len - 1;
 			return (map);
 		}
 	}

@@ -121,14 +121,12 @@ int	raycasting(t_data *data)
 {
 	float	angle;
 	int		x;
-	int		color;
 
 	data->ray.angle = check_overflow_angle(data->angle - (PI / 6));
 	data->ray.x = 0;
 	x = 0;
 	while (x < data->width)
 	{
-		color = 0x00696969;
 		set_ray(data);
 		raycasting_vertical(data);
 		raycasting_horizontal(data);
@@ -139,7 +137,6 @@ int	raycasting(t_data *data)
 			data->ray.VsideDistX = data->ray.HsideDistX;
 			data->ray.VsideDistY = data->ray.HsideDistY;
 			data->ray.side = 1;
-			color = 0x00808080;
 		}
 		angle = data->angle - data->ray.angle;
 		if (angle > (2 * PI))
@@ -147,19 +144,21 @@ int	raycasting(t_data *data)
 		if (angle < 0)
 			angle += (2 * PI);
 		data->ray.lengthf = data->ray.length * cosf(angle);
-		//draw_3D(data);
+		draw_3D(data);
 		draw_ray(data, 0x0000FF00);
 		data->ray.angle += (PI / 3) / (data->width);
 		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;
 	}
 	draw_minimap(data);
-	data->ray.angle = data->angle;
+/*
+	data->ray.angle = check_overflow_angle(data->angle);
 	raycasting_vertical(data);
 	raycasting_horizontal(data);
 	data->ray.length = data->ray.lengthV;
 	if (data->ray.lengthV > data->ray.lengthH)
 		data->ray.length = data->ray.lengthH;
 	draw_ray(data, 0xFF0000);
+*/
 	return (0);
 }

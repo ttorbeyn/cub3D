@@ -163,14 +163,21 @@ int	parsing(t_data *data);
 int check_coordinate(t_data *data);
 int check_surround(t_data *data, int x, int y);
 int	check_map(t_data *data);
-int	parsing(t_data *data);
-char	**recup_map(void);
+char	**recup_map(t_data *data);
+int check_valid_char_map(t_data *data);
 
 //ft_parsing_textures
+int get_text(t_data *data);
+int	check_texture(char *str, t_data *data);
+char	*get_texture(int i, char *str);
+int	recup(char *file, t_data *data);
 
 //ft_parsing_utils
 int is_space(char str);
 int	is_coordinate(char str);
+void	fill_tab_zero(void *s, size_t n);
+int		ft_atoi_base(char *str, char *base);
+char	*ft_itoa(int nbr);
 
 //ft_utils.c
 double	check_overflow_angle(double angle);
@@ -185,6 +192,6 @@ char	*ft_strjoin(char *s1, char *s2);
 
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int		big_pixel(t_data *data, int color, int i, int j, int l);
+int	big_pixel(t_data *data, int color, int i, int j, int l);
 
 #endif
