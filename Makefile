@@ -19,7 +19,8 @@ FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 
 LIBFT			=	@ cd libft && make ;
 
-SRC				=				ft_cub3D.c \
+SRC				=				libft/libft.a \
+								ft_cub3D.c \
 								ft_set.c \
 								ft_raycasting.c \
 								ft_mlx_utils.c \
@@ -30,9 +31,7 @@ SRC				=				ft_cub3D.c \
 								ft_parsing_map.c \
 								ft_parsing_utils.c \
 								ft_utils.c \
-								gnl/get_next_line.c \
-                                gnl/get_next_line_utils.c
-
+								gnl/get_next_line.c
 
 OBJS			=	$(SRC:.c=.o)
 
@@ -43,7 +42,7 @@ NAME			=	cub3D
 all: 		$(NAME)
 
 $(NAME):
-			@(LIBFT)
+			@$(LIBFT)
 			@$(CC) $(FRAMEWORKS) $(CFLAGS) $(SRC) $(INCLUDE) -o $(NAME)
 
 clean:

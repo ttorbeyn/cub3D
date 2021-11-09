@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 #include <stdio.h>
 
 int	set_ray(t_data *data)

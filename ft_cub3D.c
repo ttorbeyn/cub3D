@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 
 int	make_image(t_data *data)

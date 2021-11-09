@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

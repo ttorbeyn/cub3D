@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 int	define_step(t_data * data, float angle)
 {

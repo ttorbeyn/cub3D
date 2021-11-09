@@ -1,4 +1,4 @@
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 int	parsing(t_data *data)
 {

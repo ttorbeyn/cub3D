@@ -1,4 +1,4 @@
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
 char	*ft_revstr(char *str)
 {
@@ -79,7 +79,7 @@ int get_color(int i, char *str)
 		i++;
 	while (str[i])
 	{
-		while (str[i] != ',' && str[i])
+		while (str[i] != ',' && str[i] && ft_isdigit(str[i]))
 		{
 			printf("color\t|%d|\n", color);
 			printf("str[i]\t|%d|\n", str[i] - 48);

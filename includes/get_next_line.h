@@ -20,9 +20,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-size_t		ft_strlen(char *s);
-char		*ft_strdup(char *s1);
-char		*ft_strjoin(char *s1, char *s2);
 int			get_next_line(int fd, char **line);
 
 #endif

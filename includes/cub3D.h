@@ -18,7 +18,8 @@
 
 # include <limits.h>
 
-#include "includes/get_next_line.h"
+# include "get_next_line.h"
+# include "libft.h"
 
 # define BUFFER_SIZE 10
 # define PI 3.14159265359
@@ -183,14 +184,6 @@ char	*ft_itoa(int nbr);
 
 //ft_utils.c
 double	check_overflow_angle(double angle);
-
-//get_next_line
-int	get_next_line(int fd, char **line);
-
-//get_next_line_utils
-size_t	ft_strlen(char *s);
-char	*ft_strdup(char *s1);
-char	*ft_strjoin(char *s1, char *s2);
 
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);

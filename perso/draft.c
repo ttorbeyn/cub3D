@@ -1,6 +1,6 @@
 #include <mlx.h>
 #include <math.h>
-#include "../cub3D.h"
+#include "../includes/cub3D.h"
 
 # define
 
