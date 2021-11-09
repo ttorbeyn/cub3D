@@ -17,6 +17,8 @@ INCLUDE			=	-I include
 
 FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 
+LIBFT			=	@ cd libft && make ;
+
 SRC				=				ft_cub3D.c \
 								ft_set.c \
 								ft_raycasting.c \
@@ -41,9 +43,11 @@ NAME			=	cub3D
 all: 		$(NAME)
 
 $(NAME):
+			@(LIBFT)
 			@$(CC) $(FRAMEWORKS) $(CFLAGS) $(SRC) $(INCLUDE) -o $(NAME)
 
 clean:
+			@cd libft && make clean
 			$(RM) $(OBJS)
 
 fclean:		clean

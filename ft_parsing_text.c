@@ -56,7 +56,18 @@ char	*convert_to_hexa(char *str)
 }
 */
 
+/*
+int ato3i(char *str, int *a, int *b, int *c)
+{
+	int i;
 
+	i = 0;
+	if(a)
+	{
+		while(str[i] && is_digit)
+	}
+}
+*/
 int get_color(int i, char *str)
 {
 	int color = 0;
@@ -68,7 +79,7 @@ int get_color(int i, char *str)
 		i++;
 	while (str[i])
 	{
-		while (str[i] != ',' && c < 5)
+		while (str[i] != ',' && str[i])
 		{
 			printf("color\t|%d|\n", color);
 			printf("str[i]\t|%d|\n", str[i] - 48);
@@ -80,9 +91,9 @@ int get_color(int i, char *str)
 		if (str[i] == ',')
 			i++;
 		else
-			return (0);
+			break;
 	}
-	printf("%d\n", color);
+	printf("color final ici :|%d|\n", color);
 	return (color);
 }
 

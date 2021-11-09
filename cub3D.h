@@ -18,6 +18,8 @@
 
 # include <limits.h>
 
+#include "includes/get_next_line.h"
+
 # define BUFFER_SIZE 10
 # define PI 3.14159265359
 
