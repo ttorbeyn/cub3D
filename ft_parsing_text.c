@@ -56,7 +56,11 @@ char	*convert_to_hexa(char *str)
 }
 */
 
-/*
+unsigned long	ft_rgb_to_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
 int ato3i(char *str, int *a, int *b, int *c)
 {
 	int i;
@@ -64,10 +68,25 @@ int ato3i(char *str, int *a, int *b, int *c)
 	i = 0;
 	if(a)
 	{
-		while(str[i] && is_digit)
+		while(str[i] && !ft_isdigit(str[i]))
+			i++;
+		*a = ft_atoi(&str[i++]);
 	}
+	if(b)
+	{
+		while(str[i] && !ft_isdigit(str[i]))
+			i++;
+		*b = ft_atoi(&str[i++]);
+	}
+	if(c)
+	{
+		while(str[i] && !ft_isdigit(str[i]))
+			i++;
+		*c = ft_atoi(&str[i]);
+	}
+	return (0);
 }
-*/
+/*
 int get_color(int i, char *str)
 {
 	int color = 0;
@@ -96,6 +115,27 @@ int get_color(int i, char *str)
 	printf("color final ici :|%d|\n", color);
 	return (color);
 }
+*/
+int get_color(int i, char *str, t_data *data)
+{
+	//int color = 0;
+	unsigned long c = 0;
+
+	i++;
+	printf("%s\n", str);
+	while (is_space(str[i]))
+		i++;
+	ato3i(str, &data->r, &data->g, &data->b);
+	printf("r=%d\n", data->r);
+	printf("g=%d\n", data->g);
+	printf("b=%d\n", data->b);
+	printf("c1=%lu\n", c);
+
+	c = ft_rgb_to_trgb(0, data->r, data->g, data->b);
+	printf("c2=%lu\n", c);
+	return (c);
+}
+
 
 char	*get_texture(int i, char *str)
 {
@@ -152,12 +192,12 @@ int	check_texture(char *str, t_data *data)
 		}
 		else if (str[i] == 'F')
 		{
-			data->parsing.text_f = get_color(i, str);
+			data->parsing.text_f = get_color(i, str, data);
 			i++;
 		}
 		else if (str[i] == 'C')
 		{
-			data->parsing.text_c = get_color(i, str);
+			data->parsing.text_c = get_color(i, str, data);
 			i++;
 		}
 		else
@@ -191,7 +231,8 @@ int	recup(char *file, t_data *data)
 	printf("EA|%s|\n", data->parsing.text_ea);
 	printf("F|%d|\n", data->parsing.text_f);
 	printf("C|%d|\n", data->parsing.text_c);
-
+	data->color_sky = data->parsing.text_c;
+	data->color_ground = data->parsing.text_f;
 	//printf("hello i am here\n");
 
 	return (0);

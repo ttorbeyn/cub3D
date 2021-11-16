@@ -124,6 +124,10 @@ typedef struct  s_data {
 	int			userheight;
 	int			color_sky;
 	int			color_ground;
+	int			r;
+	int			g;
+	int			b;
+	int			t;
 	int			map_heigth;
 	int			map_width;
 	char		player_cardinal;

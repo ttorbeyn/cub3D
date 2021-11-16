@@ -42,7 +42,7 @@ NAME			=	cub3D
 all: 		$(NAME)
 
 $(NAME):
-			@$(LIBFT)
+			@$(LIBFT)w
 			@$(CC) $(FRAMEWORKS) $(CFLAGS) $(SRC) $(INCLUDE) -o $(NAME)
 
 clean:

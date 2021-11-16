@@ -10,8 +10,8 @@ int	set_data(t_data *data)
 	data->width = 2000;
 	data->map = recup_map(data);
 	data->userheight = data->cellsize / 20;
-	data->color_sky = 0x7a7a7a;
-	data->color_ground = 0x00FF0000;
+	data->color_sky = data->parsing.text_c;
+	data->color_ground = data->parsing.text_f;
 	return (0);
 }
 
