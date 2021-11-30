@@ -19,44 +19,8 @@ char	*ft_revstr(char *str)
 	new[i] = '\0';
 	return (new);
 }
-/*
-char	*convert_to_hexa(char *str)
-{
-	int nbr;
-	char *base = "0123456789ABCDEF";
-	int len = 16;
-	char *text;
-	int i;
 
-
-	nbr = atoi(str);
-	text = malloc(100);
-	if (nbr == 0)
-	{
-		text = "00";
-		return (text);
-	}
-	//printf("%d\n", nbr);
-	i = 0;
-	while (nbr >= len)
-	{
-		text[i] = base[nbr % len];
-		//printf("text\t|%c|\n", text[i]);
-		//printf("base\t|%c|\n",  base[nbr % len]);
-		nbr = nbr / len;
-	//	printf("%d\n", nbr);
-
-		i++;
-	}
-	text[i++] = base[nbr];
-	text[i] = '\0';
-	text = ft_revstr(text);
-
-	return(text);
-}
-*/
-
-unsigned long	ft_rgb_to_trgb(int t, int r, int g, int b)
+int	ft_rgb_to_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
@@ -71,12 +35,16 @@ int ato3i(char *str, int *a, int *b, int *c)
 		while(str[i] && !ft_isdigit(str[i]))
 			i++;
 		*a = ft_atoi(&str[i++]);
+		while(str[i] && ft_isdigit(str[i]))
+			i++;
 	}
 	if(b)
 	{
 		while(str[i] && !ft_isdigit(str[i]))
 			i++;
 		*b = ft_atoi(&str[i++]);
+		while(str[i] && ft_isdigit(str[i]))
+			i++;
 	}
 	if(c)
 	{
@@ -86,53 +54,16 @@ int ato3i(char *str, int *a, int *b, int *c)
 	}
 	return (0);
 }
-/*
-int get_color(int i, char *str)
+
+int get_color(int i, char *str, t_data *data)
 {
-	int color = 0;
 	int c = 0;
 
 	i++;
-	printf("%s\n", str);
-	while (is_space(str[i]))
-		i++;
-	while (str[i])
-	{
-		while (str[i] != ',' && str[i] && ft_isdigit(str[i]))
-		{
-			printf("color\t|%d|\n", color);
-			printf("str[i]\t|%d|\n", str[i] - 48);
-			color = (color * 10) + (str[i] - 48);
-			i++;
-			c++;
-			//printf("%d\n", color);
-		}
-		if (str[i] == ',')
-			i++;
-		else
-			break;
-	}
-	printf("color final ici :|%d|\n", color);
-	return (color);
-}
-*/
-int get_color(int i, char *str, t_data *data)
-{
-	//int color = 0;
-	unsigned long c = 0;
-
-	i++;
-	printf("%s\n", str);
 	while (is_space(str[i]))
 		i++;
 	ato3i(str, &data->r, &data->g, &data->b);
-	printf("r=%d\n", data->r);
-	printf("g=%d\n", data->g);
-	printf("b=%d\n", data->b);
-	printf("c1=%lu\n", c);
-
 	c = ft_rgb_to_trgb(0, data->r, data->g, data->b);
-	printf("c2=%lu\n", c);
 	return (c);
 }
 
@@ -142,8 +73,6 @@ char	*get_texture(int i, char *str)
 	char *text = NULL;
 
 	i += 2;
-	//printf("1%s\n", &str[i]);
-
 	while (is_space(str[i]))
 		i++;
 	if (str[i] == '.' && str[i + 1] == '/')
@@ -152,8 +81,6 @@ char	*get_texture(int i, char *str)
 	}
 	else
 		return (NULL);
-	//printf("TEXT\t|%s|\n", text);
-
 	return (text);
 }
 
@@ -164,10 +91,8 @@ int	check_texture(char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		//printf("|%c|\n", str[i]);
 		while(is_space(str[i]))
 			i++;
-		//printf("|%c|\n", str[i]);
 		if (str[i] == 'N' && str[i + 1] == 'O')
 		{
 			data->parsing.text_no = get_texture(i, str);
@@ -202,11 +127,8 @@ int	check_texture(char *str, t_data *data)
 		}
 		else
 		{
-			//printf("|%c|\n", str[i]);
-			//return (1);
 			break;
 		}
-		//i++;
 	}
 	return (0);
 }
