@@ -8,7 +8,6 @@ int	set_data(t_data *data)
 	data->cellsize = 30;
 	data->height = 1000;
 	data->width = 2000;
-	data->map = recup_map(data);
 	data->userheight = data->cellsize / 20;
 	data->color_sky = 3016396;
 	data->color_ground = data->parsing.text_f;

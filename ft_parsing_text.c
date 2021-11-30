@@ -127,38 +127,13 @@ int	check_texture(char *str, t_data *data)
 		}
 		else
 		{
-			break;
+			return (1);
 		}
 	}
 	return (0);
 }
 
-int	recup(char *file, t_data *data)
-{
-	int ret;
-	int fd;
-	char *recup;
 
-	ret = 1;
-	fd = open(file, O_RDONLY);
-	while (ret == 1)
-	{
-		ret = get_next_line(fd, &recup);
-		if(check_texture(recup, data))
-			return (1);
-	}
-	printf("NO|%s|\n", data->parsing.text_no);
-	printf("SO|%s|\n", data->parsing.text_so);
-	printf("WE|%s|\n", data->parsing.text_we);
-	printf("EA|%s|\n", data->parsing.text_ea);
-	printf("F|%d|\n", data->parsing.text_f);
-	printf("C|%d|\n", data->parsing.text_c);
-	data->color_sky = data->parsing.text_c;
-	data->color_ground = data->parsing.text_f;
-	//printf("hello i am here\n");
-
-	return (0);
-}
 
 int get_text(t_data *data)
 {
