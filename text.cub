@@ -1,6 +1,6 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./textures/eagle.xpm
+SO ./textures/brick.xpm
+WE ./textures/stone.xpm
+EA ./textures/wood.xpm
 F 91,44,111
 C 247,220,111

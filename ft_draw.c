@@ -35,6 +35,19 @@ int	draw_ray(t_data *data, int color)
 	return (0);
 }
 
+int	get_orientation(t_data *data)
+{
+	if (data->ray.stepY == 1 && data->ray.side == 1)
+		return (0);
+	else if (data->ray.stepY == -1 && data->ray.side == 1)
+		return (1);
+	else if (data->ray.stepX == 1)
+		return (2);
+	else if (data->ray.stepX == -1)
+		return (3);
+	return (-1);
+}
+
 int	draw_3D(t_data *data)
 {
 	double	len;
@@ -43,11 +56,13 @@ int	draw_3D(t_data *data)
 	double	x;
 	double	y_step;
 	double	offset;
+	int		side;
 
+	side = get_orientation(data);
 	i = 0;
 	offset = 0;
 	len = data->height / data->ray.lengthf;
-	y_step = data->text.height/len;
+	y_step = data->text[side].height/len;
 	if (len > data->height)
 	{
 		offset = (len - data->height)/2;
@@ -63,26 +78,26 @@ int	draw_3D(t_data *data)
 	}
 	if (data->ray.side == 0)
 	{
-		x = (int)(data->ray.VsideDistY * data->text.width) % data->text.width;
+		x = (int)(data->ray.VsideDistY * data->text[side].width) % data->text[side].width;
 		if (data->ray.angle > (PI / 2) && data->ray.angle < ((3 * PI) / 2))
-			x = data->text.width - 1 - x;
+			x = data->text[side].width - 1 - x;
 	}
 	else
 	{
-		x = (int)(data->ray.VsideDistX * data->text.width) % data->text.width;
+		x = (int)(data->ray.VsideDistX * data->text[side].width) % data->text[side].width;
 		if (!(data->ray.angle > PI && data->ray.angle < (2 * PI)))
-			x = data->text.width - 1 - x;
+			x = data->text[side].width - 1 - x;
 	}
-	data->text.texx = x;
-	data->text.texy = offset * y_step;
-	data->text.texpos = (data->ray.y + (data->ray.y + len) / 2 + len / 2) * y_step;
+	data->text[side].texx = x;
+	data->text[side].texy = offset * y_step;
+	data->text[side].texpos = (data->ray.y + (data->ray.y + len) / 2 + len / 2) * y_step;
 	while (len > 0 && i < data->height)
 	{
 		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] =
-				data->text.addr[(int)data->text.texy * data->text.line_length / 4 + (int)data->text.texx];
+				data->text[side].addr[(int)data->text[side].texy * data->text[side].line_length / 4 + (int)data->text[side].texx];
 		len--;
 		i++;
-		data->text.texy += y_step;
+		data->text[side].texy += y_step;
 		data->ray.y++;
 	}
 	while (i < data->height)

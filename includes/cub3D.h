@@ -133,7 +133,7 @@ typedef struct  s_data {
 	char		player_cardinal;
 	t_ray		ray;
 	t_keys		key;
-	t_text		text;
+	t_text		text[4];
 	t_parsing	parsing;
 }               t_data;
 
