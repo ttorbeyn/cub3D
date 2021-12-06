@@ -1,3 +1,12 @@
+       F 91,44,111
+       C 247,220,111
+       NO ./textures/eagle.xpm
+       SO ./textures/brick.xpm
+       WE ./textures/stone.xpm
+       EA ./textures/wood.xpm
+
+
+
         1111111111111111111111111
         1000000000110000000000001
         1101100000111000000N00001

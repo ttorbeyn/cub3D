@@ -83,6 +83,7 @@ typedef struct	s_parsing
 	char *text_s;
 	int text_f;
 	int text_c;
+	int c;
 }				t_parsing;
 
 typedef struct	s_text
@@ -143,6 +144,7 @@ int	make_image(t_data *data);
 //ft_set
 int set_key(t_data *data);
 int	set_data(t_data *data);
+int set_parsing(t_data *data);
 
 //ft_key
 int	deal_key(t_data *data);
@@ -174,7 +176,7 @@ char	**recup_map(t_data *data);
 int check_valid_char_map(t_data *data);
 
 //ft_parsing_textures
-int get_text(t_data *data);
+int addr_text(t_data *data);
 int	check_texture(char *str, t_data *data);
 char	*get_texture(int i, char *str);
 int	recup(char *file, t_data *data);

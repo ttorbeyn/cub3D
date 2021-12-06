@@ -1,15 +1,23 @@
+F 91,44,111
+C 247,220,111
 NO ./textures/eagle.xpm
 SO ./textures/brick.xpm
 WE ./textures/stone.xpm
 EA ./textures/wood.xpm
-F 91,44,111
-C 247,220,111
 
+
+
+
+
+
+
+
+111111111
 111111111
 110000001
 101000001
 100010001
 100000001
-101000N01
+10100N001
 110000001
 111111111

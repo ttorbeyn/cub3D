@@ -38,6 +38,19 @@ int check_valid_char_map(t_data *data)
 
 */
 
+int	get_angle(t_data *data)
+{
+	if (data->orientation == 'E')
+		data->angle = PI / 2;
+	if (data->orientation == 'O')
+		data->angle = (3 * PI) / 2;
+	if (data->orientation == 'N')
+		data->angle = PI;
+	if (data->orientation == 'S')
+		data->angle = 0;
+	return (0);
+}
+
 int check_coordinate(t_data *data)
 {
 	int x;
@@ -55,8 +68,8 @@ int check_coordinate(t_data *data)
 			{
 				if (c < 1)
 				{
-					data->px = x * data->cellsize;
-					data->py = y * data->cellsize;
+					data->px = x * data->cellsize + (data->cellsize / 2);
+					data->py = y * data->cellsize + (data->cellsize / 2);
 					data->orientation = data->map[x][y];
 					data->map[x][y] = '0';
 					c++;
@@ -76,6 +89,7 @@ int check_coordinate(t_data *data)
 		printf("PAS DE POSITION DE DEPART\n");
 		return (1);
 	}
+	get_angle(data);
 	return (0);
 }
 

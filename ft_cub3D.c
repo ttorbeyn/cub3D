@@ -15,7 +15,7 @@
 
 int	make_image(t_data *data)
 {
-	get_text(data);
+	addr_text(data);
 	raycasting(data);
 	big_pixel(data, 0x00FF0000, (data->px - (data->userheight / 2)),
 		(data->py + (data->userheight / 2)), data->userheight);
@@ -40,8 +40,7 @@ int	main(int ac, char **av)
 	}*/
 	if (!av || !ac)
 		return (0);
-	print_minimap(&data);
-
+	//print_minimap(&data);
 	if (parsing(&data) == 1)
 	{
 		printf("ERROR MAP\n");

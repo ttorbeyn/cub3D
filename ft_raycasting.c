@@ -31,7 +31,6 @@ int	set_ray(t_data *data)
 	data->ray.lengthH = 0;
 	data->ray.length = 0;
 	data->ray.side = 0;
-
 	return (0);
 }
 
