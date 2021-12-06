@@ -123,8 +123,6 @@ typedef struct  s_data {
 	double 		lengthx;
 	double 		lengthy;
 	int			userheight;
-	int			color_sky;
-	int			color_ground;
 	int			r;
 	int			g;
 	int			b;

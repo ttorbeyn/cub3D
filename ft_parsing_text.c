@@ -32,10 +32,6 @@ int ato3i(char *str, int *a, int *b, int *c)
 			i++;
 		*c = ft_atoi(&str[i]);
 	}
-	printf("a : %d\n", *a);
-	printf("b : %d\n", *b);
-	printf("c : %d\n", *c);
-
 	return (0);
 }
 
@@ -47,11 +43,7 @@ int	get_color(int i, char *str, t_data *data)
 	while (is_space(str[i]))
 		i++;
 	ato3i(str, &data->r, &data->g, &data->b);
-	printf("r : %d\n", data->r);
-	printf("g : %d\n", data->g);
-	printf("b : %d\n", data->b);
 	c = ft_rgb_to_trgb(0, data->r, data->g, data->b);
-	printf("%d\n", c);
 	return (c);
 }
 
@@ -78,8 +70,6 @@ int	check_texture(char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		printf("%d\n", data->parsing.c);
-
 		while(is_space(str[i]))
 			i++;
 		if (str[i] == 'N' && str[i + 1] == 'O')

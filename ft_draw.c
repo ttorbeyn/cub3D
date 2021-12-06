@@ -72,7 +72,7 @@ int	draw_3D(t_data *data)
 	data->ray.y = 0;
 	while (i < start)
 	{
-		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->color_sky;
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->parsing.text_c;
 		i++;
 		data->ray.y++;
 	}
@@ -102,7 +102,7 @@ int	draw_3D(t_data *data)
 	}
 	while (i < data->height)
 	{
-		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->color_ground;
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->parsing.text_f;
 		i++;
 		data->ray.y++;
 	}
