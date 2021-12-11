@@ -22,16 +22,14 @@ int	draw_ray(t_data *data, int color)
 	x = data->px;
 	y = data->py;
 	c = 0;
-	while (c <= (data->ray.length * data->cellsize) && c < 800
-		&& x > 0 && y > 0 && x < data->width && y < data->height)
+	while (c < (data->ray.length * data->cellsize)
+	        && x > 0 && y > 0 && x < data->width && y < data->height)
 	{
-		my_mlx_pixel_put(data, x, y, color);
+		my_mlx_pixel_put(data, y, x, color);
 		x += (cosf(data->ray.angle));
 		y += (sinf(data->ray.angle));
 		c++;
 	}
-	if (!color)
-		return (0);
 	return (0);
 }
 
@@ -62,7 +60,7 @@ int	draw_3D(t_data *data)
 	i = 0;
 	offset = 0;
 	len = data->height / data->ray.lengthf;
-	y_step = data->text[side].height/len;
+	y_step = data->text[side].height / len;
 	if (len > data->height)
 	{
 		offset = (len - data->height)/2;
@@ -122,9 +120,8 @@ int	draw_minimap(t_data *data)
 		while (data->map[x][y])
 		{
 			if (data->map[x][y] == '1')
-				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
-			//else
-			//	big_pixel(data, 0x007F7F7F, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
+				//my_mlx_pixel_put(data, y, x, 0x000000FF);
+				big_pixel(data, 0x000000FF, (((y + 1) * data->cellsize) - data->cellsize), ((x + 1) * data->cellsize), data->cellsize);
 			y++;
 		}
 		x++;

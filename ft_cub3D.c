@@ -17,10 +17,24 @@ int	make_image(t_data *data)
 {
 	addr_text(data);
 	raycasting(data);
-	big_pixel(data, 0x00FF0000, (data->px - (data->userheight / 2)),
-		(data->py + (data->userheight / 2)), data->userheight);
+	big_pixel(data, 0x00FF0000, (data->py - (data->userheight / 2)),
+		(data->px + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
-	//mlx_put_image_to_window(data->mlx, data->mlx_win, data->text.img, 0, 0);
+	return (0);
+}
+
+int check_file(char *str)
+{
+	int len;
+	int fd;
+
+	len = ft_strlen(str);
+	if (str[len - 1] != 'b' && str[len - 2] != 'u' && str[len - 3] != 'c' && str[len - 4] != '.')
+		return (1);
+	fd = open(str, O_RDONLY)
+	if (fd < 0)
+
+
 	return (0);
 }
 
@@ -28,19 +42,17 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	//configure les parametres de base
 	set_data(&data);
-	//remets a 0 toutes les keys
 	set_key(&data);
-	/*
-	if (ac < 2 || ac > 3)
+	if (ac == 2)
 	{
-		printf("ERROR ARG\n");
+
+	}
+	if (check_file(av[1]))
+	{
+		printf("error\n");
 		return (0);
-	}*/
-	if (!av || !ac)
-		return (0);
-	//print_minimap(&data);
+	}
 	if (parsing(&data) == 1)
 	{
 		printf("ERROR MAP\n");

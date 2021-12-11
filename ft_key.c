@@ -39,7 +39,7 @@ int	define_step(t_data * data, float angle)
 	return (0);
 }
 
-int player_forward(t_data *data, float angle, float l)
+int player_move(t_data *data, float angle, float l, int sign)
 {
 	int x;
 	int y;
@@ -48,30 +48,12 @@ int player_forward(t_data *data, float angle, float l)
 	dist = 0.3;
 	angle = check_overflow_angle(angle);
 	define_step(data, angle);
-	x = (int)(data->px / data->cellsize + (dist * data->key.stepX));
-	y = (int)(data->py / data->cellsize + (dist * data->key.stepY));
+	x = (int)(data->px / data->cellsize + sign * (dist * data->key.stepX));
+	y = (int)(data->py / data->cellsize + sign * (dist * data->key.stepY));
 	if (data->map[x][(int)data->py / data->cellsize] == '0')
-		data->px += l * cosf(angle);
+		data->px = data->px + sign * l * cosf(angle);
 	if (data->map[(int)data->px / data->cellsize][y] == '0')
-		data->py += l * sinf(angle);
-	return (0);
-}
-
-int player_back(t_data *data, float angle, float l)
-{
-	int x;
-	int y;
-	float dist;
-
-	dist = 0.3;
-	angle = check_overflow_angle(angle);
-	define_step(data, angle);
-	x = (int)(data->px / data->cellsize - (dist * data->key.stepX));
-	y = (int)(data->py / data->cellsize - (dist * data->key.stepY));
-	if (data->map[x][(int)data->py / data->cellsize] == '0')
-		data->px -= l * cosf(angle);
-	if (data->map[(int)data->px / data->cellsize][y] == '0')
-		data->py -= l * sinf(angle);
+		data->py = data->py + sign * l * sinf(angle);
 	return (0);
 }
 
@@ -83,17 +65,17 @@ int	deal_key(t_data *data)
 	data->img = mlx_new_image(data->mlx, data->width, data->height);
 	l = (data->cellsize / 10) * 0.5;
 	if (data->key.w == 1)
-		player_forward(data, data->angle, l);
+		player_move(data, data->angle, l, 1);
 	if (data->key.s == 1)
-		player_back(data, data->angle, l);
+		player_move(data, data->angle, l, -1);
 	if (data->key.a == 1)
-		player_back(data, (data->angle + (PI / 2)), l);
+		player_move(data, (data->angle + (PI / 2)), l, 1);
 	if (data->key.d == 1)
-		player_forward(data, (data->angle + (PI / 2)), l);
+		player_move(data, (data->angle + (PI / 2)), l, -1);
 	if (data->key.r == 1)
-		data->angle += 0.05;
-	if (data->key.l == 1)
 		data->angle -= 0.05;
+	if (data->key.l == 1)
+		data->angle += 0.05;
 	data->angle = check_overflow_angle(data->angle);
 	if (data->key.e == 1)
 		close_window(data);
