@@ -17,13 +17,10 @@ int check_valid_char_map(t_data *data)
 		y = 0;
 		while (data->map[x][y])
 		{
-			if (strchr("NSWE01 ", data->map[x][y]))
+			if (strchr("01 NSWE", data->map[x][y]))
 				y++;
 			else
-			{
-				printf("NOT GOOD CHAR\t|%c|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
 				return (1);
-			}
 		}
 	x++;
 	}
@@ -37,19 +34,6 @@ int check_valid_char_map(t_data *data)
  	Change la lettre en un 0.
 
 */
-
-int	get_angle(t_data *data)
-{
-	if (data->orientation == 'E')
-		data->angle = PI / 2;
-	if (data->orientation == 'O')
-		data->angle = (3 * PI) / 2;
-	if (data->orientation == 'N')
-		data->angle = PI;
-	if (data->orientation == 'S')
-		data->angle = 0;
-	return (0);
-}
 
 int check_coordinate(t_data *data)
 {
@@ -75,21 +59,14 @@ int check_coordinate(t_data *data)
 					c++;
 				}
 				else
-				{
-					printf("2 FOIS UNE COORDONNEE\t|%c|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
-					return (1);
-				}
+					return (print_error(7));
 			}
 			y++;
 		}
 		x++;
 	}
 	if (!c)
-	{
-		printf("PAS DE POSITION DE DEPART\n");
-		return (1);
-	}
-	get_angle(data);
+		return (print_error(8));
 	return (0);
 }
 
@@ -124,52 +101,103 @@ int check_surround(t_data *data, int x, int y)
 
 */
 
-int	check_map(t_data *data)
+int check_outline(t_data *data)
+{
+	int x;
+	int	y;
+
+	y = 0;
+	while (y < data->map_width)
+	{
+		if (!strchr(" 1", data->map[0][y]) && !strchr(" 1", data->map[data->map_heigth - 1][y]))
+			return (1);
+		y++;
+	}
+	x = 0;
+	while (x <  data->map_heigth)
+	{
+		if (!strchr(" 1", data->map[x][0]) && !strchr(" 1", data->map[x][data->map_width]))
+			return (1);
+		x++;
+	}
+	return (0);
+}
+
+int	check_wall(t_data *data)
 {
 	int	x;
 	int	y;
 
 	x = 1;
-	y = 0;
-	while (data->map[0][y])
+	while (x < data->map_heigth - 1)
 	{
-		while (is_space(data->map[0][y]))
-			y++;
-		if (data->map[0][y] != '1')
-			return (1);
-		y++;
-	}
-	while (data->map[x] && x < data->map_heigth)
-	{
-		y = 0;
-		while (data->map[x][y])
+		y = 1;
+		while (y < data->map_width - 1)
 		{
 			while (is_space(data->map[x][y]))
 				y++;
-			if (data->map[x][y] == '0')
-			{
-				if (check_surround(data, x, y))
-				{
-					printf("ERROR MAP |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
-					return (1);
-				}
-			}
+			if (data->map[x][y] == '0' && check_surround(data, x, y))
+					return (print_error(9));
 			y++;
 		}
 		x++;
 	}
-	y = 0;
-	while (data->map[x][y])
-	{
-		while (is_space(data->map[x][y]))
-			y++;
-		if (data->map[x][y] != '1')
-		{
-			printf("ERROR MAP |%c|\t|\tPOS[%d][%d]\n", data->map[x][y], x + 1, y + 1);
-			return (1);
-		}
-		y++;
-	}
 	return (0);
 }
 
+int	get_angle(t_data *data)
+{
+	if (data->orientation == 'E')
+		data->angle = PI / 2;
+	if (data->orientation == 'O')
+		data->angle = (3 * PI) / 2;
+	if (data->orientation == 'N')
+		data->angle = PI;
+	if (data->orientation == 'S')
+		data->angle = 0;
+	return (0);
+}
+
+int	check_map(t_data *data)
+{
+	if (check_valid_char_map(data))
+		return (print_error(6));
+	if (check_coordinate(data))
+		return (1);
+	if (check_outline(data))
+		return (print_error(9));
+	if (check_wall(data))
+		return (1);
+	get_angle(data);
+	return (0);
+}
+
+int	recup_map(t_data *data, char *file)
+{
+	int	x;
+	int	ret;
+	char	*recup;
+
+	x = 0;
+	ret = 1;
+	data->fd = open(file, O_RDONLY);
+	data->map = malloc(sizeof(char*) * (data->map_heigth + 1));
+	while (x < data->parsing.map_line)
+	{
+		get_next_line(data->fd, &recup);
+		x++;
+		free(recup);
+	}
+	x = 0;
+	while (ret == 1)
+	{
+		ret = get_next_line(data->fd, &recup);
+		data->map[x++] = ft_strdup(recup);
+		free(recup);
+		if (ret == 0)
+			break;
+	}
+	data->map[x] = NULL;
+	close(data->fd);
+	return (0);
+}

@@ -22,12 +22,14 @@ LIBFT			=	@ cd libft && make ;
 SRC				=				libft/libft.a \
 								ft_cub3D.c \
 								ft_set.c \
+								ft_error.c \
 								ft_raycasting.c \
 								ft_mlx_utils.c \
 								ft_key.c \
 								ft_draw.c \
 								ft_parsing.c \
 								ft_parsing_text.c \
+								ft_parsing_text_utils.c \
 								ft_parsing_map.c \
 								ft_parsing_utils.c \
 								ft_utils.c \

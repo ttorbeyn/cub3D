@@ -2,7 +2,7 @@
 
 int	set_data(t_data *data)
 {
-	data->cellsize = 30;
+	data->cellsize = 20;
 	data->height = 1000;
 	data->width = 2000;
 	data->userheight = data->cellsize / 20;
@@ -23,6 +23,21 @@ int set_key(t_data *data)
 
 int set_parsing(t_data *data)
 {
-	data->parsing.c = 0;
+	data->parsing.c = 1;
+	data->parsing.map_line = 0;
+	data->parsing.text_no = NULL;
+	data->parsing.text_so = NULL;
+	data->parsing.text_ea = NULL;
+	data->parsing.text_we = NULL;
+	data->parsing.text_c = -1;
+	data->parsing.text_f = -1;
+	return (0);
+}
+
+int set(t_data *data)
+{
+	set_data(data);
+	set_key(data);
+	set_parsing(data);
 	return (0);
 }

@@ -12,19 +12,23 @@ double	check_overflow_angle(double angle)
 int	print_minimap(t_data *data)
 {
 	int	x;
-	int	y;
 
 	x = 0;
 	while (data->map[x])
 	{
-		y = 0;
-		while (data->map[x][y])
-		{
-			printf("%c", data->map[x][y]);
-			y++;
-		}
-		printf("\n");
+		printf("%s\n", data->map[x]);
 		x++;
 	}
+	return (0);
+}
+
+int	print_textures(t_data *data)
+{
+	printf("NO : |%s|\n", data->parsing.text_no);
+	printf("SO : |%s|\n", data->parsing.text_so);
+	printf("EA : |%s|\n", data->parsing.text_ea);
+	printf("WE : |%s|\n", data->parsing.text_we);
+	printf("C : |%d|\n", data->parsing.text_c);
+	printf("F : |%d|\n", data->parsing.text_f);
 	return (0);
 }

@@ -84,6 +84,7 @@ typedef struct	s_parsing
 	int text_f;
 	int text_c;
 	int c;
+	int	map_line;
 }				t_parsing;
 
 typedef struct	s_text
@@ -102,6 +103,7 @@ typedef struct	s_text
 }				t_text;
 
 typedef struct  s_data {
+	int			fd;
 	void		*img;
 	int			*addr;
 	int			bpp;
@@ -140,9 +142,13 @@ typedef struct  s_data {
 int	make_image(t_data *data);
 
 //ft_set
+int set(t_data *data);
 int set_key(t_data *data);
 int	set_data(t_data *data);
 int set_parsing(t_data *data);
+
+//ft_error
+int print_error(int errnum);
 
 //ft_key
 int	deal_key(t_data *data);
@@ -161,23 +167,29 @@ int draw_ray(t_data *data, int color);
 int draw_3D(t_data *data);
 int	draw_text(t_data *data);
 int	draw_minimap(t_data *data);
-int print_minimap(t_data *data);
+
 
 //ft_parsing
-int	parsing(t_data *data);
+int	parsing(t_data *data, char *file);
 
 //ft_parsing_map
 int check_coordinate(t_data *data);
 int check_surround(t_data *data, int x, int y);
 int	check_map(t_data *data);
-char	**recup_map(t_data *data);
 int check_valid_char_map(t_data *data);
+int	recup_map(t_data *data, char *file);
 
 //ft_parsing_textures
+int	parsing_text(char *str, t_data *data);
+char	*get_text(int i, char *str);
+int	recup(t_data *data);
+int	check_text(t_data *data);
+int	recup_text(t_data *data);
+
+//ft_parsing_text_utils.c
+int	ft_rgb_to_trgb(int t, int r, int g, int b);
+int ato3i(char *str, int *a, int *b, int *c);
 int addr_text(t_data *data);
-int	check_texture(char *str, t_data *data);
-char	*get_texture(int i, char *str);
-int	recup(char *file, t_data *data);
 
 //ft_parsing_utils
 int is_space(char str);
@@ -188,6 +200,8 @@ char	*ft_itoa(int nbr);
 
 //ft_utils.c
 double	check_overflow_angle(double angle);
+int	print_textures(t_data *data);
+int print_minimap(t_data *data);
 
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
