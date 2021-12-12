@@ -107,7 +107,8 @@ int check_outline(t_data *data)
 	int	y;
 
 	y = 0;
-
+	printf("first line : %s\n", data->map[0]);
+	printf("last line : %s\n", data->map[data->map_heigth - 1]);
 	while (y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y]) && !strchr(" 1", data->map[data->map_heigth - 1][y]))
@@ -115,9 +116,9 @@ int check_outline(t_data *data)
 		y++;
 	}
 	x = 0;
-	while (x <  data->map_heigth - 1)
+	while (x <  data->map_heigth)
 	{
-		if (!strchr(" 1", data->map[x][0]) && !strchr(" 1", data->map[x][data->map_width]))
+		if (!strchr(" 1", data->map[x][0]) && !strchr(" 1", data->map[x][data->map_width - 1]))
 			return (1);
 		x++;
 	}
@@ -200,5 +201,6 @@ int	recup_map(t_data *data, char *file)
 	}
 	data->map[x] = NULL;
 	close(data->fd);
+	print_minimap(data);
 	return (0);
 }

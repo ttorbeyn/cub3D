@@ -86,6 +86,7 @@ int	recup_text(t_data *data)
 			data->parsing.map_line++;
 		else if (p == 2)
 		{
+
 			printf("recup : %s\n", recup);
 			if (ft_strlen(recup) > len)
 				len = ft_strlen(recup);
@@ -96,10 +97,9 @@ int	recup_text(t_data *data)
 			return (1);
 		}
 		free(recup);
-		if (ret == 0)
-			break;
 	}
-	//print_minimap(data);
+	printf("%d\n", data->parsing.map_line);
+	//data->parsing.map_line--;
 	data->map_heigth = c;
 	data->map_width = len;
 	printf("%d\n", data->map_heigth);
