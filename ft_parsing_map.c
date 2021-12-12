@@ -107,6 +107,7 @@ int check_outline(t_data *data)
 	int	y;
 
 	y = 0;
+
 	while (y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y]) && !strchr(" 1", data->map[data->map_heigth - 1][y]))
@@ -114,7 +115,7 @@ int check_outline(t_data *data)
 		y++;
 	}
 	x = 0;
-	while (x <  data->map_heigth)
+	while (x <  data->map_heigth - 1)
 	{
 		if (!strchr(" 1", data->map[x][0]) && !strchr(" 1", data->map[x][data->map_width]))
 			return (1);
@@ -137,7 +138,7 @@ int	check_wall(t_data *data)
 			while (is_space(data->map[x][y]))
 				y++;
 			if (data->map[x][y] == '0' && check_surround(data, x, y))
-					return (print_error(9));
+					return (1);
 			y++;
 		}
 		x++;
@@ -167,7 +168,7 @@ int	check_map(t_data *data)
 	if (check_outline(data))
 		return (print_error(9));
 	if (check_wall(data))
-		return (1);
+		return (print_error(9));
 	get_angle(data);
 	return (0);
 }

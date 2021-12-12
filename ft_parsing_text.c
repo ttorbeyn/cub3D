@@ -46,7 +46,7 @@ int	parsing_text(char *str, t_data *data)
 	int i;
 
 	i = 0;
-	while(is_space(str[i]))
+	while(str[i] && is_space(str[i]))
 		i++;
 	if (str[i] == 'N' && str[i + 1] == 'O' && data->parsing.c++)
 		data->parsing.text_no = get_text(i, str);
@@ -60,8 +60,10 @@ int	parsing_text(char *str, t_data *data)
 		data->parsing.text_f = get_color(i, str, data);
 	else if (str[i] == 'C' && data->parsing.c++)
 		data->parsing.text_c = get_color(i, str, data);
-	if (data->parsing.c == 7 && str[i] == '1')
+	else if (data->parsing.c == 7 && str[i] == '1')
 		return (2);
+	else if (!strchr("NSWEFC\0", str[i]))
+		return (1);
 	return (0);
 }
 
@@ -71,37 +73,38 @@ int	recup_text(t_data *data)
 	int	ret;
 	char	*recup;
 	size_t	len;
+	int p;
 
 	len = 0;
 	ret = 1;
-	c = 1;
+	c = 0;
 	while (ret == 1)
 	{
 		ret = get_next_line(data->fd, &recup);
-		if (parsing_text(recup, data) == 2)
+		p = parsing_text(recup, data);
+		if (!p)
+			data->parsing.map_line++;
+		else if (p == 2)
 		{
+			printf("recup : %s\n", recup);
 			if (ft_strlen(recup) > len)
 				len = ft_strlen(recup);
 			c++;
 		}
-		data->parsing.map_line++;
+		else if (p == 1)
+		{
+			return (1);
+		}
 		free(recup);
 		if (ret == 0)
 			break;
 	}
-
-	while (ret == 1)
-	{
-		ret = get_next_line(data->fd, &recup);
-		if (ft_strlen(recup) > len)
-			len = ft_strlen(recup);
-		free(recup);
-		c++;
-		if (ret == 0)
-			break;
-	}
+	//print_minimap(data);
 	data->map_heigth = c;
 	data->map_width = len;
+	printf("%d\n", data->map_heigth);
+	printf("%d\n", data->map_width);
+
 	close(data->fd);
 	return (0);
 }
