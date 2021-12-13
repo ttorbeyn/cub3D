@@ -24,9 +24,10 @@ int	mlx_key(t_data *data)
 
 int	make_image(t_data *data)
 {
-	raycasting(data);
-	big_pixel(data, 0x00FF0000, (data->py - (data->userheight / 2)),
-		(data->px + (data->userheight / 2)), data->userheight);
+	draw_ray_ex(data, 0x00FF0000, P2);
+	//raycasting(data);
+	//big_pixel(data, 0x00FF0000, (data->py - (data->userheight / 2)),
+	//	(data->px + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
 }
@@ -45,6 +46,7 @@ int	mlx_create(t_data *data)
 int	main(int ac, char **av)
 {
 	t_data	data;
+
 
 	if (ac != 2)
 		return (print_error(0));

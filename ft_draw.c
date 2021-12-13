@@ -25,7 +25,7 @@ int	draw_ray(t_data *data, int color)
 	while (c < (data->ray.length * data->cellsize)
 	        && x > 0 && y > 0 && x < data->width && y < data->height)
 	{
-		my_mlx_pixel_put(data, y, x, color);
+		my_mlx_pixel_put(data, x, y, color);
 		x += (cosf(data->ray.angle));
 		y += (sinf(data->ray.angle));
 		c++;
@@ -120,7 +120,7 @@ int	draw_minimap(t_data *data)
 		while (data->map[x][y])
 		{
 			if (data->map[x][y] == '1')
-				big_pixel(data, 0x000000FF, (((y + 1) * data->cellsize) - data->cellsize), ((x + 1) * data->cellsize), data->cellsize);
+				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
 			y++;
 		}
 		x++;

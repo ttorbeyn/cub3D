@@ -23,6 +23,9 @@
 
 # define BUFFER_SIZE 10
 # define PI 3.14159265359
+# define P2 (PI / 2)
+# define P32 (3 * PI / 2)
+
 
 # define PLAYER_FORWARD 13
 # define PLAYER_BACK 1
@@ -31,6 +34,7 @@
 # define CAMERA_LEFT 123
 # define CAMERA_RIGHT 124
 # define ESC 53
+
 
 
 typedef struct	s_ray
@@ -213,6 +217,6 @@ double	check_overflow_angle(double angle);
 int	print_textures(t_data *data);
 int print_minimap(t_data *data);
 int	print_outlines(t_data *data);
-
+int	draw_ray_ex(t_data *data, int color, double angle);
 
 #endif

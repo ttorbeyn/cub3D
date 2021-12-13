@@ -13,26 +13,18 @@
 #include "includes/cub3D.h"
 #include <stdio.h>
 
-int	set_ray(t_data *data)
+int define_step(t_data *data)
 {
-	data->ray.posX = (data->px) / data->cellsize ;
-	printf("%f\n", data->ray.posX);
-	data->ray.posY = (data->py) / data->cellsize;
-	printf("%f\n", data->ray.posY);
-	data->ray.mapX = (int)(data->ray.posX);
-	data->ray.mapY = (int)(data->ray.posY);
-	data->ray.dx = 0;
-	data->ray.dy = 0;
-	data->ray.VsideDistX = 0;
-	data->ray.VsideDistY = 0;
-	data->ray.HsideDistX = 0;
-	data->ray.HsideDistY = 0;
-	data->ray.deltaDistX = 0;
-	data->ray.deltaDistY = 0;
-	data->ray.lengthV = 0;
-	data->ray.lengthH = 0;
-	data->ray.length = 0;
-	data->ray.side = 0;
+	if (data->ray.angle > P2 && data->ray.angle < P32)
+	{
+		data->ray.stepX = -1;
+		data->ray.dx = data->ray.posX - data->ray.mapX;
+	}
+	else if (data->ray.angle < P2 || data->ray.angle > P32)
+	{
+		data->ray.stepX = 1;
+		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
+	}
 	return (0);
 }
 
@@ -42,16 +34,7 @@ int	raycasting_vertical(t_data *data)
 	int	x;
 
 	c = 0;
-	if ((data->ray.angle > PI / 2 && data->ray.angle < ((3 * PI) / 2)))
-	{
-		data->ray.stepX = -1;
-		data->ray.dx = data->ray.posX - data->ray.mapX;
-	}
-	else if ((data->ray.angle < PI / 2) || (data->ray.angle > ((3 * PI) / 2)))
-	{
-		data->ray.stepX = 1;
-		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
-	}
+	define_step(data);
 	if (!(data->ray.angle == PI / 2 || data->ray.angle == 3 * PI / 2))
 		data->ray.VsideDistY = data->ray.posY + (tanf(data->ray.angle) * data->ray.dx * data->ray.stepX);
 	data->ray.VsideDistX = data->ray.posX + data->ray.dx * data->ray.stepX;
@@ -76,7 +59,7 @@ int	raycasting_vertical(t_data *data)
 	data->ray.lengthV = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
-
+/*
 int	raycasting_horizontal(t_data *data)
 {
 	int	c;
@@ -117,12 +100,13 @@ int	raycasting_horizontal(t_data *data)
 	data->ray.lengthH = hypot(data->ray.deltaDistX, data->ray.deltaDistY);
 	return (0);
 }
-
+*/
 int	raycasting(t_data *data)
 {
 	float	angle;
 	int		x;
 
+	data->angle = P32;
 	data->ray.angle = check_overflow_angle(data->angle + (PI / 6));
 	data->ray.x = 0;
 	x = 0;
@@ -130,8 +114,9 @@ int	raycasting(t_data *data)
 	{
 		set_ray(data);
 		raycasting_vertical(data);
-		raycasting_horizontal(data);
+		//raycasting_horizontal(data);
 		data->ray.length = data->ray.lengthV;
+		/*
 		if (data->ray.lengthV > data->ray.lengthH)
 		{
 			data->ray.length = data->ray.lengthH;
@@ -139,6 +124,7 @@ int	raycasting(t_data *data)
 			data->ray.VsideDistY = data->ray.HsideDistY;
 			data->ray.side = 1;
 		}
+		*/
 		angle = data->angle - data->ray.angle;
 		if (angle > (2 * PI))
 			angle -= (2 * PI);
