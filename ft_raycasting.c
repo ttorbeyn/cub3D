@@ -15,8 +15,10 @@
 
 int	set_ray(t_data *data)
 {
-	data->ray.posX = data->px / data->cellsize;
-	data->ray.posY = data->py / data->cellsize;
+	data->ray.posX = (data->px) / data->cellsize ;
+	printf("%f\n", data->ray.posX);
+	data->ray.posY = (data->py) / data->cellsize;
+	printf("%f\n", data->ray.posY);
 	data->ray.mapX = (int)(data->ray.posX);
 	data->ray.mapY = (int)(data->ray.posY);
 	data->ray.dx = 0;
@@ -143,8 +145,8 @@ int	raycasting(t_data *data)
 		if (angle < 0)
 			angle += (2 * PI);
 		data->ray.lengthf = data->ray.length * cosf(angle);
-		draw_3D(data);
-		//draw_ray(data, 0x0000FF00);
+		//draw_3D(data);
+		draw_ray(data, 0x0000FF00);
 		data->ray.angle -= (PI / 3) / (data->width);
 		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;

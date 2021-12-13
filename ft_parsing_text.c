@@ -25,7 +25,7 @@ int	get_color(int i, char *str, t_data *data)
 	return (c);
 }
 
-char	*get_text(int i, char *str)
+char	*get_path_text(int i, char *str)
 {
 	char	*text;
 
@@ -50,13 +50,13 @@ int	parsing_text(char *str, t_data *data)
 	while (str[i] && is_space(str[i]))
 		i++;
 	if (str[i] == 'N' && str[i + 1] == 'O' && data->parsing.c++)
-		data->parsing.text_no = get_text(i, str);
+		data->parsing.text_no = get_path_text(i, str);
 	else if (str[i] == 'S' && str[i + 1] == 'O' && data->parsing.c++)
-		data->parsing.text_so = get_text(i, str);
+		data->parsing.text_so = get_path_text(i, str);
 	else if (str[i] == 'W' && str[i + 1] == 'E' && data->parsing.c++)
-		data->parsing.text_we = get_text(i, str);
+		data->parsing.text_we = get_path_text(i, str);
 	else if (str[i] == 'E' && str[i + 1] == 'A' && data->parsing.c++)
-		data->parsing.text_ea = get_text(i, str);
+		data->parsing.text_ea = get_path_text(i, str);
 	else if (str[i] == 'F' && data->parsing.c++)
 		data->parsing.text_f = get_color(i, str, data);
 	else if (str[i] == 'C' && data->parsing.c++)

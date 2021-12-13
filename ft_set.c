@@ -1,5 +1,7 @@
 #include "includes/cub3D.h"
 
+
+
 int	set_data(t_data *data)
 {
 	data->cellsize = 20;
