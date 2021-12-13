@@ -144,7 +144,7 @@ int	raycasting(t_data *data)
 			angle += (2 * PI);
 		data->ray.lengthf = data->ray.length * cosf(angle);
 		draw_3D(data);
-		draw_ray(data, 0x0000FF00);
+		//draw_ray(data, 0x0000FF00);
 		data->ray.angle -= (PI / 3) / (data->width);
 		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;

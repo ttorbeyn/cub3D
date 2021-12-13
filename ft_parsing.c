@@ -1,15 +1,11 @@
 #include "includes/cub3D.h"
 
-
-
-
-
 /*
 
 	Check si le ficher a un nom
 	Check si le ficher a la bonne extension (.cub)
 	Check si le ficher n'est pas un dossier
- 	Check sir le fichier s'ouvre
+ 	Check si le fichier s'ouvre
 
 */
 
@@ -40,7 +36,6 @@ int	parsing(t_data *data, char *file)
 		return (1);
 	if (check_text(data))
 		return (1);
-	print_textures(data);
 	if (recup_map(data, file))
 		return (1);
 	if (check_map(data))

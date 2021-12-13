@@ -31,6 +31,7 @@ SRC				=				libft/libft.a \
 								ft_parsing_text.c \
 								ft_parsing_text_utils.c \
 								ft_parsing_map.c \
+								ft_parsing_map_utils.c \
 								ft_parsing_utils.c \
 								ft_utils.c \
 								gnl/get_next_line.c
@@ -44,7 +45,7 @@ NAME			=	cub3D
 all: 		$(NAME)
 
 $(NAME):
-			@$(LIBFT)w
+			@$(LIBFT)
 			@$(CC) $(FRAMEWORKS) $(CFLAGS) $(SRC) $(INCLUDE) -o $(NAME)
 
 clean:

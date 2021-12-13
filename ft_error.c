@@ -1,10 +1,10 @@
 #include "includes/cub3D.h"
 
-int print_error(int errnum)
+int	print_error(int errnum)
 {
 	printf("Error\n");
 	if (errnum == 0)
-		printf("Not enough argument (2 needed)\n");
+		printf("Wrong number of arguments (2 needed)\n");
 	else if (errnum == 1)
 		printf("File .cub has no name\n");
 	else if (errnum == 2)
@@ -22,7 +22,19 @@ int print_error(int errnum)
 	else if (errnum == 8)
 		printf("Start position missing\n");
 	else if (errnum == 9)
-		printf("Hole in the outline\n");
+		printf("Hole in the outline (line)\n");
+	else if (errnum == 10)
+		printf("Hole in the outline (column)\n");
+	return (1);
+}
+
+int	print_error1(int errnum)
+{
+	printf("Error\n");
+	if (errnum == 11)
+		printf("Last line empty\n");
+	if (errnum == 12)
+		printf("File error\n");
 	return (1);
 }
 

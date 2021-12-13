@@ -120,7 +120,6 @@ int	draw_minimap(t_data *data)
 		while (data->map[x][y])
 		{
 			if (data->map[x][y] == '1')
-				//my_mlx_pixel_put(data, y, x, 0x000000FF);
 				big_pixel(data, 0x000000FF, (((y + 1) * data->cellsize) - data->cellsize), ((x + 1) * data->cellsize), data->cellsize);
 			y++;
 		}

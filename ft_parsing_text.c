@@ -2,16 +2,16 @@
 
 int	check_text(t_data *data)
 {
-	if (data->parsing.text_no == NULL || data->parsing.text_so == NULL ||
-		data->parsing.text_ea == NULL || data->parsing.text_we == NULL ||
-		data->parsing.text_c == -1 || data->parsing.text_f == -1)
+	if (data->parsing.text_no == NULL || data->parsing.text_so == NULL
+		|| data->parsing.text_ea == NULL || data->parsing.text_we == NULL
+		|| data->parsing.text_c == -1 || data->parsing.text_f == -1)
 		return (print_error(5));
 	return (0);
 }
 
 int	get_color(int i, char *str, t_data *data)
 {
-	int c;
+	int	c;
 
 	i++;
 	while (is_space(str[i]))
@@ -19,16 +19,17 @@ int	get_color(int i, char *str, t_data *data)
 	if (ato3i(&str[i], &data->r, &data->g, &data->b))
 		return (-1);
 	c = ft_rgb_to_trgb(0, data->r, data->g, data->b);
-	if (data->r < 0 || data->r > 255 || data->g < 0 ||
-			data->g > 255 || data->b < 0 || data->b > 255)
+	if (data->r < 0 || data->r > 255 || data->g < 0
+		|| data->g > 255 || data->b < 0 || data->b > 255)
 		return (-1);
 	return (c);
 }
 
 char	*get_text(int i, char *str)
 {
-	char *text = NULL;
+	char	*text;
 
+	text = NULL;
 	i += 2;
 	while (is_space(str[i]))
 		i++;
@@ -43,10 +44,10 @@ char	*get_text(int i, char *str)
 
 int	parsing_text(char *str, t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i] && is_space(str[i]))
+	while (str[i] && is_space(str[i]))
 		i++;
 	if (str[i] == 'N' && str[i + 1] == 'O' && data->parsing.c++)
 		data->parsing.text_no = get_text(i, str);
@@ -69,11 +70,11 @@ int	parsing_text(char *str, t_data *data)
 
 int	recup_text(t_data *data)
 {
-	int	c;
-	int	ret;
+	int		c;
+	int		ret;
 	char	*recup;
 	size_t	len;
-	int p;
+	int		p;
 
 	len = 0;
 	ret = 1;
@@ -82,29 +83,20 @@ int	recup_text(t_data *data)
 	{
 		ret = get_next_line(data->fd, &recup);
 		p = parsing_text(recup, data);
-		if (!p)
+		if (!p && !len)
 			data->parsing.map_line++;
 		else if (p == 2)
 		{
-
-			printf("recup : %s\n", recup);
 			if (ft_strlen(recup) > len)
 				len = ft_strlen(recup);
 			c++;
 		}
-		else if (p == 1)
-		{
-			return (1);
-		}
+		else
+			return (print_error1(12));
 		free(recup);
 	}
-	printf("%d\n", data->parsing.map_line);
-	//data->parsing.map_line--;
 	data->map_heigth = c;
 	data->map_width = len;
-	printf("%d\n", data->map_heigth);
-	printf("%d\n", data->map_width);
-
 	close(data->fd);
 	return (0);
 }

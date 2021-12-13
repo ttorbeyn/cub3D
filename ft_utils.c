@@ -32,3 +32,26 @@ int	print_textures(t_data *data)
 	printf("F : |%d|\n", data->parsing.text_f);
 	return (0);
 }
+
+int	print_outlines(t_data *data)
+{
+	int x = 0;
+	printf("first line : |%s|\n", data->map[0]);
+	printf("last line : |%s|\n", data->map[data->map_heigth - 1]);
+	printf("first column : |");
+	while (x < data->map_heigth)
+	{
+		printf("%c", data->map[x][0]);
+		x++;
+	}
+	printf("|\n");
+	printf("last column : |");
+	x = 0;
+	while (x < data->map_heigth)
+	{
+		printf("%c", data->map[x][data->map_width - 1]);
+		x++;
+	}
+	printf("|\n");
+	return (0);
+}
