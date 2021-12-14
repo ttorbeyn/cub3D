@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing_map.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/14 05:08:54 by ttorbeyn          #+#    #+#             */
+/*   Updated: 2021/12/14 05:08:56 by ttorbeyn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/cub3D.h"
 
 /*
@@ -42,29 +54,21 @@ int	check_coordinate(t_data *data)
 	int	y;
 	int	c;
 
-	x = 0;
 	c = 0;
-	while (data->map[x])
+	x = -1;
+	while (data->map[++x])
 	{
-		y = 0;
-		while (data->map[x][y])
+		y = -1;
+		while (data->map[x][++y])
 		{
 			if (is_coordinate(data->map[x][y]))
 			{
-				if (c < 1)
-				{
-					data->px = x * data->cellsize + (data->cellsize / 2);
-					data->py = y * data->cellsize + (data->cellsize / 2);
-					data->orientation = data->map[x][y];
-					data->map[x][y] = '0';
-					c++;
-				}
+				if (c++ < 1)
+					get_coordinate(data, x, y);
 				else
 					return (print_error(7));
 			}
-			y++;
 		}
-		x++;
 	}
 	if (!c)
 		return (print_error(8));
@@ -77,16 +81,15 @@ int	check_outline(t_data *data)
 	int	y;
 	int	c;
 
-	y = 0;
+	y = -1;
 	c = 0;
-	while (y < data->map_width)
+	while (++y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y])
 				&& !strchr(" 1", data->map[data->map_height - 1][y]))
 			return (print_error(9));
 		if (strchr(" ", data->map[data->map_height - 1][y]))
 			c++;
-		y++;
 	}
 	x = 0;
 	while (x < data->map_height)

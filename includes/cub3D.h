@@ -211,6 +211,7 @@ int	recup_map(t_data *data, char *file);
 int	check_wall(t_data *data);
 int check_surround(t_data *data, int x, int y);
 int	get_angle(t_data *data);
+int	get_coordinate(t_data *data, int x, int y);
 
 //ft_parsing_textures
 int	parsing_text(char *str, t_data *data);
