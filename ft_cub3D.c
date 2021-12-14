@@ -25,8 +25,6 @@ int	mlx_key(t_data *data)
 int	make_image(t_data *data)
 {
 	raycasting(data);
-	//big_pixel(data, 0x00FF0000, (data->py - (data->userheight / 2)),
-	//	(data->px + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
 	return (0);
 }
@@ -35,17 +33,16 @@ int	mlx_create(t_data *data)
 {
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, data->win_width, data->win_height,
-								   "cub3D");
+			"cub3D");
 	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
 	data->addr = (int *)mlx_get_data_addr(data->img, &data->bpp,
-										  &data->line_length, &data->end);
+			&data->line_length, &data->end);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_data	data;
-
 
 	if (ac != 2)
 		return (print_error(0));

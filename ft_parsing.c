@@ -9,15 +9,15 @@
 
 */
 
-int check_file(t_data *data, char *file)
+int	check_file(t_data *data, char *file)
 {
-	int len;
+	int	len;
 
 	len = ft_strlen(file);
 	if (len < 5)
 		return (print_error(1));
 	if (file[len - 1] != 'b' && file[len - 2] != 'u'
-			&& file[len - 3] != 'c' && file[len - 4] != '.')
+		&& file[len - 3] != 'c' && file[len - 4] != '.')
 		return (print_error(2));
 	data->fd = open(file, O_DIRECTORY);
 	if (data->fd != -1)

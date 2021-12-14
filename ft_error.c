@@ -37,4 +37,3 @@ int	print_error1(int errnum)
 		printf("File error\n");
 	return (1);
 }
-

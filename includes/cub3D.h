@@ -165,10 +165,14 @@ int print_error(int errnum);
 int print_error1(int errnum);
 
 //ft_key
+int	player_move(t_data *data, float angle, float l, int sign);
 int	deal_key(t_data *data);
 int close_window(t_data *data);
 int	key_pressed(int keycode, t_data *data);
 int	key_released(int keycode, t_data *data);
+
+//ft_key_utils
+int	define_step(t_data *data, float angle);
 
 //ft_raycasting
 int	define_step_x(t_data *data);

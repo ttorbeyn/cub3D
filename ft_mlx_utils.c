@@ -20,7 +20,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*dst = color;
 }
 
-int	big_pixel(t_data *data, int color, int i, int j, int l)
+/*
+
+ int	big_pixel(t_data *data, int color, int i, int j, int l)
 {
 	int	x;
 	int	y;
@@ -43,3 +45,5 @@ int	big_pixel(t_data *data, int color, int i, int j, int l)
 		return (0);
 	return (0);
 }
+
+*/

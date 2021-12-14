@@ -1,6 +1,6 @@
 #include "includes/cub3D.h"
 
-int is_space(char str)
+int	is_space(char str)
 {
 	if (str == ' ' || str == '\t' || str == '\n' || str == '\v'
 		|| str == '\f' || str == '\r' || str == 0)

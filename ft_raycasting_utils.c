@@ -7,7 +7,7 @@ int	is_left(double angle)
 	return (0);
 }
 
-int is_down(double angle)
+int	is_down(double angle)
 {
 	if (angle > PI && angle < (2 * PI))
 		return (1);

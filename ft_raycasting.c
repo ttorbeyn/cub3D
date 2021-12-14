@@ -14,7 +14,7 @@
 
 int	define_step_x(t_data *data)
 {
- 	if (data->ray.angle == P2 || data->ray.angle == P32)
+	if (data->ray.angle == P2 || data->ray.angle == P32)
 		return (1);
 	if (is_left(data->ray.angle))
 	{
@@ -39,7 +39,7 @@ int	raycasting_vertical(t_data *data)
 
 	c = 1;
 	if (define_step_x(data))
- 		return (0);
+		return (0);
 	while (c < data->map_height && data->ray.VcoordX >= 0
 		&& data->ray.VcoordY >= 0 && data->ray.VcoordX < data->map_height
 		&& data->ray.VcoordY < data->map_width)
@@ -125,11 +125,9 @@ int	raycasting(t_data *data)
 		raycasting_horizontal(data);
 		define_lenghtf(data);
 		draw_3d(data);
-	//	draw_ray(data, 0x0000FF00);
 		data->ray.angle -= (PI / 3) / data->win_width;
 		data->ray.angle = check_overflow_angle(data->ray.angle);
 		x++;
 	}
-	//draw_minimap(data);
 	return (0);
 }

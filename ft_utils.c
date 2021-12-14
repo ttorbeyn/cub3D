@@ -35,7 +35,9 @@ int	print_textures(t_data *data)
 
 int	print_outlines(t_data *data)
 {
-	int x = 0;
+	int	x;
+
+	x = 0;
 	printf("first line : |%s|\n", data->map[0]);
 	printf("last line : |%s|\n", data->map[data->map_height - 1]);
 	printf("first column : |");
@@ -55,7 +57,9 @@ int	print_outlines(t_data *data)
 	printf("|\n");
 	return (0);
 }
+
 /*
+
 int	draw_ray_ex(t_data *data, int color, double angle)
 {
 	double	c;
@@ -82,7 +86,9 @@ int	draw_ray_ex(t_data *data, int color, double angle)
 	}
 	return (0);
 }
+
 */
+
 int	draw_ray_ex(t_data *data, int color, double angle)
 {
 	double	c;
@@ -92,16 +98,17 @@ int	draw_ray_ex(t_data *data, int color, double angle)
 	x = 250;
 	y = 250;
 	c = 0;
-	if(!angle)
+	if (!angle)
 		return (0);
-	//printf("h : %d\n", data->height);
-	while (c < 20 && x > 0 && y > 0 && x < data->win_width && y < data->win_height)
+	while (c < 20 && x > 0 && y > 0 && x < data->win_width
+		&& y < data->win_height)
 	{
 		my_mlx_pixel_put(data, x, y, 0x0000FF00);
 		x++;
 		c++;
 	}
-	while (c < 500 && x > 0 && y > 0 && x < data->win_width && y < data->win_height)
+	while (c < 500 && x > 0 && y > 0 && x < data->win_width
+		&& y < data->win_height)
 	{
 		my_mlx_pixel_put(data, x, y, color);
 		x++;

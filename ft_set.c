@@ -28,7 +28,7 @@ int	set_data(t_data *data)
 	return (0);
 }
 
-int set_key(t_data *data)
+int	set_key(t_data *data)
 {
 	data->key.w = 0;
 	data->key.a = 0;
@@ -40,7 +40,7 @@ int set_key(t_data *data)
 	return (0);
 }
 
-int set_parsing(t_data *data)
+int	set_parsing(t_data *data)
 {
 	data->parsing.c = 1;
 	data->parsing.map_line = 0;
@@ -53,7 +53,7 @@ int set_parsing(t_data *data)
 	return (0);
 }
 
-int set(t_data *data)
+int	set(t_data *data)
 {
 	set_data(data);
 	set_key(data);

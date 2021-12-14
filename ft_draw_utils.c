@@ -10,7 +10,7 @@ int	draw_ray(t_data *data, int color)
 	y = data->py;
 	c = 0;
 	while (c < (data->ray.length * data->cellsize)
-		   && x > 0 && y > 0 && x < data->win_height && y < data->win_width)
+		&& x > 0 && y > 0 && x < data->win_height && y < data->win_width)
 	{
 		my_mlx_pixel_put(data, x, y, color);
 		x += cosf(data->ray.angle);
@@ -33,6 +33,8 @@ int	get_orientation(t_data *data)
 	return (-1);
 }
 
+/*
+
 int	draw_minimap(t_data *data)
 {
 	int	x;
@@ -46,11 +48,13 @@ int	draw_minimap(t_data *data)
 		{
 			if (data->map[x][y] == '1')
 				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize)
-											- data->cellsize), ((y + 1)
-											* data->cellsize), data->cellsize);
+						- data->cellsize), ((y + 1)
+						* data->cellsize), data->cellsize);
 			y++;
 		}
 		x++;
 	}
 	return (0);
 }
+
+*/

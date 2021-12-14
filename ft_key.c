@@ -12,38 +12,11 @@
 
 #include "includes/cub3D.h"
 
-int	define_step(t_data * data, float angle)
+int	player_move(t_data *data, float angle, float l, int sign)
 {
-	data->key.stepX = 0;
-	data->key.stepY = 0;
-	if ((angle > 0 && angle < (PI / 2)))
-	{
-		data->key.stepX = 1;
-		data->key.stepY = 1;
-	}
-	if ((angle > (PI / 2) && angle < PI))
-	{
-		data->key.stepX = -1;
-		data->key.stepY = 1;
-	}
-	if ((angle > PI && angle < (3 * PI / 2)))
-	{
-		data->key.stepX = -1;
-		data->key.stepY = -1;
-	}
-	if ((angle > (3 * PI / 2) && angle < (2 * PI)))
-	{
-		data->key.stepX = 1;
-		data->key.stepY = -1;
-	}
-	return (0);
-}
-
-int player_move(t_data *data, float angle, float l, int sign)
-{
-	int x;
-	int y;
-	float dist;
+	int		x;
+	int		y;
+	float	dist;
 
 	dist = 0.3;
 	angle = check_overflow_angle(angle);
@@ -83,7 +56,7 @@ int	deal_key(t_data *data)
 	return (0);
 }
 
-int close_window(t_data *data)
+int	close_window(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
 	exit (0);

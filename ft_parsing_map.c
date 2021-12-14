@@ -6,10 +6,10 @@
 
 */
 
-int check_valid_char_map(t_data *data)
+int	check_valid_char_map(t_data *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	while (data->map[x])
@@ -36,11 +36,11 @@ int check_valid_char_map(t_data *data)
 
 */
 
-int check_coordinate(t_data *data)
+int	check_coordinate(t_data *data)
 {
-	int x;
-	int y;
-	int c;
+	int	x;
+	int	y;
+	int	c;
 
 	x = 0;
 	c = 0;
@@ -71,11 +71,11 @@ int check_coordinate(t_data *data)
 	return (0);
 }
 
-int check_outline(t_data *data)
+int	check_outline(t_data *data)
 {
-	int x;
+	int	x;
 	int	y;
-	int c;
+	int	c;
 
 	y = 0;
 	c = 0;
@@ -89,7 +89,7 @@ int check_outline(t_data *data)
 		y++;
 	}
 	x = 0;
-	while (x <  data->map_height)
+	while (x < data->map_height)
 	{
 		if (!strchr(" 1", data->map[x][0])
 				&& !strchr(" 1", data->map[x][data->map_width - 1]))
@@ -117,16 +117,16 @@ int	check_map(t_data *data)
 
 int	recup_map(t_data *data, char *file)
 {
-	int	x;
-	int y;
-	int	ret;
+	int		x;
+	int		y;
+	int		ret;
 	char	*recup;
-	int len;
+	int		len;
 
 	x = 0;
 	ret = 1;
 	data->fd = open(file, O_RDONLY);
-	data->map = malloc(sizeof(char*) * (data->map_height + 1));
+	data->map = malloc(sizeof(char *) * (data->map_height + 1));
 	if (!data->map)
 		return (1);
 	while (x < data->parsing.map_line)
