@@ -24,9 +24,11 @@ SRC				=				libft/libft.a \
 								ft_set.c \
 								ft_error.c \
 								ft_raycasting.c \
+								ft_raycasting_utils.c \
 								ft_mlx_utils.c \
 								ft_key.c \
 								ft_draw.c \
+								ft_draw_utils.c \
 								ft_parsing.c \
 								ft_parsing_text.c \
 								ft_parsing_text_utils.c \

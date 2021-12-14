@@ -95,7 +95,7 @@ int	recup_text(t_data *data)
 			return (print_error1(12));
 		free(recup);
 	}
-	data->map_heigth = c;
+	data->map_height = c;
 	data->map_width = len;
 	close(data->fd);
 	return (0);

@@ -24,8 +24,7 @@ int	mlx_key(t_data *data)
 
 int	make_image(t_data *data)
 {
-	draw_ray_ex(data, 0x00FF0000, P2);
-	//raycasting(data);
+	raycasting(data);
 	//big_pixel(data, 0x00FF0000, (data->py - (data->userheight / 2)),
 	//	(data->px + (data->userheight / 2)), data->userheight);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img, 0, 0);
@@ -35,9 +34,9 @@ int	make_image(t_data *data)
 int	mlx_create(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, data->width, data->height,
+	data->mlx_win = mlx_new_window(data->mlx, data->win_width, data->win_height,
 								   "cub3D");
-	data->img = mlx_new_image(data->mlx, data->width, data->height);
+	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
 	data->addr = (int *)mlx_get_data_addr(data->img, &data->bpp,
 										  &data->line_length, &data->end);
 	return (0);

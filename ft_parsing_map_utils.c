@@ -13,7 +13,7 @@ int	check_wall(t_data *data)
 	int	y;
 
 	x = 1;
-	while (x < data->map_heigth - 1)
+	while (x < data->map_height - 1)
 	{
 		y = 1;
 		while (y < data->map_width - 1)

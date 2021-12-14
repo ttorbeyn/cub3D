@@ -62,7 +62,7 @@ int	deal_key(t_data *data)
 	float	l;
 
 	mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, data->width, data->height);
+	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
 	l = (data->cellsize / 10) * 0.5;
 	if (data->key.w == 1)
 		player_move(data, data->angle, l, 1);

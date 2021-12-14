@@ -82,14 +82,14 @@ int check_outline(t_data *data)
 	while (y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y])
-				&& !strchr(" 1", data->map[data->map_heigth - 1][y]))
+				&& !strchr(" 1", data->map[data->map_height - 1][y]))
 			return (print_error(9));
-		if (strchr(" ", data->map[data->map_heigth - 1][y]))
+		if (strchr(" ", data->map[data->map_height - 1][y]))
 			c++;
 		y++;
 	}
 	x = 0;
-	while (x <  data->map_heigth)
+	while (x <  data->map_height)
 	{
 		if (!strchr(" 1", data->map[x][0])
 				&& !strchr(" 1", data->map[x][data->map_width - 1]))
@@ -126,7 +126,7 @@ int	recup_map(t_data *data, char *file)
 	x = 0;
 	ret = 1;
 	data->fd = open(file, O_RDONLY);
-	data->map = malloc(sizeof(char*) * (data->map_heigth + 1));
+	data->map = malloc(sizeof(char*) * (data->map_height + 1));
 	if (!data->map)
 		return (1);
 	while (x < data->parsing.map_line)

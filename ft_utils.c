@@ -37,9 +37,9 @@ int	print_outlines(t_data *data)
 {
 	int x = 0;
 	printf("first line : |%s|\n", data->map[0]);
-	printf("last line : |%s|\n", data->map[data->map_heigth - 1]);
+	printf("last line : |%s|\n", data->map[data->map_height - 1]);
 	printf("first column : |");
-	while (x < data->map_heigth)
+	while (x < data->map_height)
 	{
 		printf("%c", data->map[x][0]);
 		x++;
@@ -47,7 +47,7 @@ int	print_outlines(t_data *data)
 	printf("|\n");
 	printf("last column : |");
 	x = 0;
-	while (x < data->map_heigth)
+	while (x < data->map_height)
 	{
 		printf("%c", data->map[x][data->map_width - 1]);
 		x++;
@@ -95,13 +95,13 @@ int	draw_ray_ex(t_data *data, int color, double angle)
 	if(!angle)
 		return (0);
 	//printf("h : %d\n", data->height);
-	while (c < 20 && x > 0 && y > 0 && x < data->width && y < data->height)
+	while (c < 20 && x > 0 && y > 0 && x < data->win_width && y < data->win_height)
 	{
 		my_mlx_pixel_put(data, x, y, 0x0000FF00);
 		x++;
 		c++;
 	}
-	while (c < 500 && x > 0 && y > 0 && x < data->width && y < data->height)
+	while (c < 500 && x > 0 && y > 0 && x < data->win_width && y < data->win_height)
 	{
 		my_mlx_pixel_put(data, x, y, color);
 		x++;

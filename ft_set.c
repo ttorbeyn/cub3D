@@ -3,19 +3,15 @@
 int	set_ray(t_data *data)
 {
 	data->ray.posX = (data->px) / data->cellsize ;
-	//printf("%f\n", data->ray.posX);
 	data->ray.posY = (data->py) / data->cellsize;
-//	printf("%f\n", data->ray.posY);
 	data->ray.mapX = (int)(data->ray.posX);
 	data->ray.mapY = (int)(data->ray.posY);
 	data->ray.dx = 0;
 	data->ray.dy = 0;
-	data->ray.VsideDistX = 0;
-	data->ray.VsideDistY = 0;
-	data->ray.HsideDistX = 0;
-	data->ray.HsideDistY = 0;
-	data->ray.deltaDistX = 0;
-	data->ray.deltaDistY = 0;
+	data->ray.VcoordX = 0;
+	data->ray.VcoordY = 0;
+	data->ray.HcoordX = 0;
+	data->ray.HcoordY = 0;
 	data->ray.lengthV = 0;
 	data->ray.lengthH = 0;
 	data->ray.length = 0;
@@ -26,8 +22,8 @@ int	set_ray(t_data *data)
 int	set_data(t_data *data)
 {
 	data->cellsize = 20;
-	data->height = 1000;
-	data->width = 2000;
+	data->win_height = 1000;
+	data->win_width = 2000;
 	data->userheight = data->cellsize / 20;
 	return (0);
 }

@@ -44,10 +44,10 @@ typedef struct	s_ray
 	double angle; 	//direction du joueur en radian
 	int mapX;
 	int mapY;
-	double HsideDistX;
-	double HsideDistY;
-	double VsideDistX;
-	double VsideDistY;
+	double HcoordX;
+	double HcoordY;
+	double VcoordX;
+	double VcoordY;
 	double deltaDistX;
 	double deltaDistY;
 	int	stepX;
@@ -62,6 +62,15 @@ typedef struct	s_ray
 	double y;
 	int side;
 }				t_ray;
+
+typedef struct	s_threeD
+{
+	double	len;
+	double	start;
+	double	i;
+	double	y_step;
+	double	offset;
+}				t_threeD;
 
 typedef struct	s_keys
 {
@@ -78,8 +87,6 @@ typedef struct	s_keys
 
 typedef struct	s_parsing
 {
-	int res_x;
-	int res_y;
 	char *text_no;
 	char *text_so;
 	char *text_we;
@@ -123,8 +130,8 @@ typedef struct  s_data {
 	void 		*mlx_win;
 	char		**map;
 	int			cellsize;
-	int			width;
-	int 		height;
+	int			win_width;
+	int 		win_height;
 	double 		length;
 	double 		lengthx;
 	double 		lengthy;
@@ -133,13 +140,14 @@ typedef struct  s_data {
 	int			g;
 	int			b;
 	int			t;
-	int			map_heigth;
+	int			map_height;
 	int			map_width;
 	char		player_cardinal;
 	t_ray		ray;
 	t_keys		key;
 	t_text		text[4];
 	t_parsing	parsing;
+	t_threeD 	threeD;
 }               t_data;
 
 //ft_cub3D
@@ -150,7 +158,7 @@ int set(t_data *data);
 int set_key(t_data *data);
 int	set_data(t_data *data);
 int set_parsing(t_data *data);
-
+int	set_ray(t_data *data);
 
 //ft_error
 int print_error(int errnum);
@@ -163,15 +171,27 @@ int	key_pressed(int keycode, t_data *data);
 int	key_released(int keycode, t_data *data);
 
 //ft_raycasting
-int	set_ray(t_data *data);
+int	define_step_x(t_data *data);
+int	define_step_y(t_data *data);
 int	raycasting_horizontal(t_data *data);
 int	raycasting_vertical(t_data *data);
 int	raycasting(t_data *data);
 
+//ft_raycasting_utils
+int	is_left(double angle);
+int is_down(double angle);
+int	define_lenghtf(t_data *data);
+
 //ft_draw
+int	draw_ceiling(t_data *data);
+int	draw_wall(t_data *data, int side);
+int	draw_floor(t_data *data);
+int	define_coord_text(t_data *data, int side);
+int draw_3d(t_data *data);
+
+//ft_draw_utils
 int draw_ray(t_data *data, int color);
-int draw_3D(t_data *data);
-int	draw_text(t_data *data);
+int	get_orientation(t_data *data);
 int	draw_minimap(t_data *data);
 
 //ft_parsing

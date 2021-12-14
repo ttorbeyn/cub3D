@@ -12,118 +12,91 @@
 
 #include "includes/cub3D.h"
 
-
-int	draw_ray(t_data *data, int color)
+int	draw_ceiling(t_data *data)
 {
-	double	c;
-	double	x;
-	double	y;
-
-	x = data->px;
-	y = data->py;
-	c = 0;
-	while (c < (data->ray.length * data->cellsize)
-	        && x > 0 && y > 0 && x < data->width && y < data->height)
+	while (data->threeD.i < data->threeD.start)
 	{
-		my_mlx_pixel_put(data, x, y, color);
-		x += (cosf(data->ray.angle));
-		y += (sinf(data->ray.angle));
-		c++;
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x]
+			= data->parsing.text_c;
+		data->threeD.i++;
+		data->ray.y++;
 	}
 	return (0);
 }
 
-int	get_orientation(t_data *data)
+int	draw_wall(t_data *data, int side)
 {
-	if (data->ray.stepY == 1 && data->ray.side == 1)
-		return (0);
-	else if (data->ray.stepY == -1 && data->ray.side == 1)
-		return (1);
-	else if (data->ray.stepX == 1)
-		return (2);
-	else if (data->ray.stepX == -1)
-		return (3);
-	return (-1);
-}
-
-int	draw_3D(t_data *data)
-{
-	double	len;
-	double	start;
-	double	i;
-	double	x;
-	double	y_step;
-	double	offset;
-	int		side;
-
-	side = get_orientation(data);
-	i = 0;
-	offset = 0;
-	len = data->height / data->ray.lengthf;
-	y_step = data->text[side].height / len;
-	if (len > data->height)
+	while (data->threeD.len > 0 && data->threeD.i < data->win_height)
 	{
-		offset = (len - data->height)/2;
-		len = data->height;
-	}
-	start = (data->height / 2) - (len / 2);
-	data->ray.y = 0;
-	while (i < start)
-	{
-		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->parsing.text_c;
-		i++;
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x]
+			= data->text[side].addr[(int)data->text[side].texy
+			* data->text[side].line_length / 4 + (int)data->text[side].texx];
+		data->threeD.len--;
+		data->threeD.i++;
+		data->text[side].texy += data->threeD.y_step;
 		data->ray.y++;
 	}
+	return (0);
+}
+
+int	draw_floor(t_data *data)
+{
+	while (data->threeD.i < data->win_height)
+	{
+		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x]
+			= data->parsing.text_f;
+		data->threeD.i++;
+		data->ray.y++;
+	}
+	return (0);
+}
+
+int	define_coord_text(t_data *data, int side)
+{
+	double	x;
+
 	if (data->ray.side == 0)
 	{
-		x = (int)(data->ray.VsideDistY * data->text[side].width) % data->text[side].width;
+		x = (int)(data->ray.VcoordY * data->text[side].width)
+			% data->text[side].width;
 		if (data->ray.angle > (PI / 2) && data->ray.angle < ((3 * PI) / 2))
 			x = data->text[side].width - 1 - x;
 	}
 	else
 	{
-		x = (int)(data->ray.VsideDistX * data->text[side].width) % data->text[side].width;
+		x = (int)(data->ray.VcoordX * data->text[side].width)
+			% data->text[side].width;
 		if (!(data->ray.angle > PI && data->ray.angle < (2 * PI)))
 			x = data->text[side].width - 1 - x;
 	}
 	data->text[side].texx = x;
-	data->text[side].texy = offset * y_step;
-	data->text[side].texpos = (data->ray.y + (data->ray.y + len) / 2 + len / 2) * y_step;
-	while (len > 0 && i < data->height)
-	{
-		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] =
-				data->text[side].addr[(int)data->text[side].texy * data->text[side].line_length / 4 + (int)data->text[side].texx];
-		len--;
-		i++;
-		data->text[side].texy += y_step;
-		data->ray.y++;
-	}
-	while (i < data->height)
-	{
-		data->addr[(int)data->ray.y * data->line_length / 4 + (int)data->ray.x] = data->parsing.text_f;
-		i++;
-		data->ray.y++;
-	}
-	data->ray.x++;
+	data->text[side].texy = data->threeD.offset * data->threeD.y_step;
+	data->text[side].texpos = (data->ray.y + (data->ray.y
+				+ data->threeD.len) / 2 + data->threeD.len / 2)
+		* data->threeD.y_step;
 	return (0);
 }
 
-int	draw_minimap(t_data *data)
+int	draw_3d(t_data *data)
 {
-	int	x;
-	int	y;
+	int		side;
 
-	x = 0;
-	while (data->map[x])
+	side = get_orientation(data);
+	data->threeD.i = 0;
+	data->threeD.offset = 0;
+	data->threeD.len = data->win_height / data->ray.lengthf;
+	data->threeD.y_step = data->text[side].height / data->threeD.len;
+	if (data->threeD.len > data->win_height)
 	{
-		y = 0;
-		while (data->map[x][y])
-		{
-			if (data->map[x][y] == '1')
-				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize) - data->cellsize), ((y + 1) * data->cellsize), data->cellsize);
-			y++;
-		}
-		x++;
+		data->threeD.offset = (data->threeD.len - data->win_height) / 2;
+		data->threeD.len = data->win_height;
 	}
+	data->threeD.start = (data->win_height / 2) - (data->threeD.len / 2);
+	data->ray.y = 0;
+	draw_ceiling(data);
+	define_coord_text(data, side);
+	draw_wall(data, side);
+	draw_floor(data);
+	data->ray.x++;
 	return (0);
 }
