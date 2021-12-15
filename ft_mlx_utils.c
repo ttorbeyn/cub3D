@@ -19,31 +19,3 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	dst = (int *)data->addr + (y * data->line_length / 4 + x);
 	*dst = color;
 }
-
-/*
-
- int	big_pixel(t_data *data, int color, int i, int j, int l)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < l)
-	{
-		j -= l;
-		y = 0;
-		while (y < l)
-		{
-			my_mlx_pixel_put(data, i, j, color);
-			j++;
-			y++;
-		}
-		i++;
-		x++;
-	}
-	if (!color || !data)
-		return (0);
-	return (0);
-}
-
-*/

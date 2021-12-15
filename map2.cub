@@ -1,6 +1,6 @@
-C 247,240,111
+F 247,240,111
 NO ./textures/eagle.xpm
-F 40,20,91
+C 40,20,91
 SO ./textures/brick.xpm
 WE ./textures/stone.xpm
 EA ./textures/wood.xpm

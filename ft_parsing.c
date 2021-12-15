@@ -27,16 +27,17 @@ int	check_file(t_data *data, char *file)
 
 	len = ft_strlen(file);
 	if (len < 5)
-		return (print_error(1));
+		return (print_error(1, data));
 	if (file[len - 1] != 'b' && file[len - 2] != 'u'
 		&& file[len - 3] != 'c' && file[len - 4] != '.')
-		return (print_error(2));
+		return (print_error(2, data));
 	data->fd = open(file, O_DIRECTORY);
 	if (data->fd != -1)
-		return (print_error(3));
+		return (print_error(3, data));
+	close(data->fd);
 	data->fd = open(file, O_RDONLY);
 	if (data->fd < 0)
-		return (print_error(4));
+		return (print_error(4, data));
 	return (0);
 }
 

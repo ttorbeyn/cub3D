@@ -66,12 +66,12 @@ int	check_coordinate(t_data *data)
 				if (c++ < 1)
 					get_coordinate(data, x, y);
 				else
-					return (print_error(7));
+					return (print_error(7, data));
 			}
 		}
 	}
 	if (!c)
-		return (print_error(8));
+		return (print_error(8, data));
 	return (0);
 }
 
@@ -87,7 +87,7 @@ int	check_outline(t_data *data)
 	{
 		if (!strchr(" 1", data->map[0][y])
 				&& !strchr(" 1", data->map[data->map_height - 1][y]))
-			return (print_error(9));
+			return (print_error(9, data));
 		if (strchr(" ", data->map[data->map_height - 1][y]))
 			c++;
 	}
@@ -96,24 +96,24 @@ int	check_outline(t_data *data)
 	{
 		if (!strchr(" 1", data->map[x][0])
 				&& !strchr(" 1", data->map[x][data->map_width - 1]))
-			return (print_error(10));
+			return (print_error(10, data));
 		x++;
 	}
 	if (c >= data->map_width)
-		return (print_error1(11));
+		return (print_error1(11, data));
 	return (0);
 }
 
 int	check_map(t_data *data)
 {
 	if (check_valid_char_map(data))
-		return (print_error(6));
+		return (print_error(6, data));
 	if (check_coordinate(data))
 		return (1);
 	if (check_outline(data))
 		return (1);
 	if (check_wall(data))
-		return (print_error(9));
+		return (print_error(9, data));
 	get_angle(data);
 	return (0);
 }
@@ -123,7 +123,6 @@ int	recup_map(t_data *data, char *file)
 	int		x;
 	int		y;
 	int		ret;
-	char	*recup;
 	int		len;
 
 	x = 0;
@@ -134,31 +133,31 @@ int	recup_map(t_data *data, char *file)
 		return (1);
 	while (x < data->parsing.map_line)
 	{
-		get_next_line(data->fd, &recup);
+		get_next_line(data->fd, &data->recup);
 		x++;
-		free(recup);
+		free(data->recup);
 	}
 	x = 0;
 	while (ret == 1)
 	{
-		ret = get_next_line(data->fd, &recup);
-		len = ft_strlen(recup);
+		ret = get_next_line(data->fd, &data->recup);
+		len = ft_strlen(data->recup);
 		data->map[x] = malloc(sizeof(char) * (data->map_width + 1));
 		if (!data->map[x])
 			return (1);
 		y = 0;
 		while (y < data->map_width)
 		{
-			if (y < len && (recup[y] == '0'
-					|| is_coordinate(recup[y]) || recup[y] == '1'))
-				data->map[x][y] = recup[y];
+			if (y < len && (data->recup[y] == '0'
+					|| is_coordinate(data->recup[y]) || data->recup[y] == '1'))
+				data->map[x][y] = data->recup[y];
 			else
 				data->map[x][y] = ' ';
 			y++;
 		}
 		data->map[x][y] = '\0';
 		x++;
-		free(recup);
+		free(data->recup);
 	}
 	data->map[x] = NULL;
 	close(data->fd);

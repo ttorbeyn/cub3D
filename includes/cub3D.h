@@ -34,7 +34,7 @@
 # define CAMERA_LEFT 123
 # define CAMERA_RIGHT 124
 # define ESC 53
-
+# define MAJ 257
 
 
 typedef struct	s_ray
@@ -81,6 +81,7 @@ typedef struct	s_keys
 	int l;
 	int r;
 	int e;
+	int speed;
 	int	stepX;
 	int	stepY;
 }				t_keys;
@@ -117,6 +118,7 @@ typedef struct  s_data {
 	int			fd;
 	void		*img;
 	int			*addr;
+	char		*recup;
 	int			bpp;
 	int			line_length;
 	int			end;
@@ -161,8 +163,9 @@ int set_parsing(t_data *data);
 int	set_ray(t_data *data);
 
 //ft_error
-int print_error(int errnum);
-int print_error1(int errnum);
+int print_error(int errnum, t_data *data);
+int print_error1(int errnum, t_data *data);
+int ft_free2(t_data *data);
 
 //ft_key
 int	player_move(t_data *data, float angle, float l, int sign);
@@ -215,7 +218,7 @@ int	get_coordinate(t_data *data, int x, int y);
 
 //ft_parsing_textures
 int	parsing_text(char *str, t_data *data);
-char	*get_path_text(int i, char *str);
+int get_path_text(int i, char *str, char **text);
 int	recup(t_data *data);
 int	check_text(t_data *data);
 int	recup_text(t_data *data);
@@ -229,9 +232,6 @@ int	get_addr_text(t_data *data);
 //ft_parsing_utils
 int is_space(char str);
 int	is_coordinate(char str);
-void	fill_tab_zero(void *s, size_t n);
-int		ft_atoi_base(char *str, char *base);
-char	*ft_itoa(int nbr);
 
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);

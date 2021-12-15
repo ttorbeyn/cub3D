@@ -45,14 +45,17 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-		return (print_error(0));
+		return (print_error(0, &data));
 	set(&data);
 	if (parsing(&data, av[1]))
 		return (1);
 	mlx_create(&data);
 	if (get_img_text(&data))
-		return (1);
+		return (print_error1(13, &data));
 	make_image(&data);
 	mlx_key(&data);
+	if (data.recup)
+		free(data.recup);
+	ft_free2(&data);
 	return (0);
 }

@@ -37,6 +37,8 @@ int	deal_key(t_data *data)
 	mlx_destroy_image(data->mlx, data->img);
 	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
 	l = (data->cellsize / 10) * 0.5;
+	if (data->key.speed == 1)
+		l = (data->cellsize / 10) * 0.5 * 2;
 	if (data->key.w == 1)
 		player_move(data, data->angle, l, 1);
 	if (data->key.s == 1)
@@ -76,6 +78,8 @@ int	key_pressed(int keycode, t_data *data)
 		data->key.r = 1;
 	if (keycode == CAMERA_LEFT)
 		data->key.l = 1;
+	if (keycode == MAJ)
+		data->key.speed = 1;
 	if (keycode == ESC)
 		data->key.e = 1;
 	return (0);
@@ -95,5 +99,7 @@ int	key_released(int keycode, t_data *data)
 		data->key.r = 0;
 	if (keycode == CAMERA_LEFT)
 		data->key.l = 0;
+	if (keycode == MAJ)
+		data->key.speed = 0;
 	return (0);
 }
