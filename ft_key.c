@@ -38,7 +38,7 @@ int	deal_key(t_data *data)
 	data->img = mlx_new_image(data->mlx, data->win_width, data->win_height);
 	l = (data->cellsize / 10) * 0.5;
 	if (data->key.speed == 1)
-		l = (data->cellsize / 10) * 0.5 * 2;
+		l *= 2;
 	if (data->key.w == 1)
 		player_move(data, data->angle, l, 1);
 	if (data->key.s == 1)
