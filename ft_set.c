@@ -6,7 +6,7 @@
 /*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 05:10:08 by ttorbeyn          #+#    #+#             */
-/*   Updated: 2021/12/14 05:10:11 by ttorbeyn         ###   ########.fr       */
+/*   Updated: 2021/12/16 18:16:30 by ttorbeyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	set_ray(t_data *data)
 int	set_data(t_data *data)
 {
 	data->cellsize = 20;
-	data->win_height = 1000;
-	data->win_width = 2000;
+	data->win_height = 600;
+	data->win_width = 800;
 	data->userheight = data->cellsize / 20;
 	return (0);
 }
