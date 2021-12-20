@@ -12,7 +12,7 @@
 
 #include "includes/cub3D.h"
 
-int ft_free2(t_data *data)
+int	ft_free_data(t_data *data)
 {
 	int	x;
 
@@ -39,7 +39,7 @@ int ft_free2(t_data *data)
 
 int	print_error(int errnum, t_data *data)
 {
-	ft_free2(data);
+	ft_free_data(data);
 	printf("Error\n");
 	if (errnum == 0)
 		printf("Wrong number of arguments (2 needed)\n");
@@ -61,20 +61,22 @@ int	print_error(int errnum, t_data *data)
 		printf("Start position missing\n");
 	else if (errnum == 9)
 		printf("Hole in the outline (line)\n");
-	else if (errnum == 10)
-		printf("Hole in the outline (column)\n");
 	exit (0);
 }
 
 int	print_error1(int errnum, t_data *data)
 {
-	ft_free2(data);
+	ft_free_data(data);
 	printf("Error\n");
-	if (errnum == 11)
+	if (errnum == 10)
+		printf("Hole in the outline (column)\n");
+	else if (errnum == 11)
 		printf("Last line empty\n");
-	if (errnum == 12)
+	else if (errnum == 12)
 		printf("File error\n");
-	if (errnum == 13)
+	else if (errnum == 13)
 		printf("Error Texture\n");
+	else if (errnum == 14)
+		printf("Malloc error\n");
 	exit (0);
 }

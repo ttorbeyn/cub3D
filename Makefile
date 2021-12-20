@@ -33,7 +33,8 @@ SRC				=				libft/libft.a \
 								ft_parsing.c \
 								ft_parsing_text.c \
 								ft_parsing_text_utils.c \
-								ft_parsing_map.c \
+								ft_parsing_map_recup.c \
+								ft_parsing_map_check.c \
 								ft_parsing_map_utils.c \
 								ft_parsing_utils.c \
 								ft_utils.c \

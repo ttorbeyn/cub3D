@@ -56,6 +56,6 @@ int	main(int ac, char **av)
 	mlx_key(&data);
 	if (data.recup)
 		free(data.recup);
-	ft_free2(&data);
+	ft_free_data(&data);
 	return (0);
 }

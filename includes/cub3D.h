@@ -165,7 +165,7 @@ int	set_ray(t_data *data);
 //ft_error
 int print_error(int errnum, t_data *data);
 int print_error1(int errnum, t_data *data);
-int ft_free2(t_data *data);
+int ft_free_data(t_data *data);
 
 //ft_key
 int	player_move(t_data *data, float angle, float l, int sign);
@@ -200,6 +200,7 @@ int draw_3d(t_data *data);
 int draw_ray(t_data *data, int color);
 int	get_orientation(t_data *data);
 int	draw_minimap(t_data *data);
+int	big_pixel(t_data *data, int color, int i, int j);
 
 //ft_parsing
 int	parsing(t_data *data, char *file);
@@ -235,7 +236,7 @@ int	is_coordinate(char str);
 
 //ft_mlx_utils
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-int	big_pixel(t_data *data, int color, int i, int j, int l);
+
 
 //ft_utils.c
 double	check_overflow_angle(double angle);

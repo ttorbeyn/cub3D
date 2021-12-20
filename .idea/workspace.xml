@@ -3,6 +3,24 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated />
   </component>
@@ -12,7 +30,19 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="feef39f1-9008-4230-974d-735a2ac036d0" name="Default Changelist" comment="" />
+    <list default="true" id="feef39f1-9008-4230-974d-735a2ac036d0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/ft_parsing_map_check.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cub3D" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_cub3D.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_cub3D.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_draw_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_draw_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_error.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_error.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_parsing_map.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_recup.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_parsing_map_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/cub3D.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/cub3D.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +71,14 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -51,6 +89,7 @@
       <option name="presentableId" value="Default" />
       <updated>1639675148888</updated>
       <workItem from="1639675151469" duration="1138000" />
+      <workItem from="1640024020917" duration="996000" />
     </task>
     <servers />
   </component>
@@ -58,6 +97,15 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
