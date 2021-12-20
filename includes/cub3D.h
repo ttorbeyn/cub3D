@@ -153,95 +153,101 @@ typedef struct s_data {
 }				t_data;
 
 //ft_cub3D
+int		main(int ac, char **av);
+int		mlx_create(t_data *data);
 int		make_image(t_data *data);
+int		mlx_key(t_data *data);
 
 //ft_set
 int		set(t_data *data);
+int		set_parsing(t_data *data);
 int		set_key(t_data *data);
 int		set_data(t_data *data);
-int		set_parsing(t_data *data);
 int		set_ray(t_data *data);
-
-//ft_error
-int		print_error(int errnum, t_data *data);
-int		print_error1(int errnum, t_data *data);
-int		ft_free_data(t_data *data);
-
-//ft_key
-int		player_move(t_data *data, float angle, float l, int sign);
-int		deal_key(t_data *data);
-int		close_window(t_data *data);
-int		key_pressed(int keycode, t_data *data);
-int		key_released(int keycode, t_data *data);
-
-//ft_key_utils
-int		define_step(t_data *data, float angle);
-
-//ft_raycasting
-int		define_step_x(t_data *data);
-int		define_step_y(t_data *data);
-int		raycasting_horizontal(t_data *data);
-int		raycasting_vertical(t_data *data);
-int		raycasting(t_data *data);
-
-//ft_raycasting_utils
-int		is_left(double angle);
-int		is_down(double angle);
-int		define_lenghtf(t_data *data);
-
-//ft_draw
-int		draw_ceiling(t_data *data);
-int		draw_wall(t_data *data, int side);
-int		draw_floor(t_data *data);
-int		define_coord_text(t_data *data, int side);
-int		draw_3d(t_data *data);
-
-//ft_draw_utils
-int		draw_ray(t_data *data, int color);
-int		get_orientation(t_data *data);
-int		draw_minimap(t_data *data);
-int		big_pixel(t_data *data, int color, int i, int j);
 
 //ft_parsing
 int		parsing(t_data *data, char *file);
-
-//ft_parsing_map
-int		check_coordinate(t_data *data);
-int		check_map(t_data *data);
-int		check_valid_char_map(t_data *data);
-int		recup_map(t_data *data, char *file);
-
-//ft_parsing_map_utils
-int		check_wall(t_data *data);
-int		check_surround(t_data *data, int x, int y);
-int		get_angle(t_data *data);
-int		get_coordinate(t_data *data, int x, int y);
-
-//ft_parsing_textures
-int		parsing_text(char *str, t_data *data);
-int		get_path_text(int i, char *str, char **text);
-int		recup(t_data *data);
-int		check_text(t_data *data);
-int		recup_text(t_data *data);
-
-//ft_parsing_text_utils.c
-int		ft_rgb_to_trgb(int t, int r, int g, int b);
-int		ato3i(char *str, int *a, int *b, int *c);
-int		get_img_text(t_data *data);
-int		get_addr_text(t_data *data);
+int		check_file(t_data *data, char *file);
 
 //ft_parsing_utils
 int		is_space(char str);
 int		is_coordinate(char str);
 
-//ft_mlx_utils
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+//ft_parsing_text
+int		recup_text(t_data *data);
+int		parsing_text(char *str, t_data *data);
+int		get_path_text(int i, char *str, char **text);
+int		get_color(int i, char *str, t_data *data);
+int		check_text(t_data *data);
+
+//ft_parsing_text_utils.c
+int		get_addr_text(t_data *data);
+int		get_img_text(t_data *data);
+int		ato3i(char *str, int *a, int *b, int *c);
+int		ft_rgb_to_trgb(int t, int r, int g, int b);
+
+//ft_parsing_map_recup
+int		recup_map(t_data *data, char *file);
+int		recup_map2(t_data *data, int ret, int x, int y);
+
+//ft_parsing_map_check
+int		check_map(t_data *data);
+int		check_wall(t_data *data);
+int		check_outline(t_data *data);
+int		check_coordinate(t_data *data);
+int		check_valid_char_map(t_data *data);
+
+//ft_parsing_map_utils
+int		get_coordinate(t_data *data, int x, int y);
+int		get_angle(t_data *data);
+int		check_surround(t_data *data, int x, int y);
+
+//ft_error
+int		print_error(int errnum, t_data *data);
+int		print_error1(int errnum, t_data *data);
+int		ft_free_data(t_data *data);
+int		ft_exit(t_data *data);
+
+//ft_raycasting
+int		raycasting(t_data *data);
+int		raycasting_vertical(t_data *data);
+int		define_step_x(t_data *data);
+int		raycasting_horizontal(t_data *data);
+int		define_step_y(t_data *data);
+
+//ft_raycasting_utils
+int		define_lenghtf(t_data *data);
+int		is_down(double angle);
+int		is_left(double angle);
+
+//ft_key
+int		key_released(int keycode, t_data *data);
+int		key_pressed(int keycode, t_data *data);
+int		deal_key(t_data *data);
+int		player_move(t_data *data, float angle, float l, int sign);
+int		define_step(t_data *data, float angle);
+
+//ft_draw
+int		draw_3d(t_data *data);
+int		define_coord_text(t_data *data, int side);
+int		draw_floor(t_data *data);
+int		draw_wall(t_data *data, int side);
+int		draw_ceiling(t_data *data);
+
+//ft_draw_utils
+int		big_pixel(t_data *data, int color, int i, int j);
+int		draw_minimap(t_data *data);
+int		get_orientation(t_data *data);
+int		draw_ray(t_data *data, int color);
 
 //ft_utils.c
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 double	check_overflow_angle(double angle);
-int		print_textures(t_data *data);
-int		print_minimap(t_data *data);
-int		print_outlines(t_data *data);
+
+//ft_print_utils
 int		draw_ray_ex(t_data *data, int color, double angle);
+int		print_outlines(t_data *data);
+int		print_minimap(t_data *data);
+int		print_textures(t_data *data);
 
 #endif

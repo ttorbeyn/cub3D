@@ -12,6 +12,33 @@
 
 #include "includes/cub3D.h"
 
+int	define_step(t_data *data, float angle)
+{
+	data->key.step_x = 0;
+	data->key.step_y = 0;
+	if ((angle > 0 && angle < (PI / 2)))
+	{
+		data->key.step_x = 1;
+		data->key.step_y = 1;
+	}
+	if ((angle > (PI / 2) && angle < PI))
+	{
+		data->key.step_x = -1;
+		data->key.step_y = 1;
+	}
+	if ((angle > PI && angle < (3 * PI / 2)))
+	{
+		data->key.step_x = -1;
+		data->key.step_y = -1;
+	}
+	if ((angle > (3 * PI / 2) && angle < (2 * PI)))
+	{
+		data->key.step_x = 1;
+		data->key.step_y = -1;
+	}
+	return (0);
+}
+
 int	player_move(t_data *data, float angle, float l, int sign)
 {
 	int		x;
@@ -53,16 +80,9 @@ int	deal_key(t_data *data)
 		data->angle += 0.05;
 	data->angle = check_overflow_angle(data->angle);
 	if (data->key.e == 1)
-		close_window(data);
+		ft_exit(data);
 	make_image(data);
 	return (0);
-}
-
-int	close_window(t_data *data)
-{
-	mlx_destroy_window(data->mlx, data->mlx_win);
-	ft_free_data(data);
-	exit (0);
 }
 
 int	key_pressed(int keycode, t_data *data)

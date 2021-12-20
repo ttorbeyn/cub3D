@@ -31,24 +31,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="feef39f1-9008-4230-974d-735a2ac036d0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cub3D" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_draw.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_draw.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_draw_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_draw_utils.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ft_print_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ft_error.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_error.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ft_key.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_key.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_key_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_key_utils.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_map_check.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_check.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_map_recup.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_recup.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_map_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_utils.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_text.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_text.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_text_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_text_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_key_utils.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_mlx_utils.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ft_raycasting.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_raycasting.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_raycasting_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_raycasting_utils.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_set.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_set.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_utils.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/includes/cub3D.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/cub3D.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maptest/map4.cub" beforeDir="false" afterPath="$PROJECT_DIR$/maptest/map4.cub" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +87,7 @@
       <option name="presentableId" value="Default" />
       <updated>1639675148888</updated>
       <workItem from="1639675151469" duration="1138000" />
-      <workItem from="1640024020917" duration="4669000" />
+      <workItem from="1640024020917" duration="6354000" />
     </task>
     <servers />
   </component>
