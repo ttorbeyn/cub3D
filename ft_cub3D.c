@@ -54,8 +54,6 @@ int	main(int ac, char **av)
 		return (print_error1(13, &data));
 	make_image(&data);
 	mlx_key(&data);
-	if (data.recup)
-		free(data.recup);
 	ft_free_data(&data);
 	return (0);
 }
