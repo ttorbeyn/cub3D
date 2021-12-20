@@ -115,36 +115,29 @@ typedef struct s_text
 }				t_text;
 
 typedef struct s_data {
-	int			fd;
+
 	void		*img;
 	int			*addr;
 	char		*recup;
 	int			bpp;
 	int			line_length;
 	int			end;
-	double		px;
-	double		py;
-	int			dx;
-	int			dy;
-	float		angle;
-	char		orientation;
 	void		*mlx;
 	void		*mlx_win;
-	char		**map;
-	int			cellsize;
 	int			win_width;
 	int			win_height;
-	double		length;
-	double		lengthx;
-	double		lengthy;
-	int			userheight;
+	int			fd;
+	double		px;
+	double		py;
+	float		angle;
+	char		orientation;
+	int			cellsize;
 	int			r;
 	int			g;
 	int			b;
-	int			t;
+	char		**map;
 	int			map_height;
 	int			map_width;
-	char		player_cardinal;
 	t_ray		ray;
 	t_keys		key;
 	t_text		text[4];
@@ -184,6 +177,7 @@ int		check_text(t_data *data);
 int		get_addr_text(t_data *data);
 int		get_img_text(t_data *data);
 int		ato3i(char *str, int *a, int *b, int *c);
+int		check_sep(char *str, int i);
 int		ft_rgb_to_trgb(int t, int r, int g, int b);
 
 //ft_parsing_map_recup

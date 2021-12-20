@@ -17,6 +17,23 @@ int	ft_rgb_to_trgb(int t, int r, int g, int b)
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
+int	check_sep(char *str, int i)
+{
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	while (str[i] && is_space(str[i]))
+		i++;
+	if (str[i] && str[i] == ',')
+		i++;
+	else
+		return (-1);
+	while (str[i] && is_space(str[i]))
+		i++;
+	if (str[i] == '\0' || !ft_isdigit(str[i]))
+		return (-1);
+	return (i);
+}
+
 int	ato3i(char *str, int *a, int *b, int *c)
 {
 	int	i;
@@ -24,21 +41,21 @@ int	ato3i(char *str, int *a, int *b, int *c)
 	i = 0;
 	if (str[i] && !ft_isdigit(str[i]))
 		return (1);
-	*a = ft_atoi(&str[i++]);
-	while (str[i] && ft_isdigit(str[i]))
-		i++;
-	if (str[i] && str[i] == ',')
-		i++;
-	if (str[i] == '\0' || !ft_isdigit(str[i]))
+	*a = ft_atoi(&str[i]);
+	i = check_sep(str, i);
+	if (i < 0)
 		return (1);
 	*b = ft_atoi(&str[i++]);
-	while (str[i] && ft_isdigit(str[i]))
-		i++;
-	if (str[i] && str[i] == ',')
-		i++;
-	if (str[i] == '\0' || !ft_isdigit(str[i]))
+	i = check_sep(str, i);
+	if (i < 0)
 		return (1);
 	*c = ft_atoi(&str[i]);
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	while (str[i] && is_space(str[i]))
+		i++;
+	if (str[i] != '\0')
+		return (1);
 	return (0);
 }
 

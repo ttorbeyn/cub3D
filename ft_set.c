@@ -34,9 +34,8 @@ int	set_ray(t_data *data)
 int	set_data(t_data *data)
 {
 	data->cellsize = 20;
-	data->win_height = 1000;
-	data->win_width = 2000;
-	data->userheight = data->cellsize / 20;
+	data->win_height = 600;
+	data->win_width = 800;
 	data->map_width = 0;
 	data->map_height = 0;
 	data->r = 0;

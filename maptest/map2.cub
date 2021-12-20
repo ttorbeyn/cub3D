@@ -1,4 +1,4 @@
-F 247,240,111
+F      247   ,   240  ,   111
 NO ./textures/eagle.xpm
 C 40,20,91
 SO ./textures/brick.xpm
