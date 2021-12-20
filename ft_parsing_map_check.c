@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parsing_map_check.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/20 20:11:45 by ttorbeyn          #+#    #+#             */
+/*   Updated: 2021/12/20 20:11:48 by ttorbeyn         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/cub3D.h"
 
 /*
@@ -89,6 +101,28 @@ int	check_outline(t_data *data)
 	}
 	if (c >= data->map_width)
 		return (print_error1(11, data));
+	return (0);
+}
+
+int	check_wall(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 1;
+	while (x < data->map_height - 1)
+	{
+		y = 1;
+		while (y < data->map_width - 1)
+		{
+			while (is_space(data->map[x][y]) && y < data->map_width - 1)
+				y++;
+			if (data->map[x][y] == '0' && check_surround(data, x, y))
+				return (1);
+			y++;
+		}
+		x++;
+	}
 	return (0);
 }
 

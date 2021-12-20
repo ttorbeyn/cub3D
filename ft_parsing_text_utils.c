@@ -22,32 +22,23 @@ int	ato3i(char *str, int *a, int *b, int *c)
 	int	i;
 
 	i = 0;
-	if (a)
-	{
-		if (str[i] && !ft_isdigit(str[i]))
-			return (1);
-		*a = ft_atoi(&str[i++]);
-		while (str[i] && ft_isdigit(str[i]))
-			i++;
-	}
-	if (b)
-	{
-		if (str[i] && str[i] == ',')
-			i++;
-		if (str[i] == '\0' || !ft_isdigit(str[i]))
-			return (1);
-		*b = ft_atoi(&str[i++]);
-		while (str[i] && ft_isdigit(str[i]))
-			i++;
-	}
-	if (c)
-	{
-		if (str[i] && str[i] == ',')
-			i++;
-		if (str[i] == '\0' || !ft_isdigit(str[i]))
-			return (1);
-		*c = ft_atoi(&str[i]);
-	}
+	if (str[i] && !ft_isdigit(str[i]))
+		return (1);
+	*a = ft_atoi(&str[i++]);
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str[i] && str[i] == ',')
+		i++;
+	if (str[i] == '\0' || !ft_isdigit(str[i]))
+		return (1);
+	*b = ft_atoi(&str[i++]);
+	while (str[i] && ft_isdigit(str[i]))
+		i++;
+	if (str[i] && str[i] == ',')
+		i++;
+	if (str[i] == '\0' || !ft_isdigit(str[i]))
+		return (1);
+	*c = ft_atoi(&str[i]);
 	return (0);
 }
 

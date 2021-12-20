@@ -12,6 +12,23 @@
 
 #include "includes/cub3D.h"
 
+int	ft_exit(t_data *data)
+{
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+	if (data->text[0].img)
+		mlx_destroy_image(data->mlx, data->text[0].img);
+	if (data->text[1].img)
+		mlx_destroy_image(data->mlx, data->text[1].img);
+	if (data->text[2].img)
+		mlx_destroy_image(data->mlx, data->text[2].img);
+	if (data->text[3].img)
+		mlx_destroy_image(data->mlx, data->text[3].img);
+	if (data->mlx_win)
+		mlx_destroy_window(data->mlx, data->mlx_win);
+	exit (0);
+}
+
 int	ft_free_data(t_data *data)
 {
 	int	x;
@@ -52,7 +69,7 @@ int	print_error(int errnum, t_data *data)
 	else if (errnum == 4)
 		printf("File could not be open\n");
 	else if (errnum == 5)
-		printf("Textures or color missing\n");
+		printf("Textures or color error\n");
 	else if (errnum == 6)
 		printf("Invalid char in map\n");
 	else if (errnum == 7)
@@ -61,7 +78,7 @@ int	print_error(int errnum, t_data *data)
 		printf("Start position missing\n");
 	else if (errnum == 9)
 		printf("Hole in the outline (line)\n");
-	exit (0);
+	return (ft_exit(data));
 }
 
 int	print_error1(int errnum, t_data *data)
@@ -78,5 +95,5 @@ int	print_error1(int errnum, t_data *data)
 		printf("Error Texture\n");
 	else if (errnum == 14)
 		printf("Malloc error\n");
-	exit (0);
+	return (ft_exit(data));
 }

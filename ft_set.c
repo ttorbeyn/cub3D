@@ -14,18 +14,18 @@
 
 int	set_ray(t_data *data)
 {
-	data->ray.posX = (data->px) / data->cellsize ;
-	data->ray.posY = (data->py) / data->cellsize;
-	data->ray.mapX = (int)(data->ray.posX);
-	data->ray.mapY = (int)(data->ray.posY);
+	data->ray.pos_x = (data->px) / data->cellsize ;
+	data->ray.pos_y = (data->py) / data->cellsize;
+	data->ray.map_x = (int)(data->ray.pos_x);
+	data->ray.map_y = (int)(data->ray.pos_y);
 	data->ray.dx = 0;
 	data->ray.dy = 0;
-	data->ray.VcoordX = 0;
-	data->ray.VcoordY = 0;
-	data->ray.HcoordX = 0;
-	data->ray.HcoordY = 0;
-	data->ray.lengthV = 0;
-	data->ray.lengthH = 0;
+	data->ray.v_coord_x = 0;
+	data->ray.v_coord_y = 0;
+	data->ray.h_coord_x = 0;
+	data->ray.h_coord_y = 0;
+	data->ray.length_v = 0;
+	data->ray.length_h = 0;
 	data->ray.length = 0;
 	data->ray.side = 0;
 	return (0);
@@ -37,6 +37,11 @@ int	set_data(t_data *data)
 	data->win_height = 1000;
 	data->win_width = 2000;
 	data->userheight = data->cellsize / 20;
+	data->map_width = 0;
+	data->map_height = 0;
+	data->r = 0;
+	data->g = 0;
+	data->b = 0;
 	return (0);
 }
 

@@ -34,13 +34,13 @@ int	draw_ray(t_data *data, int color)
 
 int	get_orientation(t_data *data)
 {
-	if (data->ray.stepX == -1 && data->ray.side == 0)
+	if (data->ray.step_x == -1 && data->ray.side == 0)
 		return (0);
-	else if (data->ray.stepX == 1 && data->ray.side == 0)
+	else if (data->ray.step_x == 1 && data->ray.side == 0)
 		return (1);
-	else if (data->ray.stepY == -1)
+	else if (data->ray.step_y == -1)
 		return (2);
-	else if (data->ray.stepY == 1)
+	else if (data->ray.step_y == 1)
 		return (3);
 	return (-1);
 }

@@ -21,8 +21,8 @@ int	player_move(t_data *data, float angle, float l, int sign)
 	dist = 0.3;
 	angle = check_overflow_angle(angle);
 	define_step(data, angle);
-	x = (int)(data->px / data->cellsize + sign * (dist * data->key.stepX));
-	y = (int)(data->py / data->cellsize + sign * (dist * data->key.stepY));
+	x = (int)(data->px / data->cellsize + sign * (dist * data->key.step_x));
+	y = (int)(data->py / data->cellsize + sign * (dist * data->key.step_y));
 	if (data->map[x][(int)data->py / data->cellsize] == '0')
 		data->px = data->px + sign * l * cosf(angle);
 	if (data->map[(int)data->px / data->cellsize][y] == '0')
@@ -61,6 +61,7 @@ int	deal_key(t_data *data)
 int	close_window(t_data *data)
 {
 	mlx_destroy_window(data->mlx, data->mlx_win);
+	ft_free_data(data);
 	exit (0);
 }
 

@@ -80,14 +80,12 @@ int	parsing_text(char *str, t_data *data)
 
 int	recup_text(t_data *data)
 {
-	int		c;
 	int		ret;
 	size_t	len;
 	int		p;
 
 	len = 0;
 	ret = 1;
-	c = 0;
 	while (ret == 1)
 	{
 		ret = get_next_line(data->fd, &data->recup);
@@ -98,13 +96,12 @@ int	recup_text(t_data *data)
 		{
 			if (ft_strlen(data->recup) > len)
 				len = ft_strlen(data->recup);
-			c++;
+			data->map_height++;
 		}
 		else
 			return (print_error1(12, data));
 		free(data->recup);
 	}
-	data->map_height = c;
 	data->map_width = len;
 	close(data->fd);
 	return (0);
