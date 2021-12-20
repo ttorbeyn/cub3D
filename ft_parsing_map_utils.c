@@ -19,28 +19,6 @@
 
 */
 
-int	check_wall(t_data *data)
-{
-	int	x;
-	int	y;
-
-	x = 1;
-	while (x < data->map_height - 1)
-	{
-		y = 1;
-		while (y < data->map_width - 1)
-		{
-			while (is_space(data->map[x][y]) && y < data->map_width - 1)
-				y++;
-			if (data->map[x][y] == '0' && check_surround(data, x, y))
-				return (1);
-			y++;
-		}
-		x++;
-	}
-	return (0);
-}
-
 int	check_surround(t_data *data, int x, int y)
 {
 	if (is_space(data->map[x - 1][y]) ||

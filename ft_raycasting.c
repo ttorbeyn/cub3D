@@ -12,73 +12,25 @@
 
 #include "includes/cub3D.h"
 
-int	define_step_x(t_data *data)
-{
-	if (data->ray.angle == P2 || data->ray.angle == P32)
-		return (1);
-	if (is_left(data->ray.angle))
-	{
-		data->ray.stepX = -1;
-		data->ray.dx = 0.0 - (data->ray.posX - data->ray.mapX);
-	}
-	else
-	{
-		data->ray.stepX = 1;
-		data->ray.dx = 1.0 - (data->ray.posX - data->ray.mapX);
-	}
-	data->ray.dy = tanf(data->ray.angle) * data->ray.dx;
-	data->ray.VcoordX = data->ray.posX + data->ray.dx;
-	data->ray.VcoordY = data->ray.posY + data->ray.dy;
-	return (0);
-}
-
-int	raycasting_vertical(t_data *data)
-{
-	int	c;
-	int	x;
-
-	c = 1;
-	if (define_step_x(data))
-		return (0);
-	while (c < data->map_height && data->ray.VcoordX >= 0
-		&& data->ray.VcoordY >= 0 && data->ray.VcoordX < data->map_height
-		&& data->ray.VcoordY < data->map_width)
-	{
-		x = (int)data->ray.VcoordX;
-		if (is_left(data->ray.angle) && x > 0)
-			x -= 1;
-		if (data->map[x][(int)data->ray.VcoordY] != '1' && c++)
-		{
-			data->ray.VcoordY += tanf(data->ray.angle) * data->ray.stepX;
-			data->ray.VcoordX += data->ray.stepX;
-		}
-		else
-			break ;
-	}
-	data->ray.lengthV = hypot((data->ray.VcoordX - data->ray.posX),
-			(data->ray.VcoordY - data->ray.posY));
-	return (0);
-}
-
 int	define_step_y(t_data *data)
 {
 	if (data->ray.angle == PI || data->ray.angle == 0)
 		return (1);
 	if (is_down(data->ray.angle))
 	{
-		data->ray.stepY = -1;
-		data->ray.dy = 0.0 - (data->ray.posY - data->ray.mapY);
+		data->ray.step_y = -1;
+		data->ray.dy = 0.0 - (data->ray.pos_y - data->ray.map_y);
 	}
 	else
 	{
-		data->ray.stepY = 1;
-		data->ray.dy = 1.0 - (data->ray.posY - data->ray.mapY);
+		data->ray.step_y = 1;
+		data->ray.dy = 1.0 - (data->ray.pos_y - data->ray.map_y);
 	}
 	data->ray.dx = 0;
 	if (data->ray.angle != P2 || data->ray.angle != P32)
 		data->ray.dx = data->ray.dy / tanf(data->ray.angle);
-	data->ray.HcoordX = data->ray.posX + data->ray.dx;
-	data->ray.HcoordY = data->ray.posY + data->ray.dy;
+	data->ray.h_coord_x = data->ray.pos_x + data->ray.dx;
+	data->ray.h_coord_y = data->ray.pos_y + data->ray.dy;
 	return (0);
 }
 
@@ -90,24 +42,72 @@ int	raycasting_horizontal(t_data *data)
 	c = 1;
 	if (define_step_y(data))
 		return (0);
-	while (c < data->map_width && data->ray.HcoordX >= 0
-		&& data->ray.HcoordY >= 0 && data->ray.HcoordX < data->map_height
-		&& data->ray.HcoordY < data->map_width)
+	while (c < data->map_width && data->ray.h_coord_x >= 0
+		&& data->ray.h_coord_y >= 0 && data->ray.h_coord_x < data->map_height
+		&& data->ray.h_coord_y < data->map_width)
 	{
-		y = (int)data->ray.HcoordY;
+		y = (int)data->ray.h_coord_y;
 		if (is_down(data->ray.angle) && y > 0)
 			y -= 1;
-		if (data->map[(int)data->ray.HcoordX][y] != '1' && c++)
+		if (data->map[(int)data->ray.h_coord_x][y] != '1' && c++)
 		{
 			if (data->ray.angle != P2 || data->ray.angle != P32)
-				data->ray.HcoordX += data->ray.stepY / tanf(data->ray.angle);
-			data->ray.HcoordY += data->ray.stepY;
+				data->ray.h_coord_x += data->ray.step_y / tanf(data->ray.angle);
+			data->ray.h_coord_y += data->ray.step_y;
 		}
 		else
 			break ;
 	}
-	data->ray.lengthH = hypot((data->ray.HcoordX - data->ray.posX),
-			(data->ray.HcoordY - data->ray.posY));
+	data->ray.length_h = hypot((data->ray.h_coord_x - data->ray.pos_x),
+			(data->ray.h_coord_y - data->ray.pos_y));
+	return (0);
+}
+
+int	define_step_x(t_data *data)
+{
+	if (data->ray.angle == P2 || data->ray.angle == P32)
+		return (1);
+	if (is_left(data->ray.angle))
+	{
+		data->ray.step_x = -1;
+		data->ray.dx = 0.0 - (data->ray.pos_x - data->ray.map_x);
+	}
+	else
+	{
+		data->ray.step_x = 1;
+		data->ray.dx = 1.0 - (data->ray.pos_x - data->ray.map_x);
+	}
+	data->ray.dy = tanf(data->ray.angle) * data->ray.dx;
+	data->ray.v_coord_x = data->ray.pos_x + data->ray.dx;
+	data->ray.v_coord_y = data->ray.pos_y + data->ray.dy;
+	return (0);
+}
+
+int	raycasting_vertical(t_data *data)
+{
+	int	c;
+	int	x;
+
+	c = 1;
+	if (define_step_x(data))
+		return (0);
+	while (c < data->map_height && data->ray.v_coord_x >= 0
+		&& data->ray.v_coord_y >= 0 && data->ray.v_coord_x < data->map_height
+		&& data->ray.v_coord_y < data->map_width)
+	{
+		x = (int)data->ray.v_coord_x;
+		if (is_left(data->ray.angle) && x > 0)
+			x -= 1;
+		if (data->map[x][(int)data->ray.v_coord_y] != '1' && c++)
+		{
+			data->ray.v_coord_y += tanf(data->ray.angle) * data->ray.step_x;
+			data->ray.v_coord_x += data->ray.step_x;
+		}
+		else
+			break ;
+	}
+	data->ray.length_v = hypot((data->ray.v_coord_x - data->ray.pos_x),
+			(data->ray.v_coord_y - data->ray.pos_y));
 	return (0);
 }
 

@@ -34,13 +34,13 @@ int	draw_ray(t_data *data, int color)
 
 int	get_orientation(t_data *data)
 {
-	if (data->ray.stepX == -1 && data->ray.side == 0)
+	if (data->ray.step_x == -1 && data->ray.side == 0)
 		return (0);
-	else if (data->ray.stepX == 1 && data->ray.side == 0)
+	else if (data->ray.step_x == 1 && data->ray.side == 0)
 		return (1);
-	else if (data->ray.stepY == -1)
+	else if (data->ray.step_y == -1)
 		return (2);
-	else if (data->ray.stepY == 1)
+	else if (data->ray.step_y == 1)
 		return (3);
 	return (-1);
 }
@@ -59,7 +59,7 @@ int	draw_minimap(t_data *data)
 			if (data->map[x][y] == '1')
 				big_pixel(data, 0x000000FF, (((x + 1) * data->cellsize)
 						- data->cellsize), ((y + 1)
-						* data->cellsize), data->cellsize);
+						* data->cellsize));
 			y++;
 		}
 		x++;
@@ -67,17 +67,17 @@ int	draw_minimap(t_data *data)
 	return (0);
 }
 
-int	big_pixel(t_data *data, int color, int i, int j, int l)
+int	big_pixel(t_data *data, int color, int i, int j)
 {
 	int	x;
 	int	y;
 
 	x = 0;
-	while (x < l)
+	while (x < data->cellsize)
 	{
-		j -= l;
+		j -= data->cellsize;
 		y = 0;
-		while (y < l)
+		while (y < data->cellsize)
 		{
 			my_mlx_pixel_put(data, i, j, color);
 			j++;
@@ -86,7 +86,5 @@ int	big_pixel(t_data *data, int color, int i, int j, int l)
 		i++;
 		x++;
 	}
-	if (!color || !data)
-		return (0);
 	return (0);
 }

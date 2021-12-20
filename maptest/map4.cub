@@ -1,12 +1,9 @@
-R 1920 1080
-​
-	NO img/eagle.xpm
-           SO img/greystone.xpmn    hhhh
-WE img/purplestone.xpm
-EA 	img/redbrick.xpm
-​
-F    222,25,   255
-C 111,      233,  255
+	NO ./textures/eagle.xpm
+           SO ./textures/greystone.xpm
+WE ./textures/purplestone.xpm
+EA 	./textures/redbrick.xpm
+F    222,25,255
+C 111,233,255
                                                  111111111111111111111 11111111111111
                                                  1000000000000000000001000000000000001
                                                  1000000000000S00000000000000000000001111

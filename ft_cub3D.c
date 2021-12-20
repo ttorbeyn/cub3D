@@ -16,7 +16,7 @@ int	mlx_key(t_data *data)
 {
 	mlx_hook(data->mlx_win, 2, 1L << 0, key_pressed, data);
 	mlx_hook(data->mlx_win, 3, 1L << 1, key_released, data);
-	mlx_hook(data->mlx_win, 17, 0L, close_window, data);
+	mlx_hook(data->mlx_win, 17, 0L, ft_exit, data);
 	mlx_loop_hook(data->mlx, deal_key, data);
 	mlx_loop(data->mlx);
 	return (0);
@@ -56,6 +56,6 @@ int	main(int ac, char **av)
 	mlx_key(&data);
 	if (data.recup)
 		free(data.recup);
-	ft_free2(&data);
+	ft_free_data(&data);
 	return (0);
 }

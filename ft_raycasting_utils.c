@@ -30,15 +30,15 @@ int	define_lenghtf(t_data *data)
 {
 	float	angle;
 
-	data->ray.length = data->ray.lengthV;
-	if (data->ray.lengthH < data->ray.lengthV)
+	data->ray.length = data->ray.length_v;
+	if (data->ray.length_h < data->ray.length_v)
 	{
-		data->ray.length = data->ray.lengthH;
-		data->ray.VcoordX = data->ray.HcoordX;
-		data->ray.VcoordY = data->ray.HcoordY;
+		data->ray.length = data->ray.length_h;
+		data->ray.v_coord_x = data->ray.h_coord_x;
+		data->ray.v_coord_y = data->ray.h_coord_y;
 		data->ray.side = 1;
 	}
 	angle = check_overflow_angle(data->angle - data->ray.angle);
-	data->ray.lengthf = data->ray.length * cosf(angle);
+	data->ray.length_f = data->ray.length * cosf(angle);
 	return (0);
 }

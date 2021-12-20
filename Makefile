@@ -20,24 +20,23 @@ FRAMEWORKS		=	-I /usr/X11/include -g -L /usr/X11/lib -l mlx -framework OpenGL -f
 LIBFT			=	@ cd libft && make ;
 
 SRC				=				libft/libft.a \
+								gnl/get_next_line.c \
 								ft_cub3D.c \
 								ft_set.c \
+								ft_parsing.c \
+								ft_parsing_utils.c \
+								ft_parsing_text.c \
+								ft_parsing_text_utils.c \
+								ft_parsing_map_recup.c \
+								ft_parsing_map_check.c \
+								ft_parsing_map_utils.c \
 								ft_error.c \
 								ft_raycasting.c \
 								ft_raycasting_utils.c \
-								ft_mlx_utils.c \
 								ft_key.c \
-								ft_key_utils.c \
 								ft_draw.c \
 								ft_draw_utils.c \
-								ft_parsing.c \
-								ft_parsing_text.c \
-								ft_parsing_text_utils.c \
-								ft_parsing_map.c \
-								ft_parsing_map_utils.c \
-								ft_parsing_utils.c \
-								ft_utils.c \
-								gnl/get_next_line.c
+								ft_utils.c
 
 OBJS			=	$(SRC:.c=.o)
 

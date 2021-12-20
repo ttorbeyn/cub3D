@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parsing_map.c                                   :+:      :+:    :+:   */
+/*   ft_parsing_map_check.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/14 05:08:54 by ttorbeyn          #+#    #+#             */
-/*   Updated: 2021/12/14 05:08:56 by ttorbeyn         ###   ########.fr       */
+/*   Created: 2021/12/20 20:11:45 by ttorbeyn          #+#    #+#             */
+/*   Updated: 2021/12/20 20:11:48 by ttorbeyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_valid_char_map(t_data *data)
 			else
 				return (1);
 		}
-	x++;
+		x++;
 	}
 	return (0);
 }
@@ -86,7 +86,7 @@ int	check_outline(t_data *data)
 	while (++y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y])
-				&& !strchr(" 1", data->map[data->map_height - 1][y]))
+			|| !strchr(" 1", data->map[data->map_height - 1][y]))
 			return (print_error(9, data));
 		if (strchr(" ", data->map[data->map_height - 1][y]))
 			c++;
@@ -95,12 +95,34 @@ int	check_outline(t_data *data)
 	while (x < data->map_height)
 	{
 		if (!strchr(" 1", data->map[x][0])
-				&& !strchr(" 1", data->map[x][data->map_width - 1]))
-			return (print_error(10, data));
+			|| !strchr(" 1", data->map[x][data->map_width - 1]))
+			return (print_error1(10, data));
 		x++;
 	}
 	if (c >= data->map_width)
 		return (print_error1(11, data));
+	return (0);
+}
+
+int	check_wall(t_data *data)
+{
+	int	x;
+	int	y;
+
+	x = 1;
+	while (x < data->map_height - 1)
+	{
+		y = 1;
+		while (y < data->map_width - 1)
+		{
+			while (is_space(data->map[x][y]) && y < data->map_width - 1)
+				y++;
+			if (data->map[x][y] == '0' && check_surround(data, x, y))
+				return (1);
+			y++;
+		}
+		x++;
+	}
 	return (0);
 }
 
@@ -115,51 +137,5 @@ int	check_map(t_data *data)
 	if (check_wall(data))
 		return (print_error(9, data));
 	get_angle(data);
-	return (0);
-}
-
-int	recup_map(t_data *data, char *file)
-{
-	int		x;
-	int		y;
-	int		ret;
-	int		len;
-
-	x = 0;
-	ret = 1;
-	data->fd = open(file, O_RDONLY);
-	data->map = malloc(sizeof(char *) * (data->map_height + 1));
-	if (!data->map)
-		return (1);
-	while (x < data->parsing.map_line)
-	{
-		get_next_line(data->fd, &data->recup);
-		x++;
-		free(data->recup);
-	}
-	x = 0;
-	while (ret == 1)
-	{
-		ret = get_next_line(data->fd, &data->recup);
-		len = ft_strlen(data->recup);
-		data->map[x] = malloc(sizeof(char) * (data->map_width + 1));
-		if (!data->map[x])
-			return (1);
-		y = 0;
-		while (y < data->map_width)
-		{
-			if (y < len && (data->recup[y] == '0'
-					|| is_coordinate(data->recup[y]) || data->recup[y] == '1'))
-				data->map[x][y] = data->recup[y];
-			else
-				data->map[x][y] = ' ';
-			y++;
-		}
-		data->map[x][y] = '\0';
-		x++;
-		free(data->recup);
-	}
-	data->map[x] = NULL;
-	close(data->fd);
 	return (0);
 }
