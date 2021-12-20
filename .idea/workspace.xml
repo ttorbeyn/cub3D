@@ -31,13 +31,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="feef39f1-9008-4230-974d-735a2ac036d0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/maptest/map5.cub" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cub3D" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_parsing_text_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_text_utils.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ft_set.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_set.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/cub3D.h" beforeDir="false" afterPath="$PROJECT_DIR$/includes/cub3D.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ft_parsing_map_check.c" beforeDir="false" afterPath="$PROJECT_DIR$/ft_parsing_map_check.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maptest/map2.cub" beforeDir="false" afterPath="$PROJECT_DIR$/maptest/map2.cub" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1639675148888</updated>
       <workItem from="1639675151469" duration="1138000" />
-      <workItem from="1640024020917" duration="8999000" />
+      <workItem from="1640024020917" duration="9828000" />
     </task>
     <servers />
   </component>

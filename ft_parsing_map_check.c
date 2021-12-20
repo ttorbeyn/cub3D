@@ -86,7 +86,7 @@ int	check_outline(t_data *data)
 	while (++y < data->map_width)
 	{
 		if (!strchr(" 1", data->map[0][y])
-			&& !strchr(" 1", data->map[data->map_height - 1][y]))
+			|| !strchr(" 1", data->map[data->map_height - 1][y]))
 			return (print_error(9, data));
 		if (strchr(" ", data->map[data->map_height - 1][y]))
 			c++;
@@ -95,7 +95,7 @@ int	check_outline(t_data *data)
 	while (x < data->map_height)
 	{
 		if (!strchr(" 1", data->map[x][0])
-			&& !strchr(" 1", data->map[x][data->map_width - 1]))
+			|| !strchr(" 1", data->map[x][data->map_width - 1]))
 			return (print_error1(10, data));
 		x++;
 	}
