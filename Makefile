@@ -6,14 +6,14 @@
 #    By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/26 18:56:41 by ttorbeyn          #+#    #+#              #
-#    Updated: 2021/04/26 18:56:43 by ttorbeyn         ###   ########.fr        #
+#    Updated: 2021/12/27 16:19:43 by ttorbeyn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 CC				=	gcc
 
 CFLAGS			=	-Wall -Wextra -Werror
 
-INCLUDE			=	-I include
+INCLUDE			=	-I includes
 
 FRAMEWORKS		=	-lmlx -framework OpenGL -framework AppKit
 

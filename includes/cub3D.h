@@ -6,7 +6,7 @@
 /*   By: ttorbeyn <ttorbeyn@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 20:12:36 by ttorbeyn          #+#    #+#             */
-/*   Updated: 2021/12/20 20:12:39 by ttorbeyn         ###   ########.fr       */
+/*   Updated: 2021/12/27 16:14:24 by ttorbeyn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ typedef struct s_text
 }				t_text;
 
 typedef struct s_data {
-
 	void		*img;
 	int			*addr;
 	char		*recup;
