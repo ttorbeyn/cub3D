@@ -32,8 +32,6 @@
   <component name="ChangeListManager">
     <list default="true" id="feef39f1-9008-4230-974d-735a2ac036d0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/maptest/map5.cub" beforeDir="false" afterPath="$PROJECT_DIR$/maptest/map5.cub" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,14 +61,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -82,6 +74,11 @@
       <updated>1639675148888</updated>
       <workItem from="1639675151469" duration="1138000" />
       <workItem from="1640024020917" duration="10446000" />
+      <workItem from="1640714062807" duration="3000" />
+      <workItem from="1640714072864" duration="9000" />
+      <workItem from="1640714086503" duration="4000" />
+      <workItem from="1640714112440" duration="15000" />
+      <workItem from="1640714152049" duration="20000" />
     </task>
     <servers />
   </component>
