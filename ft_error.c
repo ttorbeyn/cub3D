@@ -58,9 +58,7 @@ int	ft_exit(t_data *data)
 int	print_error(int errnum, t_data *data)
 {
 	printf("Error\n");
-	if (errnum == 0)
-		printf("Wrong number of arguments (2 needed)\n");
-	else if (errnum == 1)
+	if (errnum == 1)
 		printf("File .cub has no name\n");
 	else if (errnum == 2)
 		printf("File has not the good extension (.cub required)\n");

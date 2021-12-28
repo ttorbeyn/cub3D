@@ -45,7 +45,10 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-		return (print_error(0, &data));
+	{
+		printf("Error\nWrong number of arguments (2 needed)\n");
+		return (0);
+	}
 	set(&data);
 	if (parsing(&data, av[1]))
 		return (1);

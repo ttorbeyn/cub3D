@@ -37,7 +37,7 @@ int	get_angle(t_data *data)
 {
 	if (data->orientation == 'E')
 		data->angle = PI / 2;
-	if (data->orientation == 'O')
+	if (data->orientation == 'W')
 		data->angle = (3 * PI) / 2;
 	if (data->orientation == 'N')
 		data->angle = PI;
